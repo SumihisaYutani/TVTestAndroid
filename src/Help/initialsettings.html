@@ -1,0 +1,48 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<link rel="stylesheet" href="default.css" type="text/css">
+	<title>初期設定ダイアログ</title>
+</head>
+<body>
+
+<h1>初期設定ダイアログ</h1>
+
+<p>
+初期設定ダイアログでは、TVTest の初期設定を行います。<br>
+ここでの設定は、<a href="options.html">設定ダイアログ</a>で後から変更することができます。
+</p>
+
+<p>
+初期設定ダイアログは、TVTest を最初に起動した際に表示されますが、<a href="commandline.html">コマンドライン</a>で /init を指定することによっても表示させることができます。<br>
+正常に起動しなくなった場合など、起動させることができずに設定の変更が行えないような場合に使用します。
+</p>
+
+<p>
+各設定項目の内容は以下の通りです。
+</p>
+
+<h2>BonDriver</h2>
+<p class="descript">使用する BonDriver のファイル名です。<br>
+複数の BonDriver を使う場合、BonDriver の変更はメニューなどから簡単にできますので、ここでは適当に一つ選んでください。</p>
+
+<h2>デコーダ</h2>
+<p class="descript">MPEG-2 / H.264 / H.265 デコーダを選択します。<br>
+「自動」を選択すると、利用可能なデコーダを検索して使用します。<br>
+リストにあっても実際には使用できないものもあります。<br>
+詳しくは<a href="appendix/decoder.html">デコーダとレンダラ</a>を参照してください。
+</p>
+
+<h2>レンダラ</h2>
+<p class="descript">ビデオレンダラを選択します。<br>
+レンダラによって画質やパフォーマンスに影響を与えます。<br>
+特に理由が無ければ、通常は EVR または EVR (Custom Presenter) を選ぶのが良いでしょう。<br>
+詳しくは<a href="appendix/decoder.html">デコーダとレンダラ</a>を参照してください。
+</p>
+
+<h2>録画ファイルの保存先フォルダ</h2>
+<p class="descript">録画したファイルを保存するフォルダを指定します。</p>
+
+</body>
+</html>

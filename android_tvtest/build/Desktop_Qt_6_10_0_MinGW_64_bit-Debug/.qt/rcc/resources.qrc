@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="/">
+    <file alias="resources/icons/play.png">D:/ClaudeCode/project/Tvtest_android/android_tvtest/resources/icons/play.png</file>
+    <file alias="resources/icons/stop.png">D:/ClaudeCode/project/Tvtest_android/android_tvtest/resources/icons/stop.png</file>
+    <file alias="resources/icons/settings.png">D:/ClaudeCode/project/Tvtest_android/android_tvtest/resources/icons/settings.png</file>
+  </qresource>
+</RCC>
+

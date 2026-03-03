@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p android_tvtest/src/core android_tvtest/src/network android_tvtest/src/database android_tvtest/src/utils android_tvtest/ui android_tvtest/resources/icons android_tvtest/android)",
+      "Bash(git init)",
+      "Bash(git add .)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

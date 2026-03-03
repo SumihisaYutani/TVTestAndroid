@@ -1,0 +1,25 @@
+# ninja log v6
+15	30	7942386041015755	CMakeFiles/clean.additional	baedbe210acaa455
+31	35	7942386041185191	clean	577b940aee94fbd7
+21	544	7942386117123582	D:/ClaudeCode/project/Tvtest_android/android_tvtest/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/TVTestAndroid_autogen/timestamp	b311250b504e3f69
+553	1879	7942386117641851	CMakeFiles/TVTestAndroid.dir/src/utils/Logger.cpp.obj	41840fd04ee01801
+21	544	7942386117123582	TVTestAndroid_autogen/timestamp	b311250b504e3f69
+551	2075	7942386117631883	CMakeFiles/TVTestAndroid.dir/src/database/EPGDatabase.cpp.obj	2baad134236c6b6d
+21	544	7942386117123582	TVTestAndroid_autogen/mocs_compilation.cpp	b311250b504e3f69
+21	544	7942386117123582	D:/ClaudeCode/project/Tvtest_android/android_tvtest/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/TVTestAndroid_autogen/mocs_compilation.cpp	b311250b504e3f69
+550	2360	7942386117611949	CMakeFiles/TVTestAndroid.dir/src/network/NetworkManager.cpp.obj	f853d502248b0e3d
+549	2366	7942386117601982	CMakeFiles/TVTestAndroid.dir/src/core/CoreEngine.cpp.obj	a90566ed11f556e3
+16	29	7942388962361585	CMakeFiles/clean.additional	baedbe210acaa455
+29	34	7942388962500298	clean	577b940aee94fbd7
+13	571	7942389398386872	TVTestAndroid_autogen/timestamp	b311250b504e3f69
+13	571	7942389398386872	TVTestAndroid_autogen/mocs_compilation.cpp	b311250b504e3f69
+13	571	7942389398386872	D:/ClaudeCode/project/Tvtest_android/android_tvtest/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/TVTestAndroid_autogen/timestamp	b311250b504e3f69
+13	571	7942389398386872	D:/ClaudeCode/project/Tvtest_android/android_tvtest/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/TVTestAndroid_autogen/mocs_compilation.cpp	b311250b504e3f69
+580	2273	7942389398945007	CMakeFiles/TVTestAndroid.dir/src/utils/Logger.cpp.obj	3f5d6a5fb8825f45
+579	2514	7942389398935040	CMakeFiles/TVTestAndroid.dir/src/database/EPGDatabase.cpp.obj	dd1ca4f0693d0dce
+573	2764	7942389398875229	CMakeFiles/TVTestAndroid.dir/src/main.cpp.obj	b19a65c98ae61e0f
+576	2905	7942389398905138	CMakeFiles/TVTestAndroid.dir/src/core/CoreEngine.cpp.obj	222cf03f3fa6aa7f
+577	2924	7942389398915106	CMakeFiles/TVTestAndroid.dir/src/network/NetworkManager.cpp.obj	c17cb67655105da6
+574	3119	7942389398885208	CMakeFiles/TVTestAndroid.dir/src/mainwindow.cpp.obj	aa2fdf9de2804bdd
+571	3449	7942389398855305	CMakeFiles/TVTestAndroid.dir/TVTestAndroid_autogen/mocs_compilation.cpp.obj	1a17ac1ad7913212
+3449	3978	7942389427642799	TVTestAndroid.exe	c4180e00888f1aab
