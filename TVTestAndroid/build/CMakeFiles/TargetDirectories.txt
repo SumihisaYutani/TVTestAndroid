@@ -1,0 +1,5 @@
+D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/CMakeFiles/TVTestAndroid.dir
+D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/CMakeFiles/edit_cache.dir
+D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/CMakeFiles/rebuild_cache.dir
+D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/CMakeFiles/TVTestAndroid_autogen_timestamp_deps.dir
+D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/CMakeFiles/TVTestAndroid_autogen.dir

@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir E:wirelog)",
+      "Read(//e/wirelog/**)",
+      "Bash(.TVTestAndroid.exe)",
+      "Bash(\"D:\\ClaudeCode\\project\\Tvtest_android\\TVTestAndroid\\build\\TVTestAndroid.exe\")",
+      "Bash(powershell -Command \"& ''.\\TVTestAndroid.exe'' 2>&1\")",
+      "Bash(cmd /c TVTestAndroid.exe)",
+      "Bash(cmake --build . --config Debug)",
+      "Bash(cmake ..)",
+      "Read(//c/ffmpeg/**)",
+      "Read(//d/ClaudeCode/project/Tvtest_android/**)",
+      "Bash(git remote add origin https://github.com/SumihisaYutani/TVTestAndroid.git)",
+      "Bash(git add .)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -1,0 +1,4 @@
+# Hashes of file build rules.
+54cdec1bc9840ca4ec73e097f2c58fe0 .qt/rcc/qrc_resources.cpp
+bdcef0c7a7917e09f7bdebd6ac221d56 CMakeFiles/TVTestAndroid_autogen
+1945a9e0a7ee0f0fddf33746dc44e4f4 TVTestAndroid_autogen/timestamp

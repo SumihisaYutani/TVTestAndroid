@@ -1,0 +1,48 @@
+{
+  "terrestrial": [
+    {"name": "13ch", "space": 0, "channel": 0, "frequency": 473},
+    {"name": "14ch", "space": 0, "channel": 1, "frequency": 479},
+    {"name": "15ch", "space": 0, "channel": 2, "frequency": 485},
+    {"name": "16ch", "space": 0, "channel": 3, "frequency": 491},
+    {"name": "17ch", "space": 0, "channel": 4, "frequency": 497},
+    {"name": "18ch", "space": 0, "channel": 5, "frequency": 503},
+    {"name": "19ch", "space": 0, "channel": 6, "frequency": 509},
+    {"name": "20ch", "space": 0, "channel": 7, "frequency": 515},
+    {"name": "21ch", "space": 0, "channel": 8, "frequency": 521},
+    {"name": "22ch", "space": 0, "channel": 9, "frequency": 527},
+    {"name": "23ch", "space": 0, "channel": 10, "frequency": 533},
+    {"name": "24ch", "space": 0, "channel": 11, "frequency": 539},
+    {"name": "25ch", "space": 0, "channel": 12, "frequency": 545},
+    {"name": "26ch", "space": 0, "channel": 13, "frequency": 551},
+    {"name": "27ch", "space": 0, "channel": 14, "frequency": 557},
+    {"name": "28ch", "space": 0, "channel": 15, "frequency": 563}
+  ],
+  "bs": [
+    {"name": "BS01/TS0", "space": 1, "channel": 0, "tsid": 16400, "service": "NHK BS1"},
+    {"name": "BS01/TS1", "space": 1, "channel": 1, "tsid": 16401, "service": "NHK BS2"},
+    {"name": "BS01/TS2", "space": 1, "channel": 2, "tsid": 16402, "service": "NHK BSプレミアム"},
+    {"name": "BS03/TS0", "space": 1, "channel": 3, "tsid": 16432, "service": "BS朝日"},
+    {"name": "BS03/TS1", "space": 1, "channel": 4, "tsid": 16433, "service": "BS朝日2"},
+    {"name": "BS05/TS0", "space": 1, "channel": 6, "tsid": 17488, "service": "BS-TBS"},
+    {"name": "BS05/TS1", "space": 1, "channel": 7, "tsid": 17489, "service": "BS-TBS2"},
+    {"name": "BS09/TS0", "space": 1, "channel": 8, "tsid": 16528, "service": "BSフジ"},
+    {"name": "BS09/TS1", "space": 1, "channel": 9, "tsid": 16529, "service": "BSフジ2"},
+    {"name": "BS11/TS1", "space": 1, "channel": 11, "tsid": 18097, "service": "BS11"},
+    {"name": "BS11/TS2", "space": 1, "channel": 12, "tsid": 18098, "service": "BS11-2"},
+    {"name": "BS13/TS0", "space": 1, "channel": 14, "tsid": 16592, "service": "BS12"},
+    {"name": "BS15/TS1", "space": 1, "channel": 16, "tsid": 18193, "service": "BSアニマックス"},
+    {"name": "BS17/TS0", "space": 1, "channel": 17, "tsid": 16656, "service": "BSよしもと"},
+    {"name": "BS19/TS0", "space": 1, "channel": 19, "tsid": 16720, "service": "BSグリーンチャンネル"}
+  ],
+  "cs": [
+    {"name": "CS110-1", "space": 2, "channel": 0, "service": "スカパー!プロモ"},
+    {"name": "CS110-2", "space": 2, "channel": 1, "service": "CN1"},
+    {"name": "CS110-3", "space": 2, "channel": 2, "service": "CN2"},
+    {"name": "CS110-4", "space": 2, "channel": 3, "service": "CN3"}
+  ],
+  "default_channels": {
+    "terrestrial": {"name": "20ch", "space": 0, "channel": 7},
+    "bs": {"name": "BS01/TS0", "space": 1, "channel": 0},
+    "cs": {"name": "CS110-1", "space": 2, "channel": 0}
+  }
+}

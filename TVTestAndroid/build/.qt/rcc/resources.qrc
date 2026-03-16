@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/">
+    <file alias="resources/channels.json">D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/resources/channels.json</file>
+  </qresource>
+</RCC>
+

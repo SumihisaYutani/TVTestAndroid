@@ -1,0 +1,5 @@
+D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/CMakeFiles/TVTestAndroid.dir
+D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
+D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
+D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/CMakeFiles/TVTestAndroid_autogen_timestamp_deps.dir
+D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/CMakeFiles/TVTestAndroid_autogen.dir
