@@ -342,6 +342,18 @@
 	"HEADERS" : 
 	[
 		[
+			"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/DirectStreamPlayer.h",
+			"MU",
+			"SVT5AJZPWX/moc_DirectStreamPlayer.cpp",
+			null
+		],
+		[
+			"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsStreamDevice.h",
+			"MU",
+			"SVT5AJZPWX/moc_TsStreamDevice.cpp",
+			null
+		],
+		[
 			"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/BonDriverNetwork.h",
 			"MU",
 			"UFQQIFJZKK/moc_BonDriverNetwork.cpp",
@@ -371,9 +383,9 @@
 		"QT_MULTIMEDIAWIDGETS_LIB",
 		"QT_MULTIMEDIA_LIB",
 		"QT_NETWORK_LIB",
-		"QT_NO_DEBUG",
 		"QT_WIDGETS_LIB",
 		"UNICODE",
+		"USE_FFMPEG_EXTERNAL",
 		"WIN32",
 		"WIN64",
 		"_ENABLE_EXTENDED_ALIGNED_STORAGE",
@@ -443,6 +455,16 @@
 	[
 		[
 			"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/main.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/DirectStreamPlayer.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsStreamDevice.cpp",
 			"MU",
 			null
 		],

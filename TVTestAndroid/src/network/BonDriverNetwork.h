@@ -110,6 +110,21 @@ public:
      */
     float getSignalLevel() const;
 
+    /**
+     * @brief 直接ストリーミング再生モードを有効化
+     * @param enabled 有効化フラグ
+     * 
+     * 有効時：TSデータを直接DirectStreamPlayerに送信（元TVTest同様）
+     * 無効時：従来のファイル保存方式
+     */
+    void setDirectStreamMode(bool enabled);
+    
+    /**
+     * @brief DirectStreamPlayerとの連携
+     * @param player DirectStreamPlayerインスタンス
+     */
+    void setDirectStreamPlayer(class DirectStreamPlayer *player);
+
 signals:
     /**
      * @brief 接続完了シグナル
@@ -126,6 +141,12 @@ signals:
      * @param data TSストリームデータ
      */
     void tsDataReceived(const QByteArray &data);
+    
+    /**
+     * @brief 直接ストリーミング用TSデータシグナル（メモリ効率最適化）
+     * @param data TSストリームデータ（DirectStreamPlayer専用）
+     */
+    void directTsDataReceived(const QByteArray &data);
     
     /**
      * @brief チャンネル変更完了シグナル
@@ -212,6 +233,10 @@ private:
     
     bool m_isInitialized;           // 初期化状態
     bool m_isTunerOpen;            // チューナー開放状態
+    
+    // 直接ストリーミング再生用
+    bool m_directStreamMode;        // 直接ストリーミングモード
+    class DirectStreamPlayer *m_directStreamPlayer; // DirectStreamPlayerへの参照
 };
 
 #endif // BONDRIVERNETWORK_H

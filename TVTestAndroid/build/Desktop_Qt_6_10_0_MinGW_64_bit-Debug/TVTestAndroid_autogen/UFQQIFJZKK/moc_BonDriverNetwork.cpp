@@ -44,6 +44,7 @@ template <> constexpr inline auto BonDriverNetwork::qt_create_metaobjectdata<qt_
         "disconnected",
         "tsDataReceived",
         "data",
+        "directTsDataReceived",
         "channelChanged",
         "TuningSpace",
         "space",
@@ -70,30 +71,34 @@ template <> constexpr inline auto BonDriverNetwork::qt_create_metaobjectdata<qt_
         QtMocHelpers::SignalData<void(const QByteArray &)>(4, 2, QMC::AccessPublic, QMetaType::Void, {{
             { QMetaType::QByteArray, 5 },
         }}),
+        // Signal 'directTsDataReceived'
+        QtMocHelpers::SignalData<void(const QByteArray &)>(6, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QByteArray, 5 },
+        }}),
         // Signal 'channelChanged'
-        QtMocHelpers::SignalData<void(enum TuningSpace, uint32_t)>(6, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { 0x80000000 | 7, 8 }, { 0x80000000 | 9, 10 },
+        QtMocHelpers::SignalData<void(enum TuningSpace, uint32_t)>(7, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { 0x80000000 | 8, 9 }, { 0x80000000 | 10, 11 },
         }}),
         // Signal 'signalLevelChanged'
-        QtMocHelpers::SignalData<void(float)>(11, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::Float, 12 },
+        QtMocHelpers::SignalData<void(float)>(12, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::Float, 13 },
         }}),
         // Signal 'errorOccurred'
-        QtMocHelpers::SignalData<void(const QString &)>(13, 2, QMC::AccessPublic, QMetaType::Void, {{
-            { QMetaType::QString, 14 },
+        QtMocHelpers::SignalData<void(const QString &)>(14, 2, QMC::AccessPublic, QMetaType::Void, {{
+            { QMetaType::QString, 15 },
         }}),
         // Slot 'onConnected'
-        QtMocHelpers::SlotData<void()>(15, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'onDisconnected'
         QtMocHelpers::SlotData<void()>(16, 2, QMC::AccessPrivate, QMetaType::Void),
-        // Slot 'onReadyRead'
+        // Slot 'onDisconnected'
         QtMocHelpers::SlotData<void()>(17, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'onReadyRead'
+        QtMocHelpers::SlotData<void()>(18, 2, QMC::AccessPrivate, QMetaType::Void),
         // Slot 'onSocketError'
-        QtMocHelpers::SlotData<void(QAbstractSocket::SocketError)>(18, 2, QMC::AccessPrivate, QMetaType::Void, {{
-            { 0x80000000 | 19, 14 },
+        QtMocHelpers::SlotData<void(QAbstractSocket::SocketError)>(19, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { 0x80000000 | 20, 15 },
         }}),
         // Slot 'onTsReceiveTimer'
-        QtMocHelpers::SlotData<void()>(20, 2, QMC::AccessPrivate, QMetaType::Void),
+        QtMocHelpers::SlotData<void()>(21, 2, QMC::AccessPrivate, QMetaType::Void),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -120,21 +125,22 @@ void BonDriverNetwork::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
         case 0: _t->connected(); break;
         case 1: _t->disconnected(); break;
         case 2: _t->tsDataReceived((*reinterpret_cast<std::add_pointer_t<QByteArray>>(_a[1]))); break;
-        case 3: _t->channelChanged((*reinterpret_cast<std::add_pointer_t<enum TuningSpace>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<uint32_t>>(_a[2]))); break;
-        case 4: _t->signalLevelChanged((*reinterpret_cast<std::add_pointer_t<float>>(_a[1]))); break;
-        case 5: _t->errorOccurred((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
-        case 6: _t->onConnected(); break;
-        case 7: _t->onDisconnected(); break;
-        case 8: _t->onReadyRead(); break;
-        case 9: _t->onSocketError((*reinterpret_cast<std::add_pointer_t<QAbstractSocket::SocketError>>(_a[1]))); break;
-        case 10: _t->onTsReceiveTimer(); break;
+        case 3: _t->directTsDataReceived((*reinterpret_cast<std::add_pointer_t<QByteArray>>(_a[1]))); break;
+        case 4: _t->channelChanged((*reinterpret_cast<std::add_pointer_t<enum TuningSpace>>(_a[1])),(*reinterpret_cast<std::add_pointer_t<uint32_t>>(_a[2]))); break;
+        case 5: _t->signalLevelChanged((*reinterpret_cast<std::add_pointer_t<float>>(_a[1]))); break;
+        case 6: _t->errorOccurred((*reinterpret_cast<std::add_pointer_t<QString>>(_a[1]))); break;
+        case 7: _t->onConnected(); break;
+        case 8: _t->onDisconnected(); break;
+        case 9: _t->onReadyRead(); break;
+        case 10: _t->onSocketError((*reinterpret_cast<std::add_pointer_t<QAbstractSocket::SocketError>>(_a[1]))); break;
+        case 11: _t->onTsReceiveTimer(); break;
         default: ;
         }
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         switch (_id) {
         default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
-        case 9:
+        case 10:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
@@ -150,11 +156,13 @@ void BonDriverNetwork::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
             return;
         if (QtMocHelpers::indexOfMethod<void (BonDriverNetwork::*)(const QByteArray & )>(_a, &BonDriverNetwork::tsDataReceived, 2))
             return;
-        if (QtMocHelpers::indexOfMethod<void (BonDriverNetwork::*)(TuningSpace , uint32_t )>(_a, &BonDriverNetwork::channelChanged, 3))
+        if (QtMocHelpers::indexOfMethod<void (BonDriverNetwork::*)(const QByteArray & )>(_a, &BonDriverNetwork::directTsDataReceived, 3))
             return;
-        if (QtMocHelpers::indexOfMethod<void (BonDriverNetwork::*)(float )>(_a, &BonDriverNetwork::signalLevelChanged, 4))
+        if (QtMocHelpers::indexOfMethod<void (BonDriverNetwork::*)(TuningSpace , uint32_t )>(_a, &BonDriverNetwork::channelChanged, 4))
             return;
-        if (QtMocHelpers::indexOfMethod<void (BonDriverNetwork::*)(const QString & )>(_a, &BonDriverNetwork::errorOccurred, 5))
+        if (QtMocHelpers::indexOfMethod<void (BonDriverNetwork::*)(float )>(_a, &BonDriverNetwork::signalLevelChanged, 5))
+            return;
+        if (QtMocHelpers::indexOfMethod<void (BonDriverNetwork::*)(const QString & )>(_a, &BonDriverNetwork::errorOccurred, 6))
             return;
     }
 }
@@ -178,14 +186,14 @@ int BonDriverNetwork::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 12;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 12;
     }
     return _id;
 }
@@ -209,20 +217,26 @@ void BonDriverNetwork::tsDataReceived(const QByteArray & _t1)
 }
 
 // SIGNAL 3
-void BonDriverNetwork::channelChanged(TuningSpace _t1, uint32_t _t2)
+void BonDriverNetwork::directTsDataReceived(const QByteArray & _t1)
 {
-    QMetaObject::activate<void>(this, &staticMetaObject, 3, nullptr, _t1, _t2);
+    QMetaObject::activate<void>(this, &staticMetaObject, 3, nullptr, _t1);
 }
 
 // SIGNAL 4
-void BonDriverNetwork::signalLevelChanged(float _t1)
+void BonDriverNetwork::channelChanged(TuningSpace _t1, uint32_t _t2)
 {
-    QMetaObject::activate<void>(this, &staticMetaObject, 4, nullptr, _t1);
+    QMetaObject::activate<void>(this, &staticMetaObject, 4, nullptr, _t1, _t2);
 }
 
 // SIGNAL 5
-void BonDriverNetwork::errorOccurred(const QString & _t1)
+void BonDriverNetwork::signalLevelChanged(float _t1)
 {
     QMetaObject::activate<void>(this, &staticMetaObject, 5, nullptr, _t1);
+}
+
+// SIGNAL 6
+void BonDriverNetwork::errorOccurred(const QString & _t1)
+{
+    QMetaObject::activate<void>(this, &staticMetaObject, 6, nullptr, _t1);
 }
 QT_WARNING_POP

@@ -1,11 +1,12 @@
 #include "BonDriverNetwork.h"
 #include "utils/Logger.h"
+#include "../media/DirectStreamPlayer.h"
 #include <QThread>
 #include <QElapsedTimer>
 #include <QCoreApplication>
 
 BonDriverNetwork::BonDriverNetwork(QObject *parent)
-    : QObject(parent), m_socket(new QTcpSocket(this)), m_tsReceiveTimer(new QTimer(this)), m_currentSpace(TERRESTRIAL), m_currentChannel(0), m_signalLevel(0.0f), m_isInitialized(false), m_isTunerOpen(false), m_isTsStreamActive(false)
+    : QObject(parent), m_socket(new QTcpSocket(this)), m_tsReceiveTimer(new QTimer(this)), m_currentSpace(TERRESTRIAL), m_currentChannel(0), m_signalLevel(0.0f), m_isInitialized(false), m_isTunerOpen(false), m_isTsStreamActive(false), m_directStreamMode(false), m_directStreamPlayer(nullptr)
 {
     // TCP接続シグナル接続
     connect(m_socket, &QTcpSocket::connected, this, &BonDriverNetwork::onConnected);
@@ -122,8 +123,8 @@ bool BonDriverNetwork::selectBonDriver(const QString &bonDriver)
         // C:\TV\BonDriver_Proxy_S.ini: BONDRIVER=PT-S
         // C:\TV\BonDriver_Proxy_T.ini: BONDRIVER=PT-T
 
-        // 正常TVTestログ解析: "PT-S" + null terminator (5バイト)
-        QString driverName = "PT-S"; // 衛星チューナーで試行（Wiresharkログでbaruma.f5.siがPT-Sを期待していることを確認）
+        // ユーザーが選択したBonDriverを使用
+        QString driverName = bonDriver; // パラメータで受け取ったBonDriver名を使用
         QByteArray driverData = driverName.toUtf8();
         driverData.append('\0'); // null terminatorを追加（正常ログで確認済み）
 
@@ -693,17 +694,57 @@ void BonDriverNetwork::processResponse()
             
             for (int i = 0; i < processPackets; i++) {
                 QByteArray tsPacket = m_receiveBuffer.left(188);
+                
+                // 🔧 TSパケット同期バイト(0x47)チェック
+                if (tsPacket.size() >= 1 && static_cast<uint8_t>(tsPacket[0]) != 0x47) {
+                    // 0x47を探して同期を取る
+                    int syncPos = m_receiveBuffer.indexOf(0x47);
+                    if (syncPos > 0) {
+                        LOG_WARNING(QString("⚠️ TS同期エラー: %1バイト破棄して0x47で再同期").arg(syncPos));
+                        m_receiveBuffer.remove(0, syncPos);
+                        continue; // 次のループで再処理
+                    } else {
+                        LOG_WARNING("⚠️ TS同期バイト(0x47)が見つかりません - バッファクリア");
+                        m_receiveBuffer.clear();
+                        break;
+                    }
+                }
+                
                 m_receiveBuffer.remove(0, 188);
                 processedBytes += 188;
                 
                 static int tsDataCount = 0;
                 tsDataCount++;
+                
+                // 従来のシグナル発行（既存機能維持）
                 emit tsDataReceived(tsPacket);
                 
-                // ログ出力制限
-                if (tsDataCount <= 5 || tsDataCount % 500 == 0) {
-                    LOG_INFO(QString("📺 TSパケット #%1 (バッファ残: %2 KB)")
-                             .arg(tsDataCount).arg(m_receiveBuffer.size() / 1024));
+                // 直接ストリーミングモード対応
+                if (m_directStreamMode) {
+                    emit directTsDataReceived(tsPacket);
+                    
+                    // 直接ストリーミングデータ送信ログ（デバッグ強化版）
+                    static int directStreamCount = 0;
+                    directStreamCount++;
+                    
+                    if (directStreamCount <= 5) {
+                        LOG_INFO(QString("🎯 DirectStream送信: パケット#%1, %2 bytes, total#%3")
+                                .arg(tsDataCount).arg(tsPacket.size()).arg(directStreamCount));
+                    }
+                } else {
+                    // 直接ストリーミングが無効であることをログ（最初の1回のみ）
+                    static bool directModeWarningLogged = false;
+                    if (!directModeWarningLogged) {
+                        LOG_WARNING("⚠️ 直接ストリーミングモードが無効です");
+                        directModeWarningLogged = true;
+                    }
+                }
+                
+                // ログ出力制限（調査用：最初の10個、その後は2000個ごと）
+                if (tsDataCount <= 10 || tsDataCount % 2000 == 0) {
+                    LOG_INFO(QString("📺 TSパケット #%1 (バッファ残: %2 KB) %3")
+                             .arg(tsDataCount).arg(m_receiveBuffer.size() / 1024)
+                             .arg(m_directStreamMode ? "[直接ストリーム]" : ""));
                 }
             }
             continue;
@@ -806,5 +847,44 @@ QString BonDriverNetwork::getCommandName(BonDriverCommand command) const
         return "SetChannel2";
     default:
         return QString("Unknown_%1").arg(command);
+    }
+}
+
+// 直接ストリーミング再生用メソッド実装
+
+void BonDriverNetwork::setDirectStreamMode(bool enabled)
+{
+    m_directStreamMode = enabled;
+    
+    LOG_INFO(QString("直接ストリーミングモード: %1").arg(enabled ? "有効" : "無効"));
+    
+    if (enabled && m_directStreamPlayer) {
+        // DirectStreamPlayerとの接続を確立
+        connect(this, &BonDriverNetwork::directTsDataReceived,
+                m_directStreamPlayer, &DirectStreamPlayer::addTsStream,
+                Qt::QueuedConnection);
+        LOG_INFO("DirectStreamPlayerとの接続確立");
+    } else {
+        // 接続解除
+        disconnect(this, &BonDriverNetwork::directTsDataReceived, nullptr, nullptr);
+        LOG_INFO("DirectStreamPlayerとの接続解除");
+    }
+}
+
+void BonDriverNetwork::setDirectStreamPlayer(DirectStreamPlayer *player)
+{
+    // 前回の接続を解除
+    if (m_directStreamPlayer) {
+        disconnect(this, &BonDriverNetwork::directTsDataReceived, nullptr, nullptr);
+    }
+    
+    m_directStreamPlayer = player;
+    
+    if (m_directStreamPlayer && m_directStreamMode) {
+        // 新しい接続を確立
+        connect(this, &BonDriverNetwork::directTsDataReceived,
+                m_directStreamPlayer, &DirectStreamPlayer::addTsStream,
+                Qt::QueuedConnection);
+        LOG_INFO("新しいDirectStreamPlayerとの接続確立");
     }
 }

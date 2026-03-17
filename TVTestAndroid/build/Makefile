@@ -226,6 +226,54 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\TVTestAndroid.dir\build.make CMakeFiles/TVTestAndroid.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+src/media/DirectStreamPlayer.obj: src/media/DirectStreamPlayer.cpp.obj
+.PHONY : src/media/DirectStreamPlayer.obj
+
+# target to build an object file
+src/media/DirectStreamPlayer.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\TVTestAndroid.dir\build.make CMakeFiles/TVTestAndroid.dir/src/media/DirectStreamPlayer.cpp.obj
+.PHONY : src/media/DirectStreamPlayer.cpp.obj
+
+src/media/DirectStreamPlayer.i: src/media/DirectStreamPlayer.cpp.i
+.PHONY : src/media/DirectStreamPlayer.i
+
+# target to preprocess a source file
+src/media/DirectStreamPlayer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\TVTestAndroid.dir\build.make CMakeFiles/TVTestAndroid.dir/src/media/DirectStreamPlayer.cpp.i
+.PHONY : src/media/DirectStreamPlayer.cpp.i
+
+src/media/DirectStreamPlayer.s: src/media/DirectStreamPlayer.cpp.s
+.PHONY : src/media/DirectStreamPlayer.s
+
+# target to generate assembly for a file
+src/media/DirectStreamPlayer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\TVTestAndroid.dir\build.make CMakeFiles/TVTestAndroid.dir/src/media/DirectStreamPlayer.cpp.s
+.PHONY : src/media/DirectStreamPlayer.cpp.s
+
+src/media/TsStreamDevice.obj: src/media/TsStreamDevice.cpp.obj
+.PHONY : src/media/TsStreamDevice.obj
+
+# target to build an object file
+src/media/TsStreamDevice.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\TVTestAndroid.dir\build.make CMakeFiles/TVTestAndroid.dir/src/media/TsStreamDevice.cpp.obj
+.PHONY : src/media/TsStreamDevice.cpp.obj
+
+src/media/TsStreamDevice.i: src/media/TsStreamDevice.cpp.i
+.PHONY : src/media/TsStreamDevice.i
+
+# target to preprocess a source file
+src/media/TsStreamDevice.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\TVTestAndroid.dir\build.make CMakeFiles/TVTestAndroid.dir/src/media/TsStreamDevice.cpp.i
+.PHONY : src/media/TsStreamDevice.cpp.i
+
+src/media/TsStreamDevice.s: src/media/TsStreamDevice.cpp.s
+.PHONY : src/media/TsStreamDevice.s
+
+# target to generate assembly for a file
+src/media/TsStreamDevice.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\TVTestAndroid.dir\build.make CMakeFiles/TVTestAndroid.dir/src/media/TsStreamDevice.cpp.s
+.PHONY : src/media/TsStreamDevice.cpp.s
+
 src/network/BonDriverNetwork.obj: src/network/BonDriverNetwork.cpp.obj
 .PHONY : src/network/BonDriverNetwork.obj
 
@@ -318,6 +366,12 @@ help:
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... src/media/DirectStreamPlayer.obj
+	@echo ... src/media/DirectStreamPlayer.i
+	@echo ... src/media/DirectStreamPlayer.s
+	@echo ... src/media/TsStreamDevice.obj
+	@echo ... src/media/TsStreamDevice.i
+	@echo ... src/media/TsStreamDevice.s
 	@echo ... src/network/BonDriverNetwork.obj
 	@echo ... src/network/BonDriverNetwork.i
 	@echo ... src/network/BonDriverNetwork.s

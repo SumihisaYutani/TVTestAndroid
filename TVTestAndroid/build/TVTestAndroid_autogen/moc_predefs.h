@@ -63,7 +63,6 @@
 #define __BFLT16_MAX_10_EXP__ 38
 #define __BFLT16_MAX_EXP__ 128
 #define __LDBL_IS_IEC_60559__ 1
-#define QT_NO_DEBUG 1
 #define __FLT64X_HAS_QUIET_NAN__ 1
 #define __UINT_LEAST8_MAX__ 0xff
 #define __GCC_ATOMIC_BOOL_LOCK_FREE 2
@@ -190,6 +189,7 @@
 #define __cpp_hex_float 201603L
 #define __GXX_ABI_VERSION 1018
 #define __FLT_MIN_EXP__ (-125)
+#define USE_FFMPEG_EXTERNAL 1
 #define __x86_64 1
 #define __cpp_lambdas 200907L
 #define __INT_FAST64_TYPE__ long long int

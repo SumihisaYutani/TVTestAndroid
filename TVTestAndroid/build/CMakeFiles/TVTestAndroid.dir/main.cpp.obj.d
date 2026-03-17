@@ -514,6 +514,8 @@ CMakeFiles/TVTestAndroid.dir/main.cpp.obj: \
  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudiooutput.h \
  C:/Qt/6.10.0/mingw_64/include/QtCore/QBuffer \
  C:/Qt/6.10.0/mingw_64/include/QtCore/qbuffer.h \
+ C:/Qt/6.10.0/mingw_64/include/QtCore/QSettings \
+ C:/Qt/6.10.0/mingw_64/include/QtCore/qsettings.h \
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/BonDriverNetwork.h \
  C:/Qt/6.10.0/mingw_64/include/QtCore/QObject \
  C:/Qt/6.10.0/mingw_64/include/QtCore/qobject.h \

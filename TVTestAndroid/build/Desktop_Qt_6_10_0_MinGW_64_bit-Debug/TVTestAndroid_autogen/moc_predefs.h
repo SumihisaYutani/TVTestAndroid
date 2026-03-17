@@ -189,6 +189,7 @@
 #define __cpp_hex_float 201603L
 #define __GXX_ABI_VERSION 1018
 #define __FLT_MIN_EXP__ (-125)
+#define USE_FFMPEG_EXTERNAL 1
 #define __x86_64 1
 #define __cpp_lambdas 200907L
 #define __INT_FAST64_TYPE__ long long int

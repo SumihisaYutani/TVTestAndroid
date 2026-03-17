@@ -19,6 +19,7 @@
 #include <QVideoWidget>
 #include <QAudioOutput>
 #include <QBuffer>
+#include <QSettings>
 
 #include "network/BonDriverNetwork.h"
 
@@ -27,6 +28,7 @@
 class FFmpegDecoder;
 class FFmpegVideoWidget;
 #endif
+class DirectStreamPlayer;
 
 /**
  * @brief BonDriver_Proxy接続テスト用メインウィンドウ
@@ -69,6 +71,16 @@ private slots:
      * @brief TSストリーム受信停止ボタンクリック
      */
     void onStopReceivingClicked();
+    
+    /**
+     * @brief 直接ストリーミング開始ボタンクリック
+     */
+    void onStartDirectStreamClicked();
+    
+    /**
+     * @brief 直接ストリーミング停止ボタンクリック
+     */
+    void onStopDirectStreamClicked();
     
     /**
      * @brief ログクリアボタンクリック
@@ -114,6 +126,37 @@ private slots:
      * @brief クイックチャンネル選択
      */
     void onQuickChannelSelected();
+    
+    // DirectStreamPlayer関連スロット
+    /**
+     * @brief 直接ストリーミング再生状態変更
+     */
+    void onDirectStreamPlaybackStateChanged(QMediaPlayer::PlaybackState state);
+    
+    /**
+     * @brief 直接ストリーミングメディア情報変更
+     */
+    void onDirectStreamMediaInfoChanged(const QString &info);
+    
+    /**
+     * @brief 直接ストリーミングエラー
+     */
+    void onDirectStreamErrorOccurred(const QString &error);
+    
+    /**
+     * @brief 直接ストリーミングバッファ状態変更
+     */
+    void onDirectStreamBufferStatusChanged(qint64 bufferSize, int bufferStatus);
+
+    /**
+     * @brief 設定の保存
+     */
+    void saveSettings();
+    
+    /**
+     * @brief 設定の復元
+     */
+    void restoreSettings();
 
 private:
     /**
@@ -130,6 +173,11 @@ private:
      * @brief メディアプレイヤー設定
      */
     void setupMediaPlayer();
+    
+    /**
+     * @brief 直接ストリーミングプレイヤー設定
+     */
+    void setupDirectStreamPlayer();
     
     /**
      * @brief クイックチャンネル選択設定（TVTest .ch2ファイルベース）
@@ -233,6 +281,18 @@ private:
     FFmpegDecoder *m_ffmpegDecoder;
     FFmpegVideoWidget *m_ffmpegVideoWidget;
 #endif
+    
+    // 直接ストリーミング再生（元TVTest同様）
+    DirectStreamPlayer *m_directStreamPlayer;
+    QVideoWidget *m_directVideoWidget;
+    
+    // 直接ストリーミング制御UI
+    QGroupBox *m_directStreamGroup;
+    QHBoxLayout *m_directStreamLayout;
+    QPushButton *m_startDirectStreamButton;
+    QPushButton *m_stopDirectStreamButton;
+    QLabel *m_directStreamStatus;
+    QLabel *m_bufferStatus;
 };
 
 #endif // MAINWINDOW_H

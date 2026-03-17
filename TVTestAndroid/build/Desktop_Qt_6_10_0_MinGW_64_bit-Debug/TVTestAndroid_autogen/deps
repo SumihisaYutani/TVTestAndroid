@@ -3,15 +3,20 @@ TVTestAndroid_autogen/timestamp: \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QByteArray \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QDataStream \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QDateTime \
+	C:/Qt/6.10.0/mingw_64/include/QtCore/QDeadlineTimer \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QDebug \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QDir \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QFile \
+	C:/Qt/6.10.0/mingw_64/include/QtCore/QIODevice \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QMutex \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QObject \
+	C:/Qt/6.10.0/mingw_64/include/QtCore/QProcess \
+	C:/Qt/6.10.0/mingw_64/include/QtCore/QSettings \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QStandardPaths \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QString \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QTextStream \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QTimer \
+	C:/Qt/6.10.0/mingw_64/include/QtCore/QWaitCondition \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/q17memory.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/q20functional.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/q20iterator.h \
@@ -100,6 +105,7 @@ TVTestAndroid_autogen/timestamp: \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qoverload.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qpair.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qpoint.h \
+	C:/Qt/6.10.0/mingw_64/include/QtCore/qprocess.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qprocessordetection.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qrect.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qrefcount.h \
@@ -107,6 +113,7 @@ TVTestAndroid_autogen/timestamp: \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qscopedpointer.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qscopeguard.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qset.h \
+	C:/Qt/6.10.0/mingw_64/include/QtCore/qsettings.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qshareddata.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qshareddata_impl.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qsharedpointer.h \
@@ -159,6 +166,7 @@ TVTestAndroid_autogen/timestamp: \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qvariant.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qvarlengtharray.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qversiontagging.h \
+	C:/Qt/6.10.0/mingw_64/include/QtCore/qwaitcondition.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qxptype_traits.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qyieldcpu.h \
 	C:/Qt/6.10.0/mingw_64/include/QtGui/qaction.h \
@@ -751,6 +759,10 @@ TVTestAndroid_autogen/timestamp: \
 	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/CMakeFiles/3.30.5/CMakeSystem.cmake \
 	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/TVTestAndroid_autogen/moc_predefs.h \
 	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/main.cpp \
+	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/DirectStreamPlayer.cpp \
+	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/DirectStreamPlayer.h \
+	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsStreamDevice.cpp \
+	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsStreamDevice.h \
 	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/BonDriverNetwork.cpp \
 	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/BonDriverNetwork.h \
 	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/ui/MainWindow.cpp \

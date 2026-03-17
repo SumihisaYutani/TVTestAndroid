@@ -6,6 +6,7 @@ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/Y
   C:/Qt/6.10.0/mingw_64/include/QtCore/QDateTime \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QDebug \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QObject \
+  C:/Qt/6.10.0/mingw_64/include/QtCore/QSettings \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QString \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QTimer \
   C:/Qt/6.10.0/mingw_64/include/QtCore/q17memory.h \
@@ -97,6 +98,7 @@ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/Y
   C:/Qt/6.10.0/mingw_64/include/QtCore/qscopedpointer.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qscopeguard.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qset.h \
+  C:/Qt/6.10.0/mingw_64/include/QtCore/qsettings.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qshareddata.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qshareddata_impl.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qsharedpointer.h \

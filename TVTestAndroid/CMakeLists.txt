@@ -8,66 +8,50 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Qt6パッケージを探す
 find_package(Qt6 REQUIRED COMPONENTS Core Network Multimedia MultimediaWidgets Widgets)
 
-# FFmpeg library detection
-# Windows固有パス設定
+# FFmpeg executable detection (external process approach)
+# 開発ライブラリが不要なシンプルな外部プロセス方式
+
+# FFmpeg executable detection (simplified for external process use)
 if(WIN32)
-    set(FFMPEG_ROOT "C:/ffmpeg" CACHE PATH "FFmpeg installation root")
-    set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} "${FFMPEG_ROOT}")
+    # 複数の候補からFFmpegを検索
+    set(FFMPEG_CANDIDATES
+        "C:/ffmpeg/bin/ffmpeg.exe"
+        "C:/Users/Yutani Sumihisa/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1-full_build/bin/ffmpeg.exe"
+    )
+    set(FFPLAY_CANDIDATES
+        "C:/ffmpeg/bin/ffplay.exe"
+        "C:/Users/Yutani Sumihisa/AppData/Local/Microsoft/WinGet/Packages/Gyan.FFmpeg_Microsoft.Winget.Source_8wekyb3d8bbwe/ffmpeg-8.1-full_build/bin/ffplay.exe"
+    )
     
-    find_path(AVCODEC_INCLUDE_DIR libavcodec/avcodec.h 
-        PATHS "${FFMPEG_ROOT}/include" 
-        NO_DEFAULT_PATH)
-    find_library(AVCODEC_LIBRARY 
-        NAMES avcodec libavcodec avcodec.dll.a
-        PATHS "${FFMPEG_ROOT}/lib" "${FFMPEG_ROOT}/bin"
-        NO_DEFAULT_PATH)
-        
-    find_path(AVFORMAT_INCLUDE_DIR libavformat/avformat.h 
-        PATHS "${FFMPEG_ROOT}/include"
-        NO_DEFAULT_PATH)
-    find_library(AVFORMAT_LIBRARY 
-        NAMES avformat libavformat avformat.dll.a
-        PATHS "${FFMPEG_ROOT}/lib" "${FFMPEG_ROOT}/bin"
-        NO_DEFAULT_PATH)
-        
-    find_path(AVUTIL_INCLUDE_DIR libavutil/avutil.h 
-        PATHS "${FFMPEG_ROOT}/include"
-        NO_DEFAULT_PATH)
-    find_library(AVUTIL_LIBRARY 
-        NAMES avutil libavutil avutil.dll.a
-        PATHS "${FFMPEG_ROOT}/lib" "${FFMPEG_ROOT}/bin"
-        NO_DEFAULT_PATH)
-        
-    find_path(SWSCALE_INCLUDE_DIR libswscale/swscale.h 
-        PATHS "${FFMPEG_ROOT}/include"
-        NO_DEFAULT_PATH)
-    find_library(SWSCALE_LIBRARY 
-        NAMES swscale libswscale swscale.dll.a
-        PATHS "${FFMPEG_ROOT}/lib" "${FFMPEG_ROOT}/bin"
-        NO_DEFAULT_PATH)
+    foreach(CANDIDATE ${FFMPEG_CANDIDATES})
+        if(EXISTS "${CANDIDATE}")
+            set(FFMPEG_EXECUTABLE "${CANDIDATE}")
+            break()
+        endif()
+    endforeach()
+    
+    foreach(CANDIDATE ${FFPLAY_CANDIDATES})
+        if(EXISTS "${CANDIDATE}")
+            set(FFPLAY_EXECUTABLE "${CANDIDATE}")
+            break()
+        endif()
+    endforeach()
 else()
-    # Linux/Android用のデフォルト検索
-    find_path(AVCODEC_INCLUDE_DIR libavcodec/avcodec.h)
-    find_library(AVCODEC_LIBRARY avcodec)
-    find_path(AVFORMAT_INCLUDE_DIR libavformat/avformat.h) 
-    find_library(AVFORMAT_LIBRARY avformat)
-    find_path(AVUTIL_INCLUDE_DIR libavutil/avutil.h)
-    find_library(AVUTIL_LIBRARY avutil)
-    find_path(SWSCALE_INCLUDE_DIR libswscale/swscale.h)
-    find_library(SWSCALE_LIBRARY swscale)
+    find_program(FFMPEG_EXECUTABLE ffmpeg)
+    find_program(FFPLAY_EXECUTABLE ffplay)
 endif()
 
-# Check if all FFmpeg components are found
-if(AVCODEC_INCLUDE_DIR AND AVCODEC_LIBRARY AND AVFORMAT_INCLUDE_DIR AND AVFORMAT_LIBRARY AND AVUTIL_INCLUDE_DIR AND AVUTIL_LIBRARY AND SWSCALE_INCLUDE_DIR AND SWSCALE_LIBRARY)
+# Check if FFmpeg executables are found
+if(EXISTS "${FFMPEG_EXECUTABLE}")
     set(FFMPEG_FOUND TRUE)
-    message(STATUS "FFmpeg found")
-    message(STATUS "  AVCODEC: ${AVCODEC_LIBRARY}")
-    message(STATUS "  AVFORMAT: ${AVFORMAT_LIBRARY}")
-    message(STATUS "  AVUTIL: ${AVUTIL_LIBRARY}")
-    message(STATUS "  SWSCALE: ${SWSCALE_LIBRARY}")
+    message(STATUS "FFmpeg executables found")
+    message(STATUS "  FFMPEG: ${FFMPEG_EXECUTABLE}")
+    if(EXISTS "${FFPLAY_EXECUTABLE}")
+        message(STATUS "  FFPLAY: ${FFPLAY_EXECUTABLE}")
+    endif()
 else()
     set(FFMPEG_FOUND FALSE)
-    message(WARNING "FFmpeg not found - TSストリーム再生機能は無効になります")
+    message(WARNING "FFmpeg executable not found - TSストリーム再生機能は無効になります")
 endif()
 
 # Qt6の標準設定
@@ -83,6 +67,8 @@ set(SOURCES
     main.cpp
     src/network/BonDriverNetwork.cpp
     src/ui/MainWindow.cpp
+    src/media/TsStreamDevice.cpp
+    src/media/DirectStreamPlayer.cpp
     src/utils/Logger.cpp
 )
 
@@ -90,21 +76,12 @@ set(SOURCES
 set(HEADERS
     src/network/BonDriverNetwork.h
     src/ui/MainWindow.h
+    src/media/TsStreamDevice.h
+    src/media/DirectStreamPlayer.h
     src/utils/Logger.h
 )
 
-# FFmpeg関連ソースファイル（FFmpegが見つかった場合のみ追加）
-if(FFMPEG_FOUND)
-    list(APPEND SOURCES
-        src/media/FFmpegDecoder.cpp
-        src/ui/FFmpegVideoWidget.cpp
-    )
-    list(APPEND HEADERS
-        src/media/FFmpegDecoder.h
-        src/ui/FFmpegVideoWidget.h
-    )
-    add_definitions(-DUSE_FFMPEG)
-endif()
+# FFmpeg外部プロセス使用のため、FFmpeg関連ソースファイルは不要
 
 # 実行ファイルの作成（Qt6の新しい方式）
 qt6_add_executable(TVTestAndroid)
@@ -133,23 +110,10 @@ target_link_libraries(TVTestAndroid PRIVATE
     Qt6::Widgets
 )
 
-# FFmpegライブラリとリンク（FFmpegが見つかった場合）
+# FFmpeg外部プロセス使用（ライブラリリンク不要）
 if(FFMPEG_FOUND)
-    target_include_directories(TVTestAndroid PRIVATE
-        ${AVCODEC_INCLUDE_DIR}
-        ${AVFORMAT_INCLUDE_DIR}
-        ${AVUTIL_INCLUDE_DIR}
-        ${SWSCALE_INCLUDE_DIR}
-    )
-    
-    target_link_libraries(TVTestAndroid PRIVATE
-        ${AVCODEC_LIBRARY}
-        ${AVFORMAT_LIBRARY}
-        ${AVUTIL_LIBRARY}
-        ${SWSCALE_LIBRARY}
-    )
-    
-    message(STATUS "FFmpeg libraries linked successfully")
+    message(STATUS "FFmpeg external process enabled")
+    add_definitions(-DUSE_FFMPEG_EXTERNAL)
 endif()
 
 # Android固有の設定

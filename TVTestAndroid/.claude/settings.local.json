@@ -12,7 +12,14 @@
       "Read(//c/ffmpeg/**)",
       "Read(//d/ClaudeCode/project/Tvtest_android/**)",
       "Bash(git remote add origin https://github.com/SumihisaYutani/TVTestAndroid.git)",
-      "Bash(git add .)"
+      "Bash(git add .)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nTVTest Android版 完全実装 - FFmpeg統合とQt Multimedia対応\n\n【主要機能】\n- BonDriver_Proxyプロトコル実装 (baruma.f5.si:1192接続)\n- リアルタイムTSストリーム受信・処理\n- FFmpegデコーダー統合 (MPEG-2/H.264対応)\n- Windows/Android クロスプラットフォーム対応\n- リアルタイム統計表示 (ビットレート、信号レベル、パケット数)\n- 包括的ログシステム (ファイル出力対応)\n- Qt Multimedia フォールバック再生\n- メモリ管理最適化 (10MBバッファ制限)\n- ネットワークプロトコル解析とWiresharkデバッグ対応\n\n🤖 Generated with [Claude Code](https://claude.ai/code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push -u origin master)",
+      "Bash(find \"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/logs/\" -name \"*.log\" -exec ls -t {} +)",
+      "Bash(cmake .. -DCMAKE_BUILD_TYPE=Debug)",
+      "Read(//c/Users/Yutani Sumihisa/AppData/Local/Temp/**)",
+      "Bash(./TVTestAndroid.exe)",
+      "Bash(\"C:/ffmpeg/bin/ffplay.exe\" -i \"C:/Users/Yutani Sumihisa/AppData/Local/Temp/tvtest_stream.ts\" -autoexit -loglevel info)"
     ],
     "deny": [],
     "ask": []
