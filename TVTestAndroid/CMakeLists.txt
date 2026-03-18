@@ -131,3 +131,28 @@ if(ANDROID)
 else()
     message(STATUS "Desktop build: FFmpeg対応予定")
 endif()
+
+# 既存の設定に追記
+set(LIBVLC_SDK_DIR "C:/vlc-sdk")  # 実際のパスに変更
+
+target_include_directories(${PROJECT_NAME} PRIVATE
+    ${LIBVLC_SDK_DIR}/include
+)
+
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    Qt6::Core
+    Qt6::Widgets
+    Qt6::Network
+    Qt6::Multimedia
+    Qt6::MultimediaWidgets
+    ${LIBVLC_SDK_DIR}/lib/libvlc.lib
+    ${LIBVLC_SDK_DIR}/lib/libvlccore.lib
+)
+
+# DLLをビルドフォルダにコピー
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${LIBVLC_SDK_DIR}/lib/libvlc.dll"
+        "${LIBVLC_SDK_DIR}/lib/libvlccore.dll"
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>
+)
