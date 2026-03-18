@@ -342,12 +342,6 @@
 	"HEADERS" : 
 	[
 		[
-			"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/DirectStreamPlayer.h",
-			"MU",
-			"SVT5AJZPWX/moc_DirectStreamPlayer.cpp",
-			null
-		],
-		[
 			"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsStreamDevice.h",
 			"MU",
 			"SVT5AJZPWX/moc_TsStreamDevice.cpp",
@@ -357,6 +351,12 @@
 			"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/BonDriverNetwork.h",
 			"MU",
 			"UFQQIFJZKK/moc_BonDriverNetwork.cpp",
+			null
+		],
+		[
+			"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/HighPerformanceStreamProcessor.h",
+			"MU",
+			"UFQQIFJZKK/moc_HighPerformanceStreamProcessor.cpp",
 			null
 		],
 		[
@@ -402,6 +402,10 @@
 	"MOC_INCLUDES" : 
 	[
 		"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src",
+		"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network",
+		"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/ui",
+		"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media",
+		"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/utils",
 		"C:/Qt/6.10.0/mingw_64/include/QtCore",
 		"C:/Qt/6.10.0/mingw_64/include",
 		"C:/Qt/6.10.0/mingw_64/mkspecs/win32-g++",
@@ -459,17 +463,17 @@
 			null
 		],
 		[
-			"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/DirectStreamPlayer.cpp",
-			"MU",
-			null
-		],
-		[
 			"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsStreamDevice.cpp",
 			"MU",
 			null
 		],
 		[
 			"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/BonDriverNetwork.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/HighPerformanceStreamProcessor.cpp",
 			"MU",
 			null
 		],

@@ -1,5 +1,4 @@
 TVTestAndroid_autogen/timestamp: \
-	C:/Qt/6.10.0/mingw_64/include/QtCore/QBuffer \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QByteArray \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QDataStream \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QDateTime \
@@ -7,10 +6,12 @@ TVTestAndroid_autogen/timestamp: \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QDebug \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QDir \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QFile \
+	C:/Qt/6.10.0/mingw_64/include/QtCore/QFileInfo \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QIODevice \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QMutex \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QObject \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QProcess \
+	C:/Qt/6.10.0/mingw_64/include/QtCore/QQueue \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QSettings \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QStandardPaths \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QString \
@@ -38,7 +39,6 @@ TVTestAndroid_autogen/timestamp: \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qbasicatomic.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qbasictimer.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qbindingstorage.h \
-	C:/Qt/6.10.0/mingw_64/include/QtCore/qbuffer.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qbytearray.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qbytearrayalgorithms.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qbytearraylist.h \
@@ -107,6 +107,7 @@ TVTestAndroid_autogen/timestamp: \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qpoint.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qprocess.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qprocessordetection.h \
+	C:/Qt/6.10.0/mingw_64/include/QtCore/qqueue.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qrect.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qrefcount.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qregularexpression.h \
@@ -759,8 +760,6 @@ TVTestAndroid_autogen/timestamp: \
 	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/CMakeFiles/3.30.5/CMakeSystem.cmake \
 	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/Desktop_Qt_6_10_0_MinGW_64_bit-Debug/TVTestAndroid_autogen/moc_predefs.h \
 	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/main.cpp \
-	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/DirectStreamPlayer.cpp \
-	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/DirectStreamPlayer.h \
 	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsStreamDevice.cpp \
 	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsStreamDevice.h \
 	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/BonDriverNetwork.cpp \

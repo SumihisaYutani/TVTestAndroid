@@ -41,7 +41,6 @@ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/t
  C:/Program Files/CMake/share/cmake-4.3/Modules/Platform/Windows-windres.cmake
  C:/Program Files/CMake/share/cmake-4.3/Modules/Platform/Windows.cmake
  C:/Program Files/CMake/share/cmake-4.3/Modules/Platform/WindowsPaths.cmake
- C:/Qt/6.10.0/mingw_64/include/QtCore/QBuffer
  C:/Qt/6.10.0/mingw_64/include/QtCore/QByteArray
  C:/Qt/6.10.0/mingw_64/include/QtCore/QDataStream
  C:/Qt/6.10.0/mingw_64/include/QtCore/QDateTime
@@ -49,13 +48,17 @@ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/t
  C:/Qt/6.10.0/mingw_64/include/QtCore/QDebug
  C:/Qt/6.10.0/mingw_64/include/QtCore/QDir
  C:/Qt/6.10.0/mingw_64/include/QtCore/QFile
+ C:/Qt/6.10.0/mingw_64/include/QtCore/QFileInfo
  C:/Qt/6.10.0/mingw_64/include/QtCore/QIODevice
  C:/Qt/6.10.0/mingw_64/include/QtCore/QMutex
  C:/Qt/6.10.0/mingw_64/include/QtCore/QObject
+ C:/Qt/6.10.0/mingw_64/include/QtCore/QProcess
+ C:/Qt/6.10.0/mingw_64/include/QtCore/QQueue
  C:/Qt/6.10.0/mingw_64/include/QtCore/QSettings
  C:/Qt/6.10.0/mingw_64/include/QtCore/QStandardPaths
  C:/Qt/6.10.0/mingw_64/include/QtCore/QString
  C:/Qt/6.10.0/mingw_64/include/QtCore/QTextStream
+ C:/Qt/6.10.0/mingw_64/include/QtCore/QThread
  C:/Qt/6.10.0/mingw_64/include/QtCore/QTimer
  C:/Qt/6.10.0/mingw_64/include/QtCore/QWaitCondition
  C:/Qt/6.10.0/mingw_64/include/QtCore/q17memory.h
@@ -79,7 +82,6 @@ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/t
  C:/Qt/6.10.0/mingw_64/include/QtCore/qbasicatomic.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qbasictimer.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qbindingstorage.h
- C:/Qt/6.10.0/mingw_64/include/QtCore/qbuffer.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qbytearray.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qbytearrayalgorithms.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qbytearraylist.h
@@ -146,7 +148,9 @@ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/t
  C:/Qt/6.10.0/mingw_64/include/QtCore/qoverload.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qpair.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qpoint.h
+ C:/Qt/6.10.0/mingw_64/include/QtCore/qprocess.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qprocessordetection.h
+ C:/Qt/6.10.0/mingw_64/include/QtCore/qqueue.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qrect.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qrefcount.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qregularexpression.h
@@ -188,6 +192,7 @@ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/t
  C:/Qt/6.10.0/mingw_64/include/QtCore/qtenvironmentvariables.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qtextstream.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qtformat_impl.h
+ C:/Qt/6.10.0/mingw_64/include/QtCore/qthread.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qtimer.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qtimezone.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qtmetamacros.h
@@ -528,6 +533,7 @@ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/t
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/allocated_ptr.h
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/allocator.h
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/atomic_base.h
+ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/atomic_futex.h
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/atomic_lockfree_defines.h
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/basic_ios.h
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/basic_ios.tcc
@@ -590,6 +596,8 @@ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/t
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/sstream.tcc
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/std_abs.h
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/std_function.h
+ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/std_mutex.h
+ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/std_thread.h
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_algo.h
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_algobase.h
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_bvector.h
@@ -618,6 +626,7 @@ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/t
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/string_view.tcc
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stringfwd.h
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/uniform_int_dist.h
+ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/unique_lock.h
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/unique_ptr.h
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/unordered_map.h
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/unordered_set.h
@@ -634,6 +643,7 @@ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/t
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/cmath
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/codecvt
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/compare
+ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/condition_variable
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/cstddef
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/cstdint
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/cstdio
@@ -654,6 +664,7 @@ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/t
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/ext/type_traits.h
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/filesystem
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/functional
+ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/future
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/initializer_list
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/iomanip
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/ios
@@ -665,6 +676,7 @@ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/t
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/locale
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/map
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/memory
+ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/mutex
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/new
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/numeric
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/optional
@@ -765,12 +777,12 @@ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/t
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/CMakeFiles/4.3.0-rc2/CMakeSystem.cmake
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/moc_predefs.h
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/main.cpp
- D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/DirectStreamPlayer.cpp
- D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/DirectStreamPlayer.h
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsStreamDevice.cpp
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsStreamDevice.h
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/BonDriverNetwork.cpp
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/BonDriverNetwork.h
+ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/HighPerformanceStreamProcessor.cpp
+ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/HighPerformanceStreamProcessor.h
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/ui/MainWindow.cpp
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/ui/MainWindow.h
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/utils/Logger.cpp

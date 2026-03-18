@@ -122,11 +122,26 @@ CMakeFiles/TVTestAndroid.dir/src/network/BonDriverNetwork.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/TVTestAndroid.dir/src/network/BonDriverNetwork.cpp.s"
 	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\ClaudeCode\project\Tvtest_android\TVTestAndroid\src\network\BonDriverNetwork.cpp -o CMakeFiles\TVTestAndroid.dir\src\network\BonDriverNetwork.cpp.s
 
+CMakeFiles/TVTestAndroid.dir/src/network/HighPerformanceStreamProcessor.cpp.obj: CMakeFiles/TVTestAndroid.dir/flags.make
+CMakeFiles/TVTestAndroid.dir/src/network/HighPerformanceStreamProcessor.cpp.obj: CMakeFiles/TVTestAndroid.dir/includes_CXX.rsp
+CMakeFiles/TVTestAndroid.dir/src/network/HighPerformanceStreamProcessor.cpp.obj: D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/HighPerformanceStreamProcessor.cpp
+CMakeFiles/TVTestAndroid.dir/src/network/HighPerformanceStreamProcessor.cpp.obj: CMakeFiles/TVTestAndroid.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:\ClaudeCode\project\Tvtest_android\TVTestAndroid\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/TVTestAndroid.dir/src/network/HighPerformanceStreamProcessor.cpp.obj"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TVTestAndroid.dir/src/network/HighPerformanceStreamProcessor.cpp.obj -MF CMakeFiles\TVTestAndroid.dir\src\network\HighPerformanceStreamProcessor.cpp.obj.d -o CMakeFiles\TVTestAndroid.dir\src\network\HighPerformanceStreamProcessor.cpp.obj -c D:\ClaudeCode\project\Tvtest_android\TVTestAndroid\src\network\HighPerformanceStreamProcessor.cpp
+
+CMakeFiles/TVTestAndroid.dir/src/network/HighPerformanceStreamProcessor.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/TVTestAndroid.dir/src/network/HighPerformanceStreamProcessor.cpp.i"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\ClaudeCode\project\Tvtest_android\TVTestAndroid\src\network\HighPerformanceStreamProcessor.cpp > CMakeFiles\TVTestAndroid.dir\src\network\HighPerformanceStreamProcessor.cpp.i
+
+CMakeFiles/TVTestAndroid.dir/src/network/HighPerformanceStreamProcessor.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/TVTestAndroid.dir/src/network/HighPerformanceStreamProcessor.cpp.s"
+	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\ClaudeCode\project\Tvtest_android\TVTestAndroid\src\network\HighPerformanceStreamProcessor.cpp -o CMakeFiles\TVTestAndroid.dir\src\network\HighPerformanceStreamProcessor.cpp.s
+
 CMakeFiles/TVTestAndroid.dir/src/ui/MainWindow.cpp.obj: CMakeFiles/TVTestAndroid.dir/flags.make
 CMakeFiles/TVTestAndroid.dir/src/ui/MainWindow.cpp.obj: CMakeFiles/TVTestAndroid.dir/includes_CXX.rsp
 CMakeFiles/TVTestAndroid.dir/src/ui/MainWindow.cpp.obj: D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/ui/MainWindow.cpp
 CMakeFiles/TVTestAndroid.dir/src/ui/MainWindow.cpp.obj: CMakeFiles/TVTestAndroid.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:\ClaudeCode\project\Tvtest_android\TVTestAndroid\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/TVTestAndroid.dir/src/ui/MainWindow.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:\ClaudeCode\project\Tvtest_android\TVTestAndroid\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/TVTestAndroid.dir/src/ui/MainWindow.cpp.obj"
 	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TVTestAndroid.dir/src/ui/MainWindow.cpp.obj -MF CMakeFiles\TVTestAndroid.dir\src\ui\MainWindow.cpp.obj.d -o CMakeFiles\TVTestAndroid.dir\src\ui\MainWindow.cpp.obj -c D:\ClaudeCode\project\Tvtest_android\TVTestAndroid\src\ui\MainWindow.cpp
 
 CMakeFiles/TVTestAndroid.dir/src/ui/MainWindow.cpp.i: cmake_force
@@ -141,7 +156,7 @@ CMakeFiles/TVTestAndroid.dir/src/media/TsStreamDevice.cpp.obj: CMakeFiles/TVTest
 CMakeFiles/TVTestAndroid.dir/src/media/TsStreamDevice.cpp.obj: CMakeFiles/TVTestAndroid.dir/includes_CXX.rsp
 CMakeFiles/TVTestAndroid.dir/src/media/TsStreamDevice.cpp.obj: D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsStreamDevice.cpp
 CMakeFiles/TVTestAndroid.dir/src/media/TsStreamDevice.cpp.obj: CMakeFiles/TVTestAndroid.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:\ClaudeCode\project\Tvtest_android\TVTestAndroid\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/TVTestAndroid.dir/src/media/TsStreamDevice.cpp.obj"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:\ClaudeCode\project\Tvtest_android\TVTestAndroid\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/TVTestAndroid.dir/src/media/TsStreamDevice.cpp.obj"
 	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TVTestAndroid.dir/src/media/TsStreamDevice.cpp.obj -MF CMakeFiles\TVTestAndroid.dir\src\media\TsStreamDevice.cpp.obj.d -o CMakeFiles\TVTestAndroid.dir\src\media\TsStreamDevice.cpp.obj -c D:\ClaudeCode\project\Tvtest_android\TVTestAndroid\src\media\TsStreamDevice.cpp
 
 CMakeFiles/TVTestAndroid.dir/src/media/TsStreamDevice.cpp.i: cmake_force
@@ -151,21 +166,6 @@ CMakeFiles/TVTestAndroid.dir/src/media/TsStreamDevice.cpp.i: cmake_force
 CMakeFiles/TVTestAndroid.dir/src/media/TsStreamDevice.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/TVTestAndroid.dir/src/media/TsStreamDevice.cpp.s"
 	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\ClaudeCode\project\Tvtest_android\TVTestAndroid\src\media\TsStreamDevice.cpp -o CMakeFiles\TVTestAndroid.dir\src\media\TsStreamDevice.cpp.s
-
-CMakeFiles/TVTestAndroid.dir/src/media/DirectStreamPlayer.cpp.obj: CMakeFiles/TVTestAndroid.dir/flags.make
-CMakeFiles/TVTestAndroid.dir/src/media/DirectStreamPlayer.cpp.obj: CMakeFiles/TVTestAndroid.dir/includes_CXX.rsp
-CMakeFiles/TVTestAndroid.dir/src/media/DirectStreamPlayer.cpp.obj: D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/DirectStreamPlayer.cpp
-CMakeFiles/TVTestAndroid.dir/src/media/DirectStreamPlayer.cpp.obj: CMakeFiles/TVTestAndroid.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=D:\ClaudeCode\project\Tvtest_android\TVTestAndroid\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/TVTestAndroid.dir/src/media/DirectStreamPlayer.cpp.obj"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/TVTestAndroid.dir/src/media/DirectStreamPlayer.cpp.obj -MF CMakeFiles\TVTestAndroid.dir\src\media\DirectStreamPlayer.cpp.obj.d -o CMakeFiles\TVTestAndroid.dir\src\media\DirectStreamPlayer.cpp.obj -c D:\ClaudeCode\project\Tvtest_android\TVTestAndroid\src\media\DirectStreamPlayer.cpp
-
-CMakeFiles/TVTestAndroid.dir/src/media/DirectStreamPlayer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/TVTestAndroid.dir/src/media/DirectStreamPlayer.cpp.i"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E D:\ClaudeCode\project\Tvtest_android\TVTestAndroid\src\media\DirectStreamPlayer.cpp > CMakeFiles\TVTestAndroid.dir\src\media\DirectStreamPlayer.cpp.i
-
-CMakeFiles/TVTestAndroid.dir/src/media/DirectStreamPlayer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/TVTestAndroid.dir/src/media/DirectStreamPlayer.cpp.s"
-	C:\Qt\Tools\mingw1310_64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S D:\ClaudeCode\project\Tvtest_android\TVTestAndroid\src\media\DirectStreamPlayer.cpp -o CMakeFiles\TVTestAndroid.dir\src\media\DirectStreamPlayer.cpp.s
 
 CMakeFiles/TVTestAndroid.dir/src/utils/Logger.cpp.obj: CMakeFiles/TVTestAndroid.dir/flags.make
 CMakeFiles/TVTestAndroid.dir/src/utils/Logger.cpp.obj: CMakeFiles/TVTestAndroid.dir/includes_CXX.rsp
@@ -202,9 +202,9 @@ TVTestAndroid_OBJECTS = \
 "CMakeFiles/TVTestAndroid.dir/TVTestAndroid_autogen/mocs_compilation.cpp.obj" \
 "CMakeFiles/TVTestAndroid.dir/main.cpp.obj" \
 "CMakeFiles/TVTestAndroid.dir/src/network/BonDriverNetwork.cpp.obj" \
+"CMakeFiles/TVTestAndroid.dir/src/network/HighPerformanceStreamProcessor.cpp.obj" \
 "CMakeFiles/TVTestAndroid.dir/src/ui/MainWindow.cpp.obj" \
 "CMakeFiles/TVTestAndroid.dir/src/media/TsStreamDevice.cpp.obj" \
-"CMakeFiles/TVTestAndroid.dir/src/media/DirectStreamPlayer.cpp.obj" \
 "CMakeFiles/TVTestAndroid.dir/src/utils/Logger.cpp.obj" \
 "CMakeFiles/TVTestAndroid.dir/build/.qt/rcc/qrc_resources.cpp.obj"
 
@@ -214,9 +214,9 @@ TVTestAndroid_EXTERNAL_OBJECTS =
 TVTestAndroid.exe: CMakeFiles/TVTestAndroid.dir/TVTestAndroid_autogen/mocs_compilation.cpp.obj
 TVTestAndroid.exe: CMakeFiles/TVTestAndroid.dir/main.cpp.obj
 TVTestAndroid.exe: CMakeFiles/TVTestAndroid.dir/src/network/BonDriverNetwork.cpp.obj
+TVTestAndroid.exe: CMakeFiles/TVTestAndroid.dir/src/network/HighPerformanceStreamProcessor.cpp.obj
 TVTestAndroid.exe: CMakeFiles/TVTestAndroid.dir/src/ui/MainWindow.cpp.obj
 TVTestAndroid.exe: CMakeFiles/TVTestAndroid.dir/src/media/TsStreamDevice.cpp.obj
-TVTestAndroid.exe: CMakeFiles/TVTestAndroid.dir/src/media/DirectStreamPlayer.cpp.obj
 TVTestAndroid.exe: CMakeFiles/TVTestAndroid.dir/src/utils/Logger.cpp.obj
 TVTestAndroid.exe: CMakeFiles/TVTestAndroid.dir/build/.qt/rcc/qrc_resources.cpp.obj
 TVTestAndroid.exe: CMakeFiles/TVTestAndroid.dir/build.make

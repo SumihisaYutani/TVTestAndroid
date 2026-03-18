@@ -1,12 +1,11 @@
 #include "BonDriverNetwork.h"
 #include "utils/Logger.h"
-#include "../media/DirectStreamPlayer.h"
 #include <QThread>
 #include <QElapsedTimer>
 #include <QCoreApplication>
 
 BonDriverNetwork::BonDriverNetwork(QObject *parent)
-    : QObject(parent), m_socket(new QTcpSocket(this)), m_tsReceiveTimer(new QTimer(this)), m_currentSpace(TERRESTRIAL), m_currentChannel(0), m_signalLevel(0.0f), m_isInitialized(false), m_isTunerOpen(false), m_isTsStreamActive(false), m_directStreamMode(false), m_directStreamPlayer(nullptr)
+    : QObject(parent), m_socket(new QTcpSocket(this)), m_tsReceiveTimer(new QTimer(this)), m_currentSpace(TERRESTRIAL), m_currentChannel(0), m_signalLevel(0.0f), m_isInitialized(false), m_isTunerOpen(false), m_isTsStreamActive(false)
 {
     // TCP接続シグナル接続
     connect(m_socket, &QTcpSocket::connected, this, &BonDriverNetwork::onConnected);
@@ -17,7 +16,7 @@ BonDriverNetwork::BonDriverNetwork(QObject *parent)
 
     // TSストリーム受信タイマー設定
     m_tsReceiveTimer->setSingleShot(false);
-    m_tsReceiveTimer->setInterval(100); // 100ms間隔
+    m_tsReceiveTimer->setInterval(1); // 1ms間隔（極限高速受信で安定化）
     connect(m_tsReceiveTimer, &QTimer::timeout, this, &BonDriverNetwork::onTsReceiveTimer);
 
     LOG_INFO("BonDriverNetwork初期化完了");
@@ -506,6 +505,11 @@ float BonDriverNetwork::getSignalLevel() const
     return m_signalLevel;
 }
 
+QTcpSocket* BonDriverNetwork::getSocket() const
+{
+    return m_socket;
+}
+
 void BonDriverNetwork::onConnected()
 {
     qDebug() << "サーバー接続完了";
@@ -559,27 +563,51 @@ void BonDriverNetwork::onTsReceiveTimer()
     // ⚠️ ログ暴走防止：GetTsStream/GetReadyCountは一旦コメントアウト
     // サーバーからの応答が無い状態での連続送信を防ぐ
 
-    // 暫定的にタイマーを停止してログ暴走を防ぐ
+    // 超高速連続TSストリーム取得（最大パフォーマンス）
     static bool hasLogged = false;
     if (!hasLogged)
     {
-        LOG_INFO("TSストリーム受信タイマー実行（暫定的に停止中）");
+        LOG_INFO("🚀 連続大量取得開始 - タイマー停止してノンストップ受信");
         hasLogged = true;
-        m_tsReceiveTimer->stop(); // 暫定停止
-    }
-
-    // TODO: サーバー応答問題が解決したら以下を有効化
-    /*
-    // GetReadyCountでバッファ確認
-    if (!sendCommand(eGetReadyCount)) {
+        // タイマーを停止して連続受信モードに切り替え
+        m_tsReceiveTimer->stop();
+        // 連続受信を別スレッドで開始
+        QTimer::singleShot(0, this, &BonDriverNetwork::continuousReceive);
         return;
     }
+}
 
-    // GetTsStreamでTSデータ取得
-    if (!sendCommand(eGetTsStream)) {
+// 連続大量TSストリーム受信（最大パフォーマンス実現）
+void BonDriverNetwork::continuousReceive()
+{
+    if (!isConnected() || !m_isTunerOpen || !m_isTsStreamActive) {
+        // 接続切れや停止時は1秒後に再チェック
+        QTimer::singleShot(1000, this, &BonDriverNetwork::continuousReceive);
         return;
     }
-    */
+    
+    static int loopCount = 0;
+    loopCount++;
+    
+    // 連続大量取得（1回で50回のコマンド実行）
+    for (int i = 0; i < 50; i++) {
+        // GetReadyCountでバッファ確認
+        if (!sendCommand(eGetReadyCount)) {
+            break;
+        }
+        // GetTsStreamでTSデータ取得
+        if (!sendCommand(eGetTsStream)) {
+            break;
+        }
+    }
+    
+    // 統計ログ（削減）
+    if (loopCount % 20 == 0) {
+        LOG_INFO(QString("🚀 連続大量受信ループ #%1: 1回で100コマンド実行").arg(loopCount));
+    }
+    
+    // 即座に次の連続受信をスケジュール（ノンストップ）
+    QTimer::singleShot(1, this, &BonDriverNetwork::continuousReceive);
 }
 
 bool BonDriverNetwork::sendCommand(BonDriverCommand command, const QByteArray &data)
@@ -719,32 +747,12 @@ void BonDriverNetwork::processResponse()
                 // 従来のシグナル発行（既存機能維持）
                 emit tsDataReceived(tsPacket);
                 
-                // 直接ストリーミングモード対応
-                if (m_directStreamMode) {
-                    emit directTsDataReceived(tsPacket);
-                    
-                    // 直接ストリーミングデータ送信ログ（デバッグ強化版）
-                    static int directStreamCount = 0;
-                    directStreamCount++;
-                    
-                    if (directStreamCount <= 5) {
-                        LOG_INFO(QString("🎯 DirectStream送信: パケット#%1, %2 bytes, total#%3")
-                                .arg(tsDataCount).arg(tsPacket.size()).arg(directStreamCount));
-                    }
-                } else {
-                    // 直接ストリーミングが無効であることをログ（最初の1回のみ）
-                    static bool directModeWarningLogged = false;
-                    if (!directModeWarningLogged) {
-                        LOG_WARNING("⚠️ 直接ストリーミングモードが無効です");
-                        directModeWarningLogged = true;
-                    }
-                }
+                // TSストリーム受信完了（シンプル版）
                 
                 // ログ出力制限（調査用：最初の10個、その後は2000個ごと）
                 if (tsDataCount <= 10 || tsDataCount % 2000 == 0) {
-                    LOG_INFO(QString("📺 TSパケット #%1 (バッファ残: %2 KB) %3")
-                             .arg(tsDataCount).arg(m_receiveBuffer.size() / 1024)
-                             .arg(m_directStreamMode ? "[直接ストリーム]" : ""));
+                    LOG_INFO(QString("📺 TSパケット #%1 (バッファ残: %2 KB)")
+                             .arg(tsDataCount).arg(m_receiveBuffer.size() / 1024));
                 }
             }
             continue;
@@ -850,41 +858,3 @@ QString BonDriverNetwork::getCommandName(BonDriverCommand command) const
     }
 }
 
-// 直接ストリーミング再生用メソッド実装
-
-void BonDriverNetwork::setDirectStreamMode(bool enabled)
-{
-    m_directStreamMode = enabled;
-    
-    LOG_INFO(QString("直接ストリーミングモード: %1").arg(enabled ? "有効" : "無効"));
-    
-    if (enabled && m_directStreamPlayer) {
-        // DirectStreamPlayerとの接続を確立
-        connect(this, &BonDriverNetwork::directTsDataReceived,
-                m_directStreamPlayer, &DirectStreamPlayer::addTsStream,
-                Qt::QueuedConnection);
-        LOG_INFO("DirectStreamPlayerとの接続確立");
-    } else {
-        // 接続解除
-        disconnect(this, &BonDriverNetwork::directTsDataReceived, nullptr, nullptr);
-        LOG_INFO("DirectStreamPlayerとの接続解除");
-    }
-}
-
-void BonDriverNetwork::setDirectStreamPlayer(DirectStreamPlayer *player)
-{
-    // 前回の接続を解除
-    if (m_directStreamPlayer) {
-        disconnect(this, &BonDriverNetwork::directTsDataReceived, nullptr, nullptr);
-    }
-    
-    m_directStreamPlayer = player;
-    
-    if (m_directStreamPlayer && m_directStreamMode) {
-        // 新しい接続を確立
-        connect(this, &BonDriverNetwork::directTsDataReceived,
-                m_directStreamPlayer, &DirectStreamPlayer::addTsStream,
-                Qt::QueuedConnection);
-        LOG_INFO("新しいDirectStreamPlayerとの接続確立");
-    }
-}

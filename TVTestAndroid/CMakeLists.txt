@@ -66,18 +66,18 @@ set(CMAKE_AUTORCC ON)
 set(SOURCES
     main.cpp
     src/network/BonDriverNetwork.cpp
+    src/network/HighPerformanceStreamProcessor.cpp
     src/ui/MainWindow.cpp
     src/media/TsStreamDevice.cpp
-    src/media/DirectStreamPlayer.cpp
     src/utils/Logger.cpp
 )
 
 # ヘッダーファイル
 set(HEADERS
     src/network/BonDriverNetwork.h
+    src/network/HighPerformanceStreamProcessor.h
     src/ui/MainWindow.h
     src/media/TsStreamDevice.h
-    src/media/DirectStreamPlayer.h
     src/utils/Logger.h
 )
 
@@ -99,6 +99,10 @@ qt6_add_resources(TVTestAndroid "resources"
 # インクルードディレクトリ
 target_include_directories(TVTestAndroid PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/network
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/ui
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/media
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/utils
 )
 
 # Qt6ライブラリとリンク
@@ -132,27 +136,5 @@ else()
     message(STATUS "Desktop build: FFmpeg対応予定")
 endif()
 
-# 既存の設定に追記
-set(LIBVLC_SDK_DIR "C:/vlc-sdk")  # 実際のパスに変更
-
-target_include_directories(${PROJECT_NAME} PRIVATE
-    ${LIBVLC_SDK_DIR}/include
-)
-
-target_link_libraries(${PROJECT_NAME} PRIVATE
-    Qt6::Core
-    Qt6::Widgets
-    Qt6::Network
-    Qt6::Multimedia
-    Qt6::MultimediaWidgets
-    ${LIBVLC_SDK_DIR}/lib/libvlc.lib
-    ${LIBVLC_SDK_DIR}/lib/libvlccore.lib
-)
-
-# DLLをビルドフォルダにコピー
-add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${LIBVLC_SDK_DIR}/lib/libvlc.dll"
-        "${LIBVLC_SDK_DIR}/lib/libvlccore.dll"
-        $<TARGET_FILE_DIR:${PROJECT_NAME}>
-)
+# Qt6とFFmpeg外部プロセスのシンプル構成
+message(STATUS "LibVLC依存を除去、Qt6 + FFmpeg外部プロセス構成")

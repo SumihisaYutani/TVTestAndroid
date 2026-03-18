@@ -83,8 +83,8 @@ clean: CMakeFiles/TVTestAndroid_autogen.dir/clean
 # Target rules for target CMakeFiles/TVTestAndroid.dir
 
 # All Build rule for target.
-CMakeFiles/TVTestAndroid.dir/all: CMakeFiles/TVTestAndroid_autogen.dir/all
 CMakeFiles/TVTestAndroid.dir/all: CMakeFiles/TVTestAndroid_autogen_timestamp_deps.dir/all
+CMakeFiles/TVTestAndroid.dir/all: CMakeFiles/TVTestAndroid_autogen.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\TVTestAndroid.dir\build.make CMakeFiles/TVTestAndroid.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\TVTestAndroid.dir\build.make CMakeFiles/TVTestAndroid.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=D:\ClaudeCode\project\Tvtest_android\TVTestAndroid\build\CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10 "Built target TVTestAndroid"
