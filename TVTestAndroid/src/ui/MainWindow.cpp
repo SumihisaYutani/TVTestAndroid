@@ -492,33 +492,3 @@ void MainWindow::restoreSettings()
 
     addLogMessage("前回の設定を復元しました");
 }
-```
-
----
-
-### 削除するファイル
-```
-media/DirectStreamPlayer.h
-media/DirectStreamPlayer.cpp
-media/FFmpegDecoder.h
-media/FFmpegDecoder.cpp
-ui/FFmpegVideoWidget.h
-ui/FFmpegVideoWidget.cpp
-```
-
----
-
-### 作業チェックリスト
-```
-□ vlc-x.x.x-win64.zip をダウンロード・解凍
-□ CMakeLists.txt に libVLC パスを追記
-□ media/TsBuffer.h を新規作成
-□ media/LibVLCPlayer.h を新規作成
-□ media/LibVLCPlayer.cpp を新規作成
-□ MainWindow.h を全文置き換え
-□ MainWindow.cpp を全文置き換え
-□ 不要ファイルをプロジェクトから除外
-□ ビルド確認
-□ libvlc.dll / libvlccore.dll が実行ファイルと同フォルダにあることを確認
-□ 受信開始 → 映像表示確認
-□ チャンネル切り替え確認
