@@ -5,7 +5,6 @@
 #include <QWidget>
 #include "TsBuffer.h"
 
-// TsBuffer → ffplay stdin パイプに流すワーカー
 class PipeWriterWorker : public QObject
 {
     Q_OBJECT
@@ -14,15 +13,14 @@ public:
         : QObject(parent), m_buffer(buffer), m_process(process) {}
 
 public slots:
-void run()
-{
-    m_running = true;
-    while (m_running) {
-        if (m_process->state() != QProcess::Running) break;
-        m_buffer->writeTo(m_process);  // ← writeToに変更するだけ
+    void run()
+    {
+        m_running = true;
+        while (m_running) {
+            if (m_process->state() != QProcess::Running) break;
+            m_buffer->writeTo(m_process);
+        }
     }
-}
-
     void stop() { m_running = false; }
 
 private:
@@ -38,11 +36,11 @@ public:
     explicit FfmpegPipePlayer(QObject *parent = nullptr);
     ~FfmpegPipePlayer();
 
-    // ffplayの映像出力先ウィンドウIDを指定
-    bool init(WId windowId);
+    bool init(QWidget *videoWidget);   // ウィジェットごと受け取る
     void play();
     void stop();
     void clearBuffer();
+    void resizeVideo(int w, int h);    // リサイズ追従
 
     TsBuffer *tsBuffer() const { return m_tsBuffer; }
 
@@ -56,9 +54,10 @@ private slots:
     void onProcessFinished(int exitCode, QProcess::ExitStatus status);
 
 private:
-    TsBuffer        *m_tsBuffer;
-    QProcess        *m_process;
-    QThread         *m_writerThread;
+    TsBuffer         *m_tsBuffer;
+    QProcess         *m_process;
+    QThread          *m_writerThread;
     PipeWriterWorker *m_worker;
-    WId              m_windowId = 0;
+    QWidget          *m_videoWidget = nullptr;
+    WId               m_windowId   = 0;
 };
