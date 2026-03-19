@@ -294,9 +294,21 @@ void MainWindow::onNetworkDisconnected()
 
 void MainWindow::onTsDataReceived(const QByteArray &data)
 {
-    // 統計のみ更新（ログ・processEventsなし）
+    // 統計更新
     m_totalBytes += data.size();
     m_totalPackets++;
+    
+    // 【修正】TSデータをTsBufferに送信（直接パイプライン復旧）
+    m_player->tsBuffer()->appendData(data);
+    
+    // デバッグ用：1000パケットごとにログ出力
+    static qint64 debugCounter = 0;
+    if (++debugCounter % 1000 == 0) {
+        LOG_INFO(QString("✅ TSデータフロー確認: %1 packets, %2 MB累積, バッファサイズ: %3 KB")
+                .arg(m_totalPackets)
+                .arg(m_totalBytes / (1024.0 * 1024.0), 0, 'f', 2)
+                .arg(m_player->tsBuffer()->size() / 1024.0, 0, 'f', 1));
+    }
 }
 
 void MainWindow::onChannelChanged(BonDriverNetwork::TuningSpace space, uint32_t channel)
