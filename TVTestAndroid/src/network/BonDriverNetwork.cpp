@@ -808,6 +808,16 @@ bool BonDriverNetwork::processCommandResponse()
     if (responseCmd == eGetTsStream && !responseData.isEmpty())
     {
         m_isTsStreamActive = true;
+        
+        // 【修正】GetTsStreamレスポンスデータを受信バッファに追加してTS処理
+        m_receiveBuffer.append(responseData);
+        
+        // デバッグ用ログ（パフォーマンス考慮で100回に1回）
+        static int tsLogCounter = 0;
+        if (++tsLogCounter % 100 == 0) {
+            LOG_INFO(QString("📡 GetTsStream受信: %1 bytes, バッファサイズ: %2 bytes")
+                    .arg(responseData.size()).arg(m_receiveBuffer.size()));
+        }
     }
     
     return true; // 正常処理完了

@@ -2,6 +2,7 @@
 #include "utils/Logger.h"
 #include <QDateTime>
 #include <QApplication>
+#include <QFile>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -300,6 +301,19 @@ void MainWindow::onTsDataReceived(const QByteArray &data)
     
     // 【修正】TSデータをTsBufferに送信（直接パイプライン復旧）
     m_player->tsBuffer()->appendData(data);
+    
+    // 【デバッグ】TSファイル保存テスト（最初の5MB）
+    static QFile debugTsFile("C:/Users/Yutani Sumihisa/AppData/Local/Temp/debug_stream.ts");
+    static bool fileOpened = false;
+    if (!fileOpened) {
+        fileOpened = debugTsFile.open(QIODevice::WriteOnly);
+        if (fileOpened) {
+            LOG_INFO("🟡 デバッグTSファイル保存開始: debug_stream.ts");
+        }
+    }
+    if (fileOpened && debugTsFile.size() < 5 * 1024 * 1024) {
+        debugTsFile.write(data);
+    }
     
     // デバッグ用：1000パケットごとにログ出力
     static qint64 debugCounter = 0;
