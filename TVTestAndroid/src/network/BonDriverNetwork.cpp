@@ -3,6 +3,7 @@
 #include <QThread>
 #include <QElapsedTimer>
 #include <QCoreApplication>
+#include <cstring>
 
 BonDriverNetwork::BonDriverNetwork(QObject *parent)
     : QObject(parent), m_socket(new QTcpSocket(this)), m_tsReceiveTimer(new QTimer(this)), m_currentSpace(TERRESTRIAL), m_currentChannel(0), m_signalLevel(0.0f), m_isInitialized(false), m_isTunerOpen(false), m_isTsStreamActive(false)
@@ -719,17 +720,28 @@ void BonDriverNetwork::processResponse()
             for (int i = 0; i < processPackets; i++) {
                 QByteArray tsPacket = m_receiveBuffer.left(188);
                 
-                // 🔧 TSパケット同期バイト(0x47)チェック
+                // 🔧 強化されたTSパケット同期チェック
                 if (tsPacket.size() >= 1 && static_cast<uint8_t>(tsPacket[0]) != 0x47) {
-                    // 0x47を探して同期を取る
-                    int syncPos = m_receiveBuffer.indexOf(0x47);
+                    // 連続する2つのTSパケット(0x47)を探して確実な同期を取る
+                    int syncPos = -1;
+                    for (int searchPos = 1; searchPos < m_receiveBuffer.size() - 188; searchPos++) {
+                        if (static_cast<uint8_t>(m_receiveBuffer[searchPos]) == 0x47 &&
+                            searchPos + 188 < m_receiveBuffer.size() &&
+                            static_cast<uint8_t>(m_receiveBuffer[searchPos + 188]) == 0x47) {
+                            // 188バイト間隔で2つの0x47が見つかった → 正しい同期位置
+                            syncPos = searchPos;
+                            break;
+                        }
+                    }
+                    
                     if (syncPos > 0) {
-                        LOG_WARNING(QString("⚠️ TS同期エラー: %1バイト破棄して0x47で再同期").arg(syncPos));
+                        LOG_WARNING(QString("⚠️ TS同期エラー: %1バイト破棄して確実な0x47で再同期").arg(syncPos));
                         m_receiveBuffer.remove(0, syncPos);
                         continue; // 次のループで再処理
                     } else {
-                        LOG_WARNING("⚠️ TS同期バイト(0x47)が見つかりません - バッファクリア");
-                        m_receiveBuffer.clear();
+                        // 確実な同期が見つからない場合は1バイトずつ破棄
+                        LOG_WARNING("⚠️ 確実なTS同期が見つかりません - 1バイト破棄");
+                        m_receiveBuffer.remove(0, 1);
                         break;
                     }
                 }
@@ -774,7 +786,33 @@ bool BonDriverNetwork::processCommandResponse()
     }
 
     uint8_t responseCmd = static_cast<uint8_t>(m_receiveBuffer[1]);
-    uint8_t responseSize = static_cast<uint8_t>(m_receiveBuffer[7]);
+    
+    // 【修正】サイズは3-6バイト目の4バイトlittle-endian
+    uint32_t responseSize;
+    memcpy(&responseSize, &m_receiveBuffer.data()[2], sizeof(uint32_t));
+    
+    // デバッグ: プロトコルヘッダ詳細ログ（最初の10回のみ）
+    static int protocolDebugCount = 0;
+    if (++protocolDebugCount <= 10) {
+        LOG_INFO(QString("🔍 プロトコル解析: cmd=%1, size=%2, header=[%3 %4 %5 %6 %7 %8 %9 %10]")
+                .arg(responseCmd)
+                .arg(responseSize)
+                .arg((uint8_t)m_receiveBuffer[0], 2, 16, QChar('0'))
+                .arg((uint8_t)m_receiveBuffer[1], 2, 16, QChar('0'))
+                .arg((uint8_t)m_receiveBuffer[2], 2, 16, QChar('0'))
+                .arg((uint8_t)m_receiveBuffer[3], 2, 16, QChar('0'))
+                .arg((uint8_t)m_receiveBuffer[4], 2, 16, QChar('0'))
+                .arg((uint8_t)m_receiveBuffer[5], 2, 16, QChar('0'))
+                .arg((uint8_t)m_receiveBuffer[6], 2, 16, QChar('0'))
+                .arg((uint8_t)m_receiveBuffer[7], 2, 16, QChar('0')));
+    }
+    
+    // 異常に大きなサイズの場合はプロトコルエラー
+    if (responseSize > 10 * 1024 * 1024) { // 10MB制限
+        LOG_WARNING(QString("⚠️ 異常なレスポンスサイズ: %1 bytes - 1バイト破棄").arg(responseSize));
+        m_receiveBuffer.remove(0, 1);
+        return false;
+    }
 
     int totalPacketSize = 8 + responseSize; // ヘッダー8バイト + データ
 
