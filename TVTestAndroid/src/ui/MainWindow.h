@@ -24,7 +24,6 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-QTcpSocket* socket() const { return m_socket; }
 
 private slots:
     void onConnectClicked();
