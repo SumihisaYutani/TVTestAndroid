@@ -6,7 +6,6 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , m_network(new BonDriverNetwork(this))
-    , m_processor(new HighPerformanceStreamProcessor(this))
     , m_player(new FfmpegPipePlayer(this))
     , m_videoWidget(new QWidget(this))
     , m_updateStatsTimer(new QTimer(this))
@@ -18,8 +17,6 @@ MainWindow::MainWindow(QWidget *parent)
     // ffplay埋め込み先ウィジェットを渡す
 m_player->init(m_videoWidget);
 
-    // プロセッサ初期化
-    m_processor->initialize();
 
     restoreSettings();
     updateUIState();
@@ -189,16 +186,9 @@ void MainWindow::setupConnections()
     connect(m_network, &BonDriverNetwork::errorOccurred,
             this, &MainWindow::onErrorOccurred);
 
-    // HighPerformanceStreamProcessor → TsBuffer → ffplay
-    connect(m_processor, &HighPerformanceStreamProcessor::tsPacketReady,
-            m_player->tsBuffer(), &TsBuffer::appendData);
 
     // プロセッサをネットワークソケットに接続
     // ※ BonDriverNetwork側のreadyRead接続と競合しないよう
-    //   BonDriverNetwork内でプロセッサへソケットを渡す
-    connect(m_network, &BonDriverNetwork::connected, this, [this]() {
-        m_processor->setSocket(m_network->socket());
-    });
 }
 
 void MainWindow::onConnectClicked()
@@ -216,7 +206,6 @@ void MainWindow::onConnectClicked()
 void MainWindow::onDisconnectClicked()
 {
     m_player->stop();
-    m_processor->stopStreaming();
     m_network->disconnectFromServer();
     updateUIState();
 }
@@ -256,11 +245,10 @@ void MainWindow::onSetChannelClicked()
 
 void MainWindow::onStartReceivingClicked()
 {
-    addLogMessage("TSストリーム受信開始");
-    m_processor->startStreaming();
+    addLogMessage("🚀 TSストリーム受信開始");
     m_network->startReceiving();
     m_player->play();
-    m_streamStatus->setText("受信中");
+    m_streamStatus->setText("🚀 高性能受信中");
 
     m_totalBytes     = 0;
     m_totalPackets   = 0;
@@ -275,7 +263,6 @@ void MainWindow::onStopReceivingClicked()
 {
     addLogMessage("TSストリーム受信停止");
     m_network->stopReceiving();
-    m_processor->stopStreaming();
     m_player->stop();
     m_streamStatus->setText("停止中");
     m_updateStatsTimer->stop();
@@ -301,7 +288,6 @@ void MainWindow::onNetworkDisconnected()
     m_bonDriverStatus->setText("未選択");
     m_channelStatus->setText("未設定");
     m_player->stop();
-    m_processor->stopStreaming();
     addLogMessage("ネットワーク切断");
     updateUIState();
 }

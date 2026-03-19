@@ -10,12 +10,10 @@ CMakeFiles/TVTestAndroid.dir/TVTestAndroid_autogen/mocs_compilation.cpp.obj
  C:/Qt/6.10.0/mingw_64/include/QtCore/QDebug
  C:/Qt/6.10.0/mingw_64/include/QtCore/QDir
  C:/Qt/6.10.0/mingw_64/include/QtCore/QFile
- C:/Qt/6.10.0/mingw_64/include/QtCore/QFileInfo
  C:/Qt/6.10.0/mingw_64/include/QtCore/QIODevice
  C:/Qt/6.10.0/mingw_64/include/QtCore/QMutex
  C:/Qt/6.10.0/mingw_64/include/QtCore/QObject
  C:/Qt/6.10.0/mingw_64/include/QtCore/QProcess
- C:/Qt/6.10.0/mingw_64/include/QtCore/QQueue
  C:/Qt/6.10.0/mingw_64/include/QtCore/QSettings
  C:/Qt/6.10.0/mingw_64/include/QtCore/QStandardPaths
  C:/Qt/6.10.0/mingw_64/include/QtCore/QString
@@ -114,7 +112,6 @@ CMakeFiles/TVTestAndroid.dir/TVTestAndroid_autogen/mocs_compilation.cpp.obj
  C:/Qt/6.10.0/mingw_64/include/QtCore/qpoint.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qprocess.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qprocessordetection.h
- C:/Qt/6.10.0/mingw_64/include/QtCore/qqueue.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qrect.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qrefcount.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qregularexpression.h
@@ -213,19 +210,6 @@ CMakeFiles/TVTestAndroid.dir/TVTestAndroid_autogen/mocs_compilation.cpp.obj
  C:/Qt/6.10.0/mingw_64/include/QtGui/qvalidator.h
  C:/Qt/6.10.0/mingw_64/include/QtGui/qwindowdefs.h
  C:/Qt/6.10.0/mingw_64/include/QtGui/qwindowdefs_win.h
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/QAudioOutput
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/QMediaPlayer
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudio.h
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudiooutput.h
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qmediaplayer.h
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtaudio.h
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimedia-config.h
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimediaexports.h
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimediaglobal.h
- C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/QVideoWidget
- C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsexports.h
- C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsglobal.h
- C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qvideowidget.h
  C:/Qt/6.10.0/mingw_64/include/QtNetwork/QTcpSocket
  C:/Qt/6.10.0/mingw_64/include/QtNetwork/qabstractsocket.h
  C:/Qt/6.10.0/mingw_64/include/QtNetwork/qhostaddress.h
@@ -245,6 +229,7 @@ CMakeFiles/TVTestAndroid.dir/TVTestAndroid_autogen/mocs_compilation.cpp.obj
  C:/Qt/6.10.0/mingw_64/include/QtWidgets/QSpinBox
  C:/Qt/6.10.0/mingw_64/include/QtWidgets/QTextEdit
  C:/Qt/6.10.0/mingw_64/include/QtWidgets/QVBoxLayout
+ C:/Qt/6.10.0/mingw_64/include/QtWidgets/QWidget
  C:/Qt/6.10.0/mingw_64/include/QtWidgets/qabstractbutton.h
  C:/Qt/6.10.0/mingw_64/include/QtWidgets/qabstractitemdelegate.h
  C:/Qt/6.10.0/mingw_64/include/QtWidgets/qabstractscrollarea.h
@@ -535,11 +520,15 @@ CMakeFiles/TVTestAndroid.dir/TVTestAndroid_autogen/mocs_compilation.cpp.obj
  C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/vadefs.h
  C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wchar.h
  C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wctype.h
+ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/FfmpegPipePlayer.h
+ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsBuffer.h
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsStreamDevice.h
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/BonDriverNetwork.h
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/HighPerformanceStreamProcessor.h
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/ui/MainWindow.h
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/utils/Logger.h
+ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/SVT5AJZPWX/moc_FfmpegPipePlayer.cpp
+ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/SVT5AJZPWX/moc_TsBuffer.cpp
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/SVT5AJZPWX/moc_TsStreamDevice.cpp
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/UFQQIFJZKK/moc_BonDriverNetwork.cpp
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/UFQQIFJZKK/moc_HighPerformanceStreamProcessor.cpp
@@ -554,21 +543,21 @@ CMakeFiles/TVTestAndroid.dir/main.cpp.obj
  C:/Qt/6.10.0/mingw_64/include/QtCore/QByteArray
  C:/Qt/6.10.0/mingw_64/include/QtCore/QDataStream
  C:/Qt/6.10.0/mingw_64/include/QtCore/QDateTime
+ C:/Qt/6.10.0/mingw_64/include/QtCore/QDeadlineTimer
  C:/Qt/6.10.0/mingw_64/include/QtCore/QDebug
  C:/Qt/6.10.0/mingw_64/include/QtCore/QDir
  C:/Qt/6.10.0/mingw_64/include/QtCore/QFile
- C:/Qt/6.10.0/mingw_64/include/QtCore/QFileInfo
  C:/Qt/6.10.0/mingw_64/include/QtCore/QLoggingCategory
  C:/Qt/6.10.0/mingw_64/include/QtCore/QMutex
  C:/Qt/6.10.0/mingw_64/include/QtCore/QObject
  C:/Qt/6.10.0/mingw_64/include/QtCore/QProcess
- C:/Qt/6.10.0/mingw_64/include/QtCore/QQueue
  C:/Qt/6.10.0/mingw_64/include/QtCore/QSettings
  C:/Qt/6.10.0/mingw_64/include/QtCore/QStandardPaths
  C:/Qt/6.10.0/mingw_64/include/QtCore/QString
  C:/Qt/6.10.0/mingw_64/include/QtCore/QTextStream
  C:/Qt/6.10.0/mingw_64/include/QtCore/QThread
  C:/Qt/6.10.0/mingw_64/include/QtCore/QTimer
+ C:/Qt/6.10.0/mingw_64/include/QtCore/QWaitCondition
  C:/Qt/6.10.0/mingw_64/include/QtCore/q17memory.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/q20functional.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/q20iterator.h
@@ -663,7 +652,6 @@ CMakeFiles/TVTestAndroid.dir/main.cpp.obj
  C:/Qt/6.10.0/mingw_64/include/QtCore/qpoint.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qprocess.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qprocessordetection.h
- C:/Qt/6.10.0/mingw_64/include/QtCore/qqueue.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qrect.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qrefcount.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qregularexpression.h
@@ -724,6 +712,7 @@ CMakeFiles/TVTestAndroid.dir/main.cpp.obj
  C:/Qt/6.10.0/mingw_64/include/QtCore/qvariant.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qvarlengtharray.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qversiontagging.h
+ C:/Qt/6.10.0/mingw_64/include/QtCore/qwaitcondition.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qxptype_traits.h
  C:/Qt/6.10.0/mingw_64/include/QtCore/qyieldcpu.h
  C:/Qt/6.10.0/mingw_64/include/QtGui/qaction.h
@@ -762,19 +751,6 @@ CMakeFiles/TVTestAndroid.dir/main.cpp.obj
  C:/Qt/6.10.0/mingw_64/include/QtGui/qvalidator.h
  C:/Qt/6.10.0/mingw_64/include/QtGui/qwindowdefs.h
  C:/Qt/6.10.0/mingw_64/include/QtGui/qwindowdefs_win.h
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/QAudioOutput
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/QMediaPlayer
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudio.h
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudiooutput.h
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qmediaplayer.h
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtaudio.h
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimedia-config.h
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimediaexports.h
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimediaglobal.h
- C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/QVideoWidget
- C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsexports.h
- C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsglobal.h
- C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qvideowidget.h
  C:/Qt/6.10.0/mingw_64/include/QtNetwork/QTcpSocket
  C:/Qt/6.10.0/mingw_64/include/QtNetwork/qabstractsocket.h
  C:/Qt/6.10.0/mingw_64/include/QtNetwork/qhostaddress.h
@@ -797,6 +773,7 @@ CMakeFiles/TVTestAndroid.dir/main.cpp.obj
  C:/Qt/6.10.0/mingw_64/include/QtWidgets/QStyleFactory
  C:/Qt/6.10.0/mingw_64/include/QtWidgets/QTextEdit
  C:/Qt/6.10.0/mingw_64/include/QtWidgets/QVBoxLayout
+ C:/Qt/6.10.0/mingw_64/include/QtWidgets/QWidget
  C:/Qt/6.10.0/mingw_64/include/QtWidgets/qabstractbutton.h
  C:/Qt/6.10.0/mingw_64/include/QtWidgets/qabstractitemdelegate.h
  C:/Qt/6.10.0/mingw_64/include/QtWidgets/qabstractscrollarea.h
@@ -1092,6 +1069,8 @@ CMakeFiles/TVTestAndroid.dir/main.cpp.obj
  C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/vadefs.h
  C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wchar.h
  C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wctype.h
+ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/FfmpegPipePlayer.h
+ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsBuffer.h
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/BonDriverNetwork.h
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/HighPerformanceStreamProcessor.h
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/ui/MainWindow.h

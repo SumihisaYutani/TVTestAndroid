@@ -501,25 +501,6 @@ CMakeFiles/TVTestAndroid.dir/main.cpp.obj: \
  C:/Qt/6.10.0/mingw_64/include/QtCore/qdatetime.h \
  C:/Qt/6.10.0/mingw_64/include/QtCore/QSettings \
  C:/Qt/6.10.0/mingw_64/include/QtCore/qsettings.h \
- C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/QVideoWidget \
- C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qvideowidget.h \
- C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsglobal.h \
- C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsexports.h \
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/QMediaPlayer \
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qmediaplayer.h \
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimediaglobal.h \
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimedia-config.h \
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimediaexports.h \
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtaudio.h \
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudio.h \
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/QAudioOutput \
- C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudiooutput.h \
- C:/Qt/6.10.0/mingw_64/include/QtCore/QProcess \
- C:/Qt/6.10.0/mingw_64/include/QtCore/qprocess.h \
- C:/Qt/6.10.0/mingw_64/include/QtCore/QFileInfo \
- C:/Qt/6.10.0/mingw_64/include/QtCore/qfileinfo.h \
- C:/Qt/6.10.0/mingw_64/include/QtCore/QQueue \
- C:/Qt/6.10.0/mingw_64/include/QtCore/qqueue.h \
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/BonDriverNetwork.h \
  C:/Qt/6.10.0/mingw_64/include/QtCore/QObject \
  C:/Qt/6.10.0/mingw_64/include/QtCore/qobject.h \
@@ -548,11 +529,21 @@ CMakeFiles/TVTestAndroid.dir/main.cpp.obj: \
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/condition_variable \
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/atomic_futex.h \
  C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/std_thread.h \
+ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/FfmpegPipePlayer.h \
+ C:/Qt/6.10.0/mingw_64/include/QtCore/QProcess \
+ C:/Qt/6.10.0/mingw_64/include/QtCore/qprocess.h \
+ C:/Qt/6.10.0/mingw_64/include/QtWidgets/QWidget \
+ C:/Qt/6.10.0/mingw_64/include/QtWidgets/qwidget.h \
+ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsBuffer.h \
+ C:/Qt/6.10.0/mingw_64/include/QtCore/QMutex \
+ C:/Qt/6.10.0/mingw_64/include/QtCore/qmutex.h \
+ C:/Qt/6.10.0/mingw_64/include/QtCore/qtsan_impl.h \
+ C:/Qt/6.10.0/mingw_64/include/QtCore/QWaitCondition \
+ C:/Qt/6.10.0/mingw_64/include/QtCore/qwaitcondition.h \
+ C:/Qt/6.10.0/mingw_64/include/QtCore/QDeadlineTimer \
+ C:/Qt/6.10.0/mingw_64/include/QtCore/qdeadlinetimer.h \
  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/utils/Logger.h \
  C:/Qt/6.10.0/mingw_64/include/QtCore/QFile \
  C:/Qt/6.10.0/mingw_64/include/QtCore/qfile.h \
  C:/Qt/6.10.0/mingw_64/include/QtCore/QTextStream \
- C:/Qt/6.10.0/mingw_64/include/QtCore/qtextstream.h \
- C:/Qt/6.10.0/mingw_64/include/QtCore/QMutex \
- C:/Qt/6.10.0/mingw_64/include/QtCore/qmutex.h \
- C:/Qt/6.10.0/mingw_64/include/QtCore/qtsan_impl.h
+ C:/Qt/6.10.0/mingw_64/include/QtCore/qtextstream.h

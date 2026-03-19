@@ -342,6 +342,18 @@
 	"HEADERS" : 
 	[
 		[
+			"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/FfmpegPipePlayer.h",
+			"MU",
+			"SVT5AJZPWX/moc_FfmpegPipePlayer.cpp",
+			null
+		],
+		[
+			"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsBuffer.h",
+			"MU",
+			"SVT5AJZPWX/moc_TsBuffer.cpp",
+			null
+		],
+		[
 			"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsStreamDevice.h",
 			"MU",
 			"SVT5AJZPWX/moc_TsStreamDevice.cpp",
@@ -459,6 +471,11 @@
 	[
 		[
 			"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/main.cpp",
+			"MU",
+			null
+		],
+		[
+			"D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/FfmpegPipePlayer.cpp",
 			"MU",
 			null
 		],

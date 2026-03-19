@@ -44,12 +44,10 @@ TVTestAndroid_autogen/timestamp: \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QDebug \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QDir \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QFile \
-	C:/Qt/6.10.0/mingw_64/include/QtCore/QFileInfo \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QIODevice \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QMutex \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QObject \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QProcess \
-	C:/Qt/6.10.0/mingw_64/include/QtCore/QQueue \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QSettings \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QStandardPaths \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/QString \
@@ -146,7 +144,6 @@ TVTestAndroid_autogen/timestamp: \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qpoint.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qprocess.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qprocessordetection.h \
-	C:/Qt/6.10.0/mingw_64/include/QtCore/qqueue.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qrect.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qrefcount.h \
 	C:/Qt/6.10.0/mingw_64/include/QtCore/qregularexpression.h \
@@ -243,19 +240,6 @@ TVTestAndroid_autogen/timestamp: \
 	C:/Qt/6.10.0/mingw_64/include/QtGui/qvalidator.h \
 	C:/Qt/6.10.0/mingw_64/include/QtGui/qwindowdefs.h \
 	C:/Qt/6.10.0/mingw_64/include/QtGui/qwindowdefs_win.h \
-	C:/Qt/6.10.0/mingw_64/include/QtMultimedia/QAudioOutput \
-	C:/Qt/6.10.0/mingw_64/include/QtMultimedia/QMediaPlayer \
-	C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudio.h \
-	C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudiooutput.h \
-	C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qmediaplayer.h \
-	C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtaudio.h \
-	C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimedia-config.h \
-	C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimediaexports.h \
-	C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimediaglobal.h \
-	C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/QVideoWidget \
-	C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsexports.h \
-	C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsglobal.h \
-	C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qvideowidget.h \
 	C:/Qt/6.10.0/mingw_64/include/QtNetwork/QTcpSocket \
 	C:/Qt/6.10.0/mingw_64/include/QtNetwork/qabstractsocket.h \
 	C:/Qt/6.10.0/mingw_64/include/QtNetwork/qhostaddress.h \
@@ -275,6 +259,7 @@ TVTestAndroid_autogen/timestamp: \
 	C:/Qt/6.10.0/mingw_64/include/QtWidgets/QSpinBox \
 	C:/Qt/6.10.0/mingw_64/include/QtWidgets/QTextEdit \
 	C:/Qt/6.10.0/mingw_64/include/QtWidgets/QVBoxLayout \
+	C:/Qt/6.10.0/mingw_64/include/QtWidgets/QWidget \
 	C:/Qt/6.10.0/mingw_64/include/QtWidgets/qabstractbutton.h \
 	C:/Qt/6.10.0/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
 	C:/Qt/6.10.0/mingw_64/include/QtWidgets/qabstractscrollarea.h \
@@ -773,6 +758,9 @@ TVTestAndroid_autogen/timestamp: \
 	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/CMakeFiles/4.3.0-rc2/CMakeSystem.cmake \
 	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/build/TVTestAndroid_autogen/moc_predefs.h \
 	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/main.cpp \
+	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/FfmpegPipePlayer.cpp \
+	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/FfmpegPipePlayer.h \
+	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsBuffer.h \
 	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsStreamDevice.cpp \
 	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsStreamDevice.h \
 	D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/BonDriverNetwork.cpp \

@@ -66,7 +66,6 @@ set(CMAKE_AUTORCC ON)
 set(SOURCES
     main.cpp
     src/network/BonDriverNetwork.cpp
-    src/network/HighPerformanceStreamProcessor.cpp
     src/ui/MainWindow.cpp
     src/media/FfmpegPipePlayer.cpp
     src/media/TsStreamDevice.cpp
@@ -76,7 +75,6 @@ set(SOURCES
 # ヘッダーファイル
 set(HEADERS
     src/network/BonDriverNetwork.h
-    src/network/HighPerformanceStreamProcessor.h
     src/ui/MainWindow.h
     src/media/FfmpegPipePlayer.h
     src/media/TsBuffer.h

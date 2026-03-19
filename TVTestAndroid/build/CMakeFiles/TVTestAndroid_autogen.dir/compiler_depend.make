@@ -47,12 +47,10 @@ TVTestAndroid_autogen/timestamp: C:/Program\ Files/CMake/bin/cmake.exe \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QDebug \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QDir \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QFile \
-  C:/Qt/6.10.0/mingw_64/include/QtCore/QFileInfo \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QIODevice \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QMutex \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QObject \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QProcess \
-  C:/Qt/6.10.0/mingw_64/include/QtCore/QQueue \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QSettings \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QStandardPaths \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QString \
@@ -149,7 +147,6 @@ TVTestAndroid_autogen/timestamp: C:/Program\ Files/CMake/bin/cmake.exe \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qpoint.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qprocess.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qprocessordetection.h \
-  C:/Qt/6.10.0/mingw_64/include/QtCore/qqueue.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qrect.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qrefcount.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qregularexpression.h \
@@ -246,19 +243,6 @@ TVTestAndroid_autogen/timestamp: C:/Program\ Files/CMake/bin/cmake.exe \
   C:/Qt/6.10.0/mingw_64/include/QtGui/qvalidator.h \
   C:/Qt/6.10.0/mingw_64/include/QtGui/qwindowdefs.h \
   C:/Qt/6.10.0/mingw_64/include/QtGui/qwindowdefs_win.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/QAudioOutput \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/QMediaPlayer \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudio.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudiooutput.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qmediaplayer.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtaudio.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimedia-config.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimediaexports.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimediaglobal.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/QVideoWidget \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsexports.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsglobal.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qvideowidget.h \
   C:/Qt/6.10.0/mingw_64/include/QtNetwork/QTcpSocket \
   C:/Qt/6.10.0/mingw_64/include/QtNetwork/qabstractsocket.h \
   C:/Qt/6.10.0/mingw_64/include/QtNetwork/qhostaddress.h \
@@ -278,6 +262,7 @@ TVTestAndroid_autogen/timestamp: C:/Program\ Files/CMake/bin/cmake.exe \
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/QSpinBox \
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/QTextEdit \
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/QVBoxLayout \
+  C:/Qt/6.10.0/mingw_64/include/QtWidgets/QWidget \
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/qabstractbutton.h \
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/qabstractscrollarea.h \
@@ -776,6 +761,9 @@ TVTestAndroid_autogen/timestamp: C:/Program\ Files/CMake/bin/cmake.exe \
   CMakeFiles/4.3.0-rc2/CMakeSystem.cmake \
   TVTestAndroid_autogen/moc_predefs.h \
   D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/main.cpp \
+  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/FfmpegPipePlayer.cpp \
+  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/FfmpegPipePlayer.h \
+  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsBuffer.h \
   D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsStreamDevice.cpp \
   D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsStreamDevice.h \
   D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/BonDriverNetwork.cpp \
@@ -788,13 +776,13 @@ TVTestAndroid_autogen/timestamp: C:/Program\ Files/CMake/bin/cmake.exe \
   D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/utils/Logger.h
 
 
-C:/Qt/6.10.0/mingw_64/include/QtCore/QFile:
-
-C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsDependencies.cmake:
+C:/Program\ Files/CMake/share/cmake-4.3/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/atomic:
 
-C:/Program\ Files/CMake/share/cmake-4.3/Modules/CMakeCheckCompilerFlagCommonPatterns.cmake:
+C:/Qt/6.10.0/mingw_64/include/QtCore/QFile:
+
+C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsDependencies.cmake:
 
 C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/ctype.h:
 
@@ -812,13 +800,13 @@ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/string_vi
 
 C:/Qt/6.10.0/mingw_64/include/QtGui/qcursor.h:
 
-C:/Qt/6.10.0/mingw_64/include/QtCore/qhash.h:
-
-C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Widgets/Qt6QModernWindowsStylePluginTargets-relwithdebinfo.cmake:
+C:/Program\ Files/CMake/share/cmake-4.3/Modules/CMakeCommonLanguageInclude.cmake:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward/binders.h:
 
-C:/Program\ Files/CMake/share/cmake-4.3/Modules/CMakeCommonLanguageInclude.cmake:
+C:/Qt/6.10.0/mingw_64/include/QtCore/qhash.h:
+
+C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Widgets/Qt6QModernWindowsStylePluginTargets-relwithdebinfo.cmake:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/istream:
 
@@ -841,6 +829,10 @@ C:/Program\ Files/CMake/share/cmake-4.3/Modules/CMakeFindDependencyMacro.cmake:
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Concurrent/Qt6ConcurrentTargets.cmake:
 
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Gui/Qt6QWindowsIntegrationPluginTargets.cmake:
+
+C:/Qt/6.10.0/mingw_64/include/QtCore/qtaggedpointer.h:
+
+C:/Qt/6.10.0/mingw_64/include/QtCore/q23utility.h:
 
 C:/Program\ Files/CMake/share/cmake-4.3/Modules/CMakeGenericSystem.cmake:
 
@@ -914,6 +906,10 @@ C:/Program\ Files/CMake/share/cmake-4.3/Modules/Compiler/CMakeCommonCompilerMacr
 
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6EntryPointPrivate/Qt6EntryPointPrivateTargets-relwithdebinfo.cmake:
 
+C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Gui/Qt6QICOPluginTargets-relwithdebinfo.cmake:
+
+C:/Qt/6.10.0/mingw_64/include/QtCore/q20utility.h:
+
 C:/Qt/6.10.0/mingw_64/include/QtCore/QDataStream:
 
 C:/Program\ Files/CMake/share/cmake-4.3/Modules/Compiler/GNU-CXX.cmake:
@@ -941,12 +937,6 @@ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/fs_p
 C:/Qt/6.10.0/mingw_64/include/QtCore/QSettings:
 
 C:/Program\ Files/CMake/share/cmake-4.3/Modules/GNUInstallDirs.cmake:
-
-C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/istream.tcc:
-
-C:/Qt/6.10.0/mingw_64/include/QtCore/qatomic.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtCore/QQueue:
 
 C:/Program\ Files/CMake/share/cmake-4.3/Modules/Internal/CMakeCXXLinkerInformation.cmake:
 
@@ -1002,8 +992,6 @@ C:/Qt/6.10.0/mingw_64/include/QtCore/qmalloc.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qtnoop.h:
 
-C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsexports.h:
-
 C:/Qt/6.10.0/mingw_64/include/QtCore/QObject:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qhashfunctions.h:
@@ -1045,12 +1033,6 @@ C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Network/Qt6QNLMNIPluginAdditionalTargetInfo.c
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_multiset.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/QDir:
-
-C:/Qt/6.10.0/mingw_64/include/QtCore/QFileInfo:
-
-C:/Qt/6.10.0/mingw_64/include/QtGui/qpaintdevice.h:
-
-C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Gui/Qt6QTuioTouchPluginConfig.cmake:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/string:
 
@@ -1095,14 +1077,6 @@ C:/Qt/6.10.0/mingw_64/include/QtCore/q20functional.h:
 C:/Qt/6.10.0/mingw_64/include/QtCore/qstringmatcher.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/q20memory.h:
-
-C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Gui/Qt6QICOPluginTargets-relwithdebinfo.cmake:
-
-C:/Qt/6.10.0/mingw_64/include/QtCore/q20utility.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtCore/qtaggedpointer.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtCore/q23utility.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qabstracteventdispatcher.h:
 
@@ -1153,6 +1127,10 @@ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_
 C:/Qt/6.10.0/mingw_64/include/QtCore/qarraydatapointer.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qassert.h:
+
+C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/istream.tcc:
+
+C:/Qt/6.10.0/mingw_64/include/QtCore/qatomic.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qatomic_cxx11.h:
 
@@ -1316,8 +1294,6 @@ C:/Qt/6.10.0/mingw_64/include/QtNetwork/qtcpsocket.h:
 
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6MultimediaConfigVersion.cmake:
 
-C:/Qt/6.10.0/mingw_64/include/QtCore/qqueue.h:
-
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/move.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qglobalstatic.h:
@@ -1330,9 +1306,9 @@ C:/Qt/6.10.0/mingw_64/include/QtCore/qiodevice.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qiodevicebase.h:
 
-C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/algorithmfwd.h:
-
 C:/Qt/6.10.0/mingw_64/include/QtCore/qiterable.h:
+
+C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/algorithmfwd.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qiterator.h:
 
@@ -1370,11 +1346,11 @@ C:/Qt/6.10.0/mingw_64/include/QtCore/qmutex.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qnumeric.h:
 
-C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateConfig.cmake:
-
 C:/Qt/6.10.0/mingw_64/include/QtCore/qobject.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qttranslation.h:
+
+C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateConfig.cmake:
 
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Network/Qt6NetworkTargets-relwithdebinfo.cmake:
 
@@ -1452,8 +1428,6 @@ C:/Qt/6.10.0/mingw_64/include/QtCore/qstringtokenizer.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qstringview.h:
 
-C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimediaglobal.h:
-
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Gui/Qt6QOffscreenIntegrationPluginConfig.cmake:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_multimap.h:
@@ -1524,8 +1498,6 @@ C:/Qt/6.10.0/mingw_64/include/QtCore/qutf8stringview.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qvarlengtharray.h:
 
-C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/QVideoWidget:
-
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Gui/Qt6GuiDependencies.cmake:
 
 D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/ui/MainWindow.cpp:
@@ -1556,6 +1528,10 @@ C:/Qt/6.10.0/mingw_64/include/QtGui/qimage.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtGui/qkeysequence.h:
 
+C:/Qt/6.10.0/mingw_64/include/QtGui/qpaintdevice.h:
+
+C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Gui/Qt6QTuioTouchPluginConfig.cmake:
+
 C:/Qt/6.10.0/mingw_64/include/QtGui/qpen.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtGui/qpixelformat.h:
@@ -1578,6 +1554,10 @@ C:/Qt/6.10.0/mingw_64/include/QtGui/qtextdocument.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtGui/qtextoption.h:
 
+C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wchar.h:
+
+C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6WidgetsTools/Qt6WidgetsToolsVersionlessTargets.cmake:
+
 C:/Qt/6.10.0/mingw_64/include/QtGui/qtguiexports.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtGui/qtguiglobal.h:
@@ -1597,32 +1577,6 @@ C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6/Qt6VersionlessAliasTargets.cmake:
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6MultimediaWidgets/Qt6MultimediaWidgetsConfigVersion.cmake:
 
 C:/Qt/6.10.0/mingw_64/include/QtGui/qwindowdefs_win.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimedia/QAudioOutput:
-
-C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/stdlib.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimedia/QMediaPlayer:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudio.h:
-
-C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6/QtInstallPaths.cmake:
-
-C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/locale_classes.tcc:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudiooutput.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qmediaplayer.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtaudio.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimedia-config.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimediaexports.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsglobal.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qvideowidget.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtNetwork/qhostaddress.h:
 
@@ -1650,6 +1604,8 @@ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/shar
 
 C:/Qt/6.10.0/mingw_64/include/QtWidgets/QLabel:
 
+C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bit:
+
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/quoted_string.h:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/invoke.h:
@@ -1674,6 +1630,8 @@ C:/Qt/6.10.0/mingw_64/include/QtWidgets/QSpinBox:
 
 C:/Qt/6.10.0/mingw_64/include/QtWidgets/QTextEdit:
 
+C:/Qt/6.10.0/mingw_64/include/QtWidgets/QWidget:
+
 C:/Qt/6.10.0/mingw_64/include/QtWidgets/qabstractbutton.h:
 
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Network/Qt6QTlsBackendCertOnlyPluginConfig.cmake:
@@ -1690,9 +1648,9 @@ C:/Qt/6.10.0/mingw_64/include/QtWidgets/qcombobox.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtWidgets/qgridlayout.h:
 
-C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/algorithm:
-
 C:/Qt/6.10.0/mingw_64/include/QtWidgets/qlayout.h:
+
+C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/algorithm:
 
 C:/Qt/6.10.0/mingw_64/include/QtWidgets/qlineedit.h:
 
@@ -1779,6 +1737,8 @@ C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6/QtPublicSbomLicenseHelpers.cmake:
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6/QtFeature.cmake:
 
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6/QtFeatureCommon.cmake:
+
+C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6/QtInstallPaths.cmake:
 
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6/QtPublicAppleHelpers.cmake:
 
@@ -1894,6 +1854,8 @@ C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6CoreTools/Qt6CoreToolsVersionlessTargets.cmak
 
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6EntryPointPrivate/Qt6EntryPointMinGW32Target.cmake:
 
+C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateConfigVersion.cmake:
+
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6EntryPointPrivate/Qt6EntryPointPrivateAdditionalTargetInfo.cmake:
 
 C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/assert.h:
@@ -1937,6 +1899,8 @@ C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Gui/Qt6QJpegPluginConfig.cmake:
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/set:
 
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Gui/Qt6QMinimalIntegrationPluginAdditionalTargetInfo.cmake:
+
+C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateConfigVersionImpl.cmake:
 
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Gui/Qt6QMinimalIntegrationPluginConfig.cmake:
 
@@ -1990,6 +1954,8 @@ C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6GuiTools/Qt6GuiToolsTargets.cmake:
 
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6MultimediaAdditionalTargetInfo.cmake:
 
+C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/align.h:
+
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6MultimediaConfigVersionImpl.cmake:
 
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Multimedia/Qt6MultimediaMacros.cmake:
@@ -2034,9 +2000,9 @@ C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Widgets/Qt6WidgetsTargets-relwithdebinfo.cmak
 
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6Widgets/Qt6WidgetsTargets.cmake:
 
-C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateTargets.cmake:
-
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6WidgetsTools/Qt6WidgetsToolsConfig.cmake:
+
+C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateTargets.cmake:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/atomic_base.h:
 
@@ -2048,15 +2014,7 @@ C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6WidgetsTools/Qt6WidgetsToolsDependencies.cmak
 
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6WidgetsTools/Qt6WidgetsToolsTargets.cmake:
 
-C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wchar.h:
-
-C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6WidgetsTools/Qt6WidgetsToolsVersionlessTargets.cmake:
-
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateAdditionalTargetInfo.cmake:
-
-C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateConfigVersion.cmake:
-
-C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateConfigVersionImpl.cmake:
 
 C:/Qt/6.10.0/mingw_64/lib/cmake/Qt6ZlibPrivate/Qt6ZlibPrivateVersionlessAliasTargets.cmake:
 
@@ -2065,10 +2023,6 @@ D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/utils/Logger.h:
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/array:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward/auto_ptr.h:
-
-C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bit:
-
-C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/align.h:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/allocated_ptr.h:
 
@@ -2113,6 +2067,8 @@ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/hash
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/ios_base.h:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/locale_classes.h:
+
+C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/locale_classes.tcc:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/locale_facets.h:
 
@@ -2270,6 +2226,8 @@ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/pstl/glue
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/pstl/pstl_config.h:
 
+C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/stdlib.h:
+
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/streambuf:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/system_error:
@@ -2349,6 +2307,12 @@ C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/vadefs.h:
 CMakeFiles/4.3.0-rc2/CMakeSystem.cmake:
 
 TVTestAndroid_autogen/moc_predefs.h:
+
+D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/FfmpegPipePlayer.cpp:
+
+D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/FfmpegPipePlayer.h:
+
+D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsBuffer.h:
 
 D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsStreamDevice.h:
 

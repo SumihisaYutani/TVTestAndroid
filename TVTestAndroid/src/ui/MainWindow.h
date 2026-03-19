@@ -15,7 +15,6 @@
 #include <QDateTime>
 #include <QSettings>
 #include "BonDriverNetwork.h"
-#include "network/HighPerformanceStreamProcessor.h"
 #include "media/FfmpegPipePlayer.h"
 
 class MainWindow : public QMainWindow
@@ -57,7 +56,6 @@ private:
 
     // ネットワーク
     BonDriverNetwork                  *m_network;
-    HighPerformanceStreamProcessor    *m_processor;
 
     // 再生
     FfmpegPipePlayer  *m_player;

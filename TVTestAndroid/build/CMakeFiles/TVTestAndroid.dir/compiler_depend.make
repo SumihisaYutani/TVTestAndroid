@@ -9,12 +9,10 @@ CMakeFiles/TVTestAndroid.dir/TVTestAndroid_autogen/mocs_compilation.cpp.obj: TVT
   C:/Qt/6.10.0/mingw_64/include/QtCore/QDebug \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QDir \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QFile \
-  C:/Qt/6.10.0/mingw_64/include/QtCore/QFileInfo \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QIODevice \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QMutex \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QObject \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QProcess \
-  C:/Qt/6.10.0/mingw_64/include/QtCore/QQueue \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QSettings \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QStandardPaths \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QString \
@@ -113,7 +111,6 @@ CMakeFiles/TVTestAndroid.dir/TVTestAndroid_autogen/mocs_compilation.cpp.obj: TVT
   C:/Qt/6.10.0/mingw_64/include/QtCore/qpoint.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qprocess.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qprocessordetection.h \
-  C:/Qt/6.10.0/mingw_64/include/QtCore/qqueue.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qrect.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qrefcount.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qregularexpression.h \
@@ -212,19 +209,6 @@ CMakeFiles/TVTestAndroid.dir/TVTestAndroid_autogen/mocs_compilation.cpp.obj: TVT
   C:/Qt/6.10.0/mingw_64/include/QtGui/qvalidator.h \
   C:/Qt/6.10.0/mingw_64/include/QtGui/qwindowdefs.h \
   C:/Qt/6.10.0/mingw_64/include/QtGui/qwindowdefs_win.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/QAudioOutput \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/QMediaPlayer \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudio.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudiooutput.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qmediaplayer.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtaudio.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimedia-config.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimediaexports.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimediaglobal.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/QVideoWidget \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsexports.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsglobal.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qvideowidget.h \
   C:/Qt/6.10.0/mingw_64/include/QtNetwork/QTcpSocket \
   C:/Qt/6.10.0/mingw_64/include/QtNetwork/qabstractsocket.h \
   C:/Qt/6.10.0/mingw_64/include/QtNetwork/qhostaddress.h \
@@ -244,6 +228,7 @@ CMakeFiles/TVTestAndroid.dir/TVTestAndroid_autogen/mocs_compilation.cpp.obj: TVT
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/QSpinBox \
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/QTextEdit \
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/QVBoxLayout \
+  C:/Qt/6.10.0/mingw_64/include/QtWidgets/QWidget \
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/qabstractbutton.h \
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/qabstractscrollarea.h \
@@ -534,11 +519,15 @@ CMakeFiles/TVTestAndroid.dir/TVTestAndroid_autogen/mocs_compilation.cpp.obj: TVT
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/vadefs.h \
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wchar.h \
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wctype.h \
+  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/FfmpegPipePlayer.h \
+  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsBuffer.h \
   D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsStreamDevice.h \
   D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/BonDriverNetwork.h \
   D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/HighPerformanceStreamProcessor.h \
   D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/ui/MainWindow.h \
   D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/utils/Logger.h \
+  TVTestAndroid_autogen/SVT5AJZPWX/moc_FfmpegPipePlayer.cpp \
+  TVTestAndroid_autogen/SVT5AJZPWX/moc_TsBuffer.cpp \
   TVTestAndroid_autogen/SVT5AJZPWX/moc_TsStreamDevice.cpp \
   TVTestAndroid_autogen/UFQQIFJZKK/moc_BonDriverNetwork.cpp \
   TVTestAndroid_autogen/UFQQIFJZKK/moc_HighPerformanceStreamProcessor.cpp \
@@ -551,21 +540,21 @@ CMakeFiles/TVTestAndroid.dir/main.cpp.obj: D:/ClaudeCode/project/Tvtest_android/
   C:/Qt/6.10.0/mingw_64/include/QtCore/QByteArray \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QDataStream \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QDateTime \
+  C:/Qt/6.10.0/mingw_64/include/QtCore/QDeadlineTimer \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QDebug \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QDir \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QFile \
-  C:/Qt/6.10.0/mingw_64/include/QtCore/QFileInfo \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QLoggingCategory \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QMutex \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QObject \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QProcess \
-  C:/Qt/6.10.0/mingw_64/include/QtCore/QQueue \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QSettings \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QStandardPaths \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QString \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QTextStream \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QThread \
   C:/Qt/6.10.0/mingw_64/include/QtCore/QTimer \
+  C:/Qt/6.10.0/mingw_64/include/QtCore/QWaitCondition \
   C:/Qt/6.10.0/mingw_64/include/QtCore/q17memory.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/q20functional.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/q20iterator.h \
@@ -660,7 +649,6 @@ CMakeFiles/TVTestAndroid.dir/main.cpp.obj: D:/ClaudeCode/project/Tvtest_android/
   C:/Qt/6.10.0/mingw_64/include/QtCore/qpoint.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qprocess.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qprocessordetection.h \
-  C:/Qt/6.10.0/mingw_64/include/QtCore/qqueue.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qrect.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qrefcount.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qregularexpression.h \
@@ -721,6 +709,7 @@ CMakeFiles/TVTestAndroid.dir/main.cpp.obj: D:/ClaudeCode/project/Tvtest_android/
   C:/Qt/6.10.0/mingw_64/include/QtCore/qvariant.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qvarlengtharray.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qversiontagging.h \
+  C:/Qt/6.10.0/mingw_64/include/QtCore/qwaitcondition.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qxptype_traits.h \
   C:/Qt/6.10.0/mingw_64/include/QtCore/qyieldcpu.h \
   C:/Qt/6.10.0/mingw_64/include/QtGui/qaction.h \
@@ -759,19 +748,6 @@ CMakeFiles/TVTestAndroid.dir/main.cpp.obj: D:/ClaudeCode/project/Tvtest_android/
   C:/Qt/6.10.0/mingw_64/include/QtGui/qvalidator.h \
   C:/Qt/6.10.0/mingw_64/include/QtGui/qwindowdefs.h \
   C:/Qt/6.10.0/mingw_64/include/QtGui/qwindowdefs_win.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/QAudioOutput \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/QMediaPlayer \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudio.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudiooutput.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qmediaplayer.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtaudio.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimedia-config.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimediaexports.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimediaglobal.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/QVideoWidget \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsexports.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsglobal.h \
-  C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qvideowidget.h \
   C:/Qt/6.10.0/mingw_64/include/QtNetwork/QTcpSocket \
   C:/Qt/6.10.0/mingw_64/include/QtNetwork/qabstractsocket.h \
   C:/Qt/6.10.0/mingw_64/include/QtNetwork/qhostaddress.h \
@@ -794,6 +770,7 @@ CMakeFiles/TVTestAndroid.dir/main.cpp.obj: D:/ClaudeCode/project/Tvtest_android/
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/QStyleFactory \
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/QTextEdit \
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/QVBoxLayout \
+  C:/Qt/6.10.0/mingw_64/include/QtWidgets/QWidget \
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/qabstractbutton.h \
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/qabstractitemdelegate.h \
   C:/Qt/6.10.0/mingw_64/include/QtWidgets/qabstractscrollarea.h \
@@ -1089,6 +1066,8 @@ CMakeFiles/TVTestAndroid.dir/main.cpp.obj: D:/ClaudeCode/project/Tvtest_android/
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/vadefs.h \
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wchar.h \
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wctype.h \
+  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/FfmpegPipePlayer.h \
+  D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsBuffer.h \
   D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/BonDriverNetwork.h \
   D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/HighPerformanceStreamProcessor.h \
   D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/ui/MainWindow.h \
@@ -3322,9 +3301,9 @@ C:/Qt/6.10.0/mingw_64/include/QtCore/q20utility.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/QDataStream:
 
-C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/sec_api/stdio_s.h:
-
 C:/Qt/6.10.0/mingw_64/include/QtCore/QProcess:
+
+C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/sec_api/stdio_s.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/QDeadlineTimer:
 
@@ -3352,39 +3331,21 @@ C:/Qt/6.10.0/mingw_64/include/QtCore/QObject:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qhashfunctions.h:
 
+C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/sec_api/sys/timeb_s.h:
+
 C:/Qt/6.10.0/mingw_64/include/QtCore/QDebug:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/atomic:
 
+TVTestAndroid_autogen/SVT5AJZPWX/moc_TsBuffer.cpp:
+
 C:/Qt/6.10.0/mingw_64/include/QtCore/QFile:
-
-C:/Qt/6.10.0/mingw_64/include/QtCore/qdarwinhelpers.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtCore/QFileInfo:
-
-C:/Qt/6.10.0/mingw_64/include/QtGui/qpaintdevice.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/QIODevice:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/string:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/QMutex:
-
-C:/Qt/6.10.0/mingw_64/include/QtCore/qconstructormacros.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtCore/qsysinfo.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtCore/qscopedpointer.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtCore/qstringconverter_base.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtCore/qbytearrayalgorithms.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtCore/qatomic.h:
-
-C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/istream.tcc:
-
-C:/Qt/6.10.0/mingw_64/include/QtCore/QQueue:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/QSettings:
 
@@ -3400,11 +3361,11 @@ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w6
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/limits:
 
-C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/stddef.h:
-
 C:/Qt/6.10.0/mingw_64/include/QtCore/QString:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qnamespace.h:
+
+C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/stddef.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qanystringview.h:
 
@@ -3518,19 +3479,33 @@ C:/Qt/6.10.0/mingw_64/include/QtCore/qarraydataops.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qassert.h:
 
+C:/Qt/6.10.0/mingw_64/include/QtCore/qconstructormacros.h:
+
+C:/Qt/6.10.0/mingw_64/include/QtCore/qsysinfo.h:
+
+C:/Qt/6.10.0/mingw_64/include/QtCore/qscopedpointer.h:
+
+C:/Qt/6.10.0/mingw_64/include/QtCore/qstringconverter_base.h:
+
+C:/Qt/6.10.0/mingw_64/include/QtCore/qbytearrayalgorithms.h:
+
+C:/Qt/6.10.0/mingw_64/include/QtCore/qatomic.h:
+
+C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/istream.tcc:
+
 C:/Qt/6.10.0/mingw_64/include/QtCore/qcoreevent.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qatomic_cxx11.h:
 
-C:/Qt/6.10.0/mingw_64/include/QtCore/qcompare.h:
-
-C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/stdlib.h:
+C:/Qt/6.10.0/mingw_64/include/QtCore/qdebug.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qbasicatomic.h:
 
-C:/Qt/6.10.0/mingw_64/include/QtCore/qdebug.h:
-
 C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/limits.h:
+
+C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/stdlib.h:
+
+C:/Qt/6.10.0/mingw_64/include/QtCore/qcompare.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qbasictimer.h:
 
@@ -3552,6 +3527,8 @@ C:/Qt/6.10.0/mingw_64/include/QtGui/qtextformat.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qcompare_impl.h:
 
+C:/Qt/6.10.0/mingw_64/include/QtCore/qdarwinhelpers.h:
+
 C:/Qt/6.10.0/mingw_64/include/QtCore/qdatastream.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qfiledevice.h:
@@ -3560,9 +3537,9 @@ C:/Qt/6.10.0/mingw_64/include/QtWidgets/qslider.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qdeadlinetimer.h:
 
-C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/swprintf.inl:
-
 C:/Qt/6.10.0/mingw_64/include/QtCore/qendian.h:
+
+C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/swprintf.inl:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qeventloop.h:
 
@@ -3616,8 +3593,6 @@ C:/Qt/6.10.0/mingw_64/include/QtCore/qtextstream.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtNetwork/qtcpsocket.h:
 
-C:/Qt/6.10.0/mingw_64/include/QtCore/qqueue.h:
-
 C:/Qt/6.10.0/mingw_64/include/QtCore/QMutexLocker:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qglobalstatic.h:
@@ -3656,13 +3631,13 @@ C:/Qt/6.10.0/mingw_64/include/QtCore/qlogging.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qvariant.h:
 
+C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsexports.h:
+
 TVTestAndroid_autogen/YPKJ5OE7LN/moc_MainWindow.cpp:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qmalloc.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qtnoop.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsexports.h:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/clocale:
 
@@ -3671,6 +3646,8 @@ C:/Qt/6.10.0/mingw_64/include/QtCore/qmap.h:
 C:/Qt/6.10.0/mingw_64/include/QtCore/qmargins.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qstringalgorithms.h:
+
+C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/string.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qmath.h:
 
@@ -3760,9 +3737,9 @@ C:/Qt/6.10.0/mingw_64/include/QtCore/qstringliteral.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qstringtokenizer.h:
 
-C:/Qt/6.10.0/mingw_64/include/QtCore/qstringview.h:
-
 C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimediaglobal.h:
+
+C:/Qt/6.10.0/mingw_64/include/QtCore/qstringview.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qswap.h:
 
@@ -3804,9 +3781,9 @@ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/code
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qtimezone.h:
 
-C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/stdarg.h:
-
 C:/Qt/6.10.0/mingw_64/include/QtCore/qtmetamacros.h:
+
+C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/stdarg.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtGui/qtransform.h:
 
@@ -3846,9 +3823,9 @@ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/ostr
 
 C:/Qt/6.10.0/mingw_64/include/QtCore/qutf8stringview.h:
 
-C:/Qt/6.10.0/mingw_64/include/QtCore/qvarlengtharray.h:
-
 C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/QVideoWidget:
+
+C:/Qt/6.10.0/mingw_64/include/QtCore/qvarlengtharray.h:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/ctime:
 
@@ -3878,13 +3855,17 @@ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/initializ
 
 C:/Qt/6.10.0/mingw_64/include/QtGui/qfontinfo.h:
 
-C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/stdio.h:
-
 C:/Qt/6.10.0/mingw_64/include/QtGui/qfontmetrics.h:
+
+C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/stdio.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtGui/qimage.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtGui/qkeysequence.h:
+
+C:/Qt/6.10.0/mingw_64/include/QtCore/QFileInfo:
+
+C:/Qt/6.10.0/mingw_64/include/QtGui/qpaintdevice.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtGui/qpalette.h:
 
@@ -3895,6 +3876,8 @@ C:/Qt/6.10.0/mingw_64/include/QtGui/qpixelformat.h:
 C:/Qt/6.10.0/mingw_64/include/QtGui/qpixmap.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtGui/qpolygon.h:
+
+C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/sec_api/stdlib_s.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtGui/qregion.h:
 
@@ -3917,34 +3900,6 @@ C:/Qt/6.10.0/mingw_64/include/QtGui/qwindowdefs.h:
 C:/Qt/6.10.0/mingw_64/include/QtCore/QElapsedTimer:
 
 C:/Qt/6.10.0/mingw_64/include/QtGui/qwindowdefs_win.h:
-
-C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_numeric.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimedia/QAudioOutput:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimedia/QMediaPlayer:
-
-C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/stdlib.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudio.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudiooutput.h:
-
-C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/locale_classes.tcc:
-
-C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/system_error:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qmediaplayer.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtaudio.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimedia-config.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimediaexports.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsglobal.h:
-
-C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qvideowidget.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtWidgets/QStyleFactory:
 
@@ -4004,6 +3959,8 @@ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/iosfwd:
 
 C:/Qt/6.10.0/mingw_64/include/QtWidgets/QTextEdit:
 
+C:/Qt/6.10.0/mingw_64/include/QtWidgets/QWidget:
+
 C:/Qt/6.10.0/mingw_64/include/QtWidgets/QMessageBox:
 
 C:/Qt/6.10.0/mingw_64/include/QtWidgets/qabstractbutton.h:
@@ -4046,6 +4003,8 @@ C:/Qt/6.10.0/mingw_64/include/QtWidgets/qrubberband.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtWidgets/qspinbox.h:
 
+C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/signal.h:
+
 C:/Qt/6.10.0/mingw_64/include/QtWidgets/qsizepolicy.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtWidgets/qstyle.h:
@@ -4057,6 +4016,8 @@ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/tr1/hyper
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/ext/alloc_traits.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtWidgets/qtabbar.h:
+
+C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/sec_api/string_s.h:
 
 C:/Qt/6.10.0/mingw_64/include/QtWidgets/qtabwidget.h:
 
@@ -4133,6 +4094,10 @@ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/iomanip:
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/hash_bytes.h:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/locale_classes.h:
+
+C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudiooutput.h:
+
+C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/locale_classes.tcc:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/string_view.tcc:
 
@@ -4218,6 +4183,8 @@ C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/ios:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_map.h:
 
+C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_numeric.h:
+
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_relops.h:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/tr1/poly_laguerre.tcc:
@@ -4264,9 +4231,9 @@ C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/_timeval.h:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/cstdint:
 
-C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/sec_api/wchar_s.h:
-
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/cstdio:
+
+C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/sec_api/wchar_s.h:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/cstdlib:
 
@@ -4306,7 +4273,13 @@ C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/_mingw_mac.h:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/sstream:
 
+C:/Qt/6.10.0/mingw_64/include/QtMultimedia/QMediaPlayer:
+
+C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/stdlib.h:
+
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/streambuf:
+
+C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/system_error:
 
 C:/Qt/Tools/mingw1310_64/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/tr1/ell_integral.tcc:
 
@@ -4376,17 +4349,7 @@ C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/pthread_unistd.h:
 
 C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/sdks/_mingw_ddk.h:
 
-C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/sec_api/stdlib_s.h:
-
-C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/sec_api/string_s.h:
-
-C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/sec_api/sys/timeb_s.h:
-
-C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/signal.h:
-
 C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/stdint.h:
-
-C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/string.h:
 
 C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/sys/timeb.h:
 
@@ -4398,9 +4361,15 @@ C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/vadefs.h:
 
 C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wchar.h:
 
+D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/FfmpegPipePlayer.h:
+
+D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsBuffer.h:
+
 D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/media/TsStreamDevice.h:
 
 D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/HighPerformanceStreamProcessor.h:
+
+TVTestAndroid_autogen/SVT5AJZPWX/moc_FfmpegPipePlayer.cpp:
 
 TVTestAndroid_autogen/SVT5AJZPWX/moc_TsStreamDevice.cpp:
 
@@ -4431,3 +4400,23 @@ C:/Qt/6.10.0/mingw_64/include/QtCore/QCoreApplication:
 C:/Qt/6.10.0/mingw_64/include/QtCore/qelapsedtimer.h:
 
 D:/ClaudeCode/project/Tvtest_android/TVTestAndroid/src/network/HighPerformanceStreamProcessor.cpp:
+
+C:/Qt/6.10.0/mingw_64/include/QtCore/QQueue:
+
+C:/Qt/6.10.0/mingw_64/include/QtCore/qqueue.h:
+
+C:/Qt/6.10.0/mingw_64/include/QtMultimedia/QAudioOutput:
+
+C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qaudio.h:
+
+C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qmediaplayer.h:
+
+C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtaudio.h:
+
+C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimedia-config.h:
+
+C:/Qt/6.10.0/mingw_64/include/QtMultimedia/qtmultimediaexports.h:
+
+C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qtmultimediawidgetsglobal.h:
+
+C:/Qt/6.10.0/mingw_64/include/QtMultimediaWidgets/qvideowidget.h:

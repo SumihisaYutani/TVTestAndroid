@@ -226,6 +226,30 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\TVTestAndroid.dir\build.make CMakeFiles/TVTestAndroid.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+src/media/FfmpegPipePlayer.obj: src/media/FfmpegPipePlayer.cpp.obj
+.PHONY : src/media/FfmpegPipePlayer.obj
+
+# target to build an object file
+src/media/FfmpegPipePlayer.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\TVTestAndroid.dir\build.make CMakeFiles/TVTestAndroid.dir/src/media/FfmpegPipePlayer.cpp.obj
+.PHONY : src/media/FfmpegPipePlayer.cpp.obj
+
+src/media/FfmpegPipePlayer.i: src/media/FfmpegPipePlayer.cpp.i
+.PHONY : src/media/FfmpegPipePlayer.i
+
+# target to preprocess a source file
+src/media/FfmpegPipePlayer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\TVTestAndroid.dir\build.make CMakeFiles/TVTestAndroid.dir/src/media/FfmpegPipePlayer.cpp.i
+.PHONY : src/media/FfmpegPipePlayer.cpp.i
+
+src/media/FfmpegPipePlayer.s: src/media/FfmpegPipePlayer.cpp.s
+.PHONY : src/media/FfmpegPipePlayer.s
+
+# target to generate assembly for a file
+src/media/FfmpegPipePlayer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\TVTestAndroid.dir\build.make CMakeFiles/TVTestAndroid.dir/src/media/FfmpegPipePlayer.cpp.s
+.PHONY : src/media/FfmpegPipePlayer.cpp.s
+
 src/media/TsStreamDevice.obj: src/media/TsStreamDevice.cpp.obj
 .PHONY : src/media/TsStreamDevice.obj
 
@@ -366,6 +390,9 @@ help:
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s
+	@echo ... src/media/FfmpegPipePlayer.obj
+	@echo ... src/media/FfmpegPipePlayer.i
+	@echo ... src/media/FfmpegPipePlayer.s
 	@echo ... src/media/TsStreamDevice.obj
 	@echo ... src/media/TsStreamDevice.i
 	@echo ... src/media/TsStreamDevice.s

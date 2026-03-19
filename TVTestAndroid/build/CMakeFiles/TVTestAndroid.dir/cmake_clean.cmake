@@ -6,6 +6,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/TVTestAndroid.dir/build/.qt/rcc/qrc_resources.cpp.obj.d"
   "CMakeFiles/TVTestAndroid.dir/main.cpp.obj"
   "CMakeFiles/TVTestAndroid.dir/main.cpp.obj.d"
+  "CMakeFiles/TVTestAndroid.dir/src/media/FfmpegPipePlayer.cpp.obj"
+  "CMakeFiles/TVTestAndroid.dir/src/media/FfmpegPipePlayer.cpp.obj.d"
   "CMakeFiles/TVTestAndroid.dir/src/media/TsStreamDevice.cpp.obj"
   "CMakeFiles/TVTestAndroid.dir/src/media/TsStreamDevice.cpp.obj.d"
   "CMakeFiles/TVTestAndroid.dir/src/network/BonDriverNetwork.cpp.obj"
