@@ -22,6 +22,7 @@ public:
     /**
      * @brief BonDriver_Proxyコマンド列挙
      */
+QTcpSocket* socket() const { return m_socket; }
     enum BonDriverCommand {
         eSelectBonDriver = 0,     // BonDriver選択
         eCreateBonDriver = 1,     // インスタンス作成
