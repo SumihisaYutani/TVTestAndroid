@@ -481,3 +481,37 @@ void MainWindow::restoreSettings()
     m_channelSpin->setValue(s.value("channel/channel", 14).toInt());
     addLogMessage("前回の設定を復元しました");
 }
+
+void MainWindow::showEvent(QShowEvent *event)
+{
+    QMainWindow::showEvent(event);
+
+    // ウィジェットが確実に表示された後に init を呼ぶ
+    static bool initialized = false;
+    if (!initialized) {
+        initialized = true;
+        m_player->init(m_videoWidget);
+        LOG_INFO("showEvent: FfmpegPipePlayer初期化完了");
+    }
+}
+
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    QMainWindow::resizeEvent(event);
+
+    // リサイズをffplayに反映（デバウンス: 300ms後に実行）
+    static QTimer *resizeTimer = nullptr;
+    if (!resizeTimer) {
+        resizeTimer = new QTimer(this);
+        resizeTimer->setSingleShot(true);
+        connect(resizeTimer, &QTimer::timeout, this, [this]() {
+            if (m_videoWidget) {
+                m_player->resizeVideo(
+                    m_videoWidget->width(),
+                    m_videoWidget->height()
+                );
+            }
+        });
+    }
+    resizeTimer->start(300); // 300ms後に実行（連続リサイズを間引く）
+}
