@@ -64,8 +64,9 @@ void MainWindow::setupUI()
     m_mainLayout = new QVBoxLayout(m_centralWidget);
 
     // 映像表示（ffplay埋め込み先）
-    m_videoWidget->setMinimumSize(640, 360);
-    m_videoWidget->setStyleSheet("background-color: black;");
+m_videoWidget->setMinimumSize(640, 360);
+m_videoWidget->setStyleSheet("background-color: black;");
+m_videoWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     m_mainLayout->addWidget(m_videoWidget);
 
     // 接続グループ
