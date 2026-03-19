@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     setupConnections();
 
     // ffplay埋め込み先ウィジェットを渡す
-    m_player->init(m_videoWidget->winId());
+m_player->init(m_videoWidget);
 
     // プロセッサ初期化
     m_processor->initialize();
