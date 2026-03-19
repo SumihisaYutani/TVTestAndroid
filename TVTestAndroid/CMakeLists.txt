@@ -68,6 +68,7 @@ set(SOURCES
     src/network/BonDriverNetwork.cpp
     src/network/HighPerformanceStreamProcessor.cpp
     src/ui/MainWindow.cpp
+    src/media/FfmpegPipePlayer.cpp
     src/media/TsStreamDevice.cpp
     src/utils/Logger.cpp
 )
@@ -77,6 +78,8 @@ set(HEADERS
     src/network/BonDriverNetwork.h
     src/network/HighPerformanceStreamProcessor.h
     src/ui/MainWindow.h
+    src/media/FfmpegPipePlayer.h
+    src/media/TsBuffer.h
     src/media/TsStreamDevice.h
     src/utils/Logger.h
 )
