@@ -14,19 +14,14 @@ public:
         : QObject(parent), m_buffer(buffer), m_process(process) {}
 
 public slots:
-    void run()
-    {
-        m_running = true;
-        while (m_running) {
-            QByteArray data = m_buffer->take(65536);
-            if (data.isEmpty()) continue;
-
-            if (m_process->state() != QProcess::Running) {
-                break;
-            }
-            m_process->write(data);
-        }
+void run()
+{
+    m_running = true;
+    while (m_running) {
+        if (m_process->state() != QProcess::Running) break;
+        m_buffer->writeTo(m_process);  // ← writeToに変更するだけ
     }
+}
 
     void stop() { m_running = false; }
 
