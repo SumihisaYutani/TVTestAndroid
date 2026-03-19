@@ -505,10 +505,6 @@ float BonDriverNetwork::getSignalLevel() const
     return m_signalLevel;
 }
 
-QTcpSocket* BonDriverNetwork::getSocket() const
-{
-    return m_socket;
-}
 
 void BonDriverNetwork::onConnected()
 {
