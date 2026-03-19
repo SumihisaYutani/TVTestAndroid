@@ -10,7 +10,8 @@ FfmpegPipePlayer::FfmpegPipePlayer(QObject *parent)
 {
     connect(m_process, &QProcess::errorOccurred,
             this, &FfmpegPipePlayer::onProcessError);
-    connect(m_process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+    connect(m_process,
+            QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
             this, &FfmpegPipePlayer::onProcessFinished);
 }
 
@@ -19,10 +20,20 @@ FfmpegPipePlayer::~FfmpegPipePlayer()
     stop();
 }
 
-bool FfmpegPipePlayer::init(WId windowId)
+bool FfmpegPipePlayer::init(QWidget *videoWidget)
 {
-    m_windowId = windowId;
-    LOG_INFO(QString("FfmpegPipePlayer初期化: windowId=%1").arg((qulonglong)windowId));
+    m_videoWidget = videoWidget;
+
+    // WA_NativeWindow でwinIdを安定させる
+    m_videoWidget->setAttribute(Qt::WA_NativeWindow);
+    m_videoWidget->winId(); // 強制的にネイティブウィンドウ作成
+
+    m_windowId = m_videoWidget->winId();
+
+    LOG_INFO(QString("FfmpegPipePlayer初期化: winId=0x%1 size=%2x%3")
+             .arg((qulonglong)m_windowId, 0, 16)
+             .arg(videoWidget->width())
+             .arg(videoWidget->height()));
     return true;
 }
 
@@ -33,35 +44,36 @@ void FfmpegPipePlayer::play()
         return;
     }
 
-    // ffplayへの引数設定
-    // -i pipe:0 → 標準入力からTSを読む
-    // -window_title "" → タイトルバーなし
-    // -left / -top → ウィンドウ位置（winIdに合わせる）
+    // winIdを最新値に更新（ウィンドウ表示後に変わる場合がある）
+    if (m_videoWidget) {
+        m_windowId = m_videoWidget->winId();
+        LOG_INFO(QString("再生開始時winId=0x%1").arg((qulonglong)m_windowId, 0, 16));
+    }
+
+    int w = m_videoWidget ? m_videoWidget->width()  : 640;
+    int h = m_videoWidget ? m_videoWidget->height() : 360;
+
     QStringList args;
-    args << "-f"              << "mpegts"
-         << "-probesize"     << "500000"
+    args << "-f"               << "mpegts"
+         << "-probesize"       << "500000"
          << "-analyzeduration" << "500000"
-         << "-fflags"        << "+genpts+discardcorrupt"
-         << "-flags"         << "low_delay"
-         << "-avioflags"     << "direct"
-         << "-i"             << "pipe:0"
-         << "-vf"            << "setpts=0"   // 低遅延
-         << "-sync"          << "ext"
-         << "-autoexit"
-         << "-window_title"  << "TVTest"
-         << "-noborder";
+         << "-fflags"          << "+genpts+discardcorrupt"
+         << "-flags"           << "low_delay"
+         << "-avioflags"       << "direct"
+         << "-i"               << "pipe:0"
+         << "-vf"              << "setpts=0"
+         << "-sync"            << "ext"
+         << "-noborder"
+         << "-window_title"    << ""
+         << "-x"               << QString::number(w)
+         << "-y"               << QString::number(h);
 
 #ifdef Q_OS_WIN
-    // ffplayをウィジェット内に埋め込む（Windows）
-    // WIDを16進文字列で渡す
     args << "-wid" << QString("0x%1").arg((qulonglong)m_windowId, 0, 16);
 #endif
 
     m_process->setProgram("C:/ffmpeg/bin/ffplay.exe");
     m_process->setArguments(args);
-
-    // 標準入力をパイプモードに設定
-    m_process->setStandardInputFile(QProcess::nullDevice()); // 一旦null
     m_process->setProcessChannelMode(QProcess::MergedChannels);
     m_process->start();
 
@@ -85,7 +97,6 @@ void FfmpegPipePlayer::play()
 
 void FfmpegPipePlayer::stop()
 {
-    // ワーカー停止
     if (m_worker) {
         m_worker->stop();
     }
@@ -98,7 +109,6 @@ void FfmpegPipePlayer::stop()
         m_worker = nullptr;
     }
 
-    // ffplay停止
     if (m_process->state() == QProcess::Running) {
         m_process->terminate();
         if (!m_process->waitForFinished(3000))
@@ -113,6 +123,51 @@ void FfmpegPipePlayer::stop()
 void FfmpegPipePlayer::clearBuffer()
 {
     m_tsBuffer->clear();
+}
+
+void FfmpegPipePlayer::resizeVideo(int w, int h)
+{
+    // ffplayはリサイズコマンドを持たないので再起動で対応
+    if (m_process->state() != QProcess::Running) return;
+
+    LOG_INFO(QString("リサイズ: %1x%2 → ffplay再起動").arg(w).arg(h));
+
+    // ワーカーは止めずにffplayだけ再起動
+    m_process->terminate();
+    m_process->waitForFinished(1000);
+
+    // 新サイズで再起動
+    int savedW = m_videoWidget ? m_videoWidget->width()  : w;
+    int savedH = m_videoWidget ? m_videoWidget->height() : h;
+
+    QStringList args;
+    args << "-f"               << "mpegts"
+         << "-probesize"       << "500000"
+         << "-analyzeduration" << "500000"
+         << "-fflags"          << "+genpts+discardcorrupt"
+         << "-flags"           << "low_delay"
+         << "-avioflags"       << "direct"
+         << "-i"               << "pipe:0"
+         << "-vf"              << "setpts=0"
+         << "-sync"            << "ext"
+         << "-noborder"
+         << "-window_title"    << ""
+         << "-x"               << QString::number(savedW)
+         << "-y"               << QString::number(savedH);
+
+#ifdef Q_OS_WIN
+    args << "-wid" << QString("0x%1").arg((qulonglong)m_windowId, 0, 16);
+#endif
+
+    m_process->setArguments(args);
+    m_process->start();
+
+    if (!m_process->waitForStarted(3000)) {
+        LOG_CRITICAL("ffplayリサイズ再起動失敗");
+        return;
+    }
+
+    LOG_INFO("✅ ffplayリサイズ再起動成功");
 }
 
 void FfmpegPipePlayer::onProcessError(QProcess::ProcessError error)
