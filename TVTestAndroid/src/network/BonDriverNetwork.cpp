@@ -747,11 +747,10 @@ void BonDriverNetwork::processResponse()
         
         // TSストリーム処理（高速化）
         if (m_receiveBuffer.size() >= 188) {
-            // 188バイト単位で一括処理
+            // 188バイト単位で一括処理（バッファ内の全パケットを処理）
             int tsPackets = m_receiveBuffer.size() / 188;
-            int processPackets = qMin(tsPackets, 5); // 最大5パケット/回
-            
-            for (int i = 0; i < processPackets; i++) {
+
+            for (int i = 0; i < tsPackets; i++) {
                 QByteArray tsPacket = m_receiveBuffer.left(188);
                 
                 // 🔧 強化されたTSパケット同期チェック

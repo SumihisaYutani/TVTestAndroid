@@ -79,17 +79,16 @@ bool VLCStreamingPlayer::initializeVLC()
         return false;
     }
 
-    // VLCインスタンス作成（ライブストリーミング最適化）
+    // VLCインスタンス作成（ライブストリーミング低遅延最適化）
     const char* vlc_args[] = {
         "--intf", "dummy",                           // インターフェース無効
         "--no-video-title-show",                     // タイトル表示無効
-        "--live-caching=5000",                       // ライブキャッシュ5秒（大幅増加）
-        "--file-caching=5000",                       // ファイルキャッシュ5秒（大幅増加）
-        "--network-caching=5000",                    // ネットワークキャッシュ5秒（大幅増加）
+        "--live-caching=300",                        // ライブキャッシュ300ms（低遅延）
+        "--file-caching=300",                        // ファイルキャッシュ300ms
+        "--network-caching=300",                     // ネットワークキャッシュ300ms
         "--clock-jitter=0",                          // クロックジッター無効
-        "--avi-index=0",                             // インデックス無効（高速化）
-        "--play-and-exit",                           // 再生終了時に停止しない
-        "--loop",                                    // ループ再生
+        "--clock-synchro=0",                         // クロック同期無効（低遅延）
+        "--no-skip-frames",                          // フレームスキップ無効
         "--verbose=1"                                // 最小ログ
     };
 
@@ -396,8 +395,8 @@ bool VLCStreamingPlayer::createStreamingMedia()
         
         // ライブストリーミング専用最適化
         libvlc_media_add_option(m_vlcMedia, ":ts-seek-percent=false");  // シーク無効
-        libvlc_media_add_option(m_vlcMedia, ":live-caching=1000");        // 1秒キャッシング
-        libvlc_media_add_option(m_vlcMedia, ":network-caching=1000");     // ネットワークキャッシング
+        libvlc_media_add_option(m_vlcMedia, ":live-caching=300");         // 300ms低遅延キャッシング
+        libvlc_media_add_option(m_vlcMedia, ":network-caching=300");      // ネットワークキャッシング300ms
         libvlc_media_add_option(m_vlcMedia, ":input-repeat=999999");      // 無限ループ
         libvlc_media_add_option(m_vlcMedia, ":start-time=0");                     // 開始時刻指定
     }

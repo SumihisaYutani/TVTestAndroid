@@ -118,13 +118,9 @@ target_include_directories(TVTestAndroid PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/network
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ui
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils
+    ${VLC_INCLUDE_DIR}
 )
-
-# VLCインクルードパス追加
-if(VLC_FOUND)
-    target_include_directories(TVTestAndroid PRIVATE ${VLC_INCLUDE_DIR})
-    add_definitions(-DUSE_VLC_MEDIA_PLAYER)
-endif()
+add_definitions(-DUSE_VLC_MEDIA_PLAYER)
 
 # Qt6ライブラリとリンク
 target_link_libraries(TVTestAndroid PRIVATE

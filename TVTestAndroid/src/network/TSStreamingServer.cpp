@@ -65,21 +65,18 @@ QString TSStreamingServer::getStreamUrl() const
 
 void TSStreamingServer::addTSData(const QByteArray &data)
 {
+    // クライアントが接続中なら即座に送信（タイマー待ちなし）
+    if (!m_clients.isEmpty()) {
+        sendTSData(data);
+        return;
+    }
+
+    // クライアント未接続時はキューに積む（接続待ち）
     QMutexLocker locker(&m_dataMutex);
-    
-    // キューサイズ制限
     while (m_tsDataQueue.size() >= MAX_QUEUE_SIZE) {
-        m_tsDataQueue.dequeue(); // 古いデータを削除
+        m_tsDataQueue.dequeue();
     }
-    
     m_tsDataQueue.enqueue(data);
-    
-    static int addDataCount = 0;
-    addDataCount++;
-    if (addDataCount <= 10 || addDataCount % 100 == 0) {
-        LOG_INFO(QString("📺 HTTPサーバー: TSデータ受信 #%1 - %2 bytes (キュー: %3)")
-                 .arg(addDataCount).arg(data.size()).arg(m_tsDataQueue.size()));
-    }
 }
 
 void TSStreamingServer::incomingConnection(qintptr socketDescriptor)
@@ -120,12 +117,18 @@ void TSStreamingServer::onClientDisconnected()
 void TSStreamingServer::handleHttpRequest(QTcpSocket *socket, const QByteArray &request)
 {
     QString requestStr = QString::fromUtf8(request);
-    
+
     // HTTP GET /stream.ts を確認
     if (requestStr.startsWith("GET /stream.ts") || requestStr.startsWith("GET /")) {
-        LOG_INFO("VLCからストリーミング要求受信");
+        LOG_INFO("VLCからストリーミング要求受信 - キューをリセットして新規配信開始");
+
+        // 古いTSデータを破棄（PTS不整合防止）
+        {
+            QMutexLocker locker(&m_dataMutex);
+            m_tsDataQueue.clear();
+        }
+
         sendHttpHeaders(socket);
-        // データ送信はタイマーで継続的に行う
     } else {
         // 404エラー応答
         QString response = "HTTP/1.1 404 Not Found\r\n\r\n";

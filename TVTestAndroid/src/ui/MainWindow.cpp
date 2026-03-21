@@ -69,8 +69,11 @@ m_videoWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     m_connectionGroup  = new QGroupBox("サーバー接続");
     m_connectionLayout = new QGridLayout(m_connectionGroup);
     m_connectionLayout->addWidget(new QLabel("サーバー:"), 0, 0);
-    m_serverEdit = new QLineEdit("baruma.f5.si");
-    m_connectionLayout->addWidget(m_serverEdit, 0, 1);
+    m_serverCombo = new QComboBox();
+    m_serverCombo->setEditable(true);
+    m_serverCombo->addItem("192.168.0.5");
+    m_serverCombo->addItem("baruma.f5.si");
+    m_connectionLayout->addWidget(m_serverCombo, 0, 1);
     m_connectionLayout->addWidget(new QLabel("ポート:"), 0, 2);
     m_portSpin = new QSpinBox();
     m_portSpin->setRange(1, 65535);
@@ -192,7 +195,7 @@ void MainWindow::setupConnections()
 
 void MainWindow::onConnectClicked()
 {
-    QString host = m_serverEdit->text();
+    QString host = m_serverCombo->currentText();
     int port = m_portSpin->value();
     addLogMessage(QString("📡 BonDriverサーバー接続: %1:%2").arg(host).arg(port));
     
@@ -244,7 +247,7 @@ void MainWindow::onSetChannelClicked()
 
 void MainWindow::onStartReceivingClicked()
 {
-    QString host = m_serverEdit->text();
+    QString host = m_serverCombo->currentText();
     int port = m_portSpin->value();
     
     addLogMessage("🚀 VLCストリーミング再生開始");
@@ -465,6 +468,7 @@ void MainWindow::onQuickChannelSelected()
 void MainWindow::saveSettings()
 {
     QSettings s;
+    s.setValue("server/host",      m_serverCombo->currentText());
     s.setValue("bondriver/index",  m_bonDriverCombo->currentIndex());
     s.setValue("channel/quick",    m_quickChannelCombo->currentIndex());
     s.setValue("channel/space",    m_spaceCombo->currentIndex());
@@ -474,6 +478,12 @@ void MainWindow::saveSettings()
 void MainWindow::restoreSettings()
 {
     QSettings s;
+    QString savedHost = s.value("server/host", "192.168.0.5").toString();
+    int hostIdx = m_serverCombo->findText(savedHost);
+    if (hostIdx >= 0)
+        m_serverCombo->setCurrentIndex(hostIdx);
+    else
+        m_serverCombo->setCurrentText(savedHost);
     int bi = s.value("bondriver/index", 0).toInt();
     if (bi >= 0 && bi < m_bonDriverCombo->count())
         m_bonDriverCombo->setCurrentIndex(bi);

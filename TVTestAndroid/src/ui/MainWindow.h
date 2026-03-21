@@ -5,7 +5,6 @@
 #include <QHBoxLayout>
 #include <QGroupBox>
 #include <QLabel>
-#include <QLineEdit>
 #include <QSpinBox>
 #include <QPushButton>
 #include <QTextEdit>
@@ -65,7 +64,7 @@ private:
 
     QGroupBox   *m_connectionGroup;
     QGridLayout *m_connectionLayout;
-    QLineEdit   *m_serverEdit;
+    QComboBox   *m_serverCombo;
     QSpinBox    *m_portSpin;
     QPushButton *m_connectButton;
     QPushButton *m_disconnectButton;
