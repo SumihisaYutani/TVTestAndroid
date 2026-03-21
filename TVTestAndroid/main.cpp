@@ -19,8 +19,16 @@ int main(int argc, char *argv[])
     app.setOrganizationName("TVTest Team");
     app.setOrganizationDomain("tvtest.android");
     
-    // ログ設定
-    QLoggingCategory::setFilterRules("qt.network.ssl.debug=false");
+    // 【ログ統一】Qt標準ログを完全無効化（ファイルログのみ使用）
+    QLoggingCategory::setFilterRules("*=false");
+    
+    // Qt標準ログを完全に無効化するカスタムハンドラー
+    qInstallMessageHandler([](QtMsgType type, const QMessageLogContext &context, const QString &msg) {
+        // 何もしない = Qt標準ログを完全無効化
+        Q_UNUSED(type)
+        Q_UNUSED(context)
+        Q_UNUSED(msg)
+    });
     
     // スタイル設定（Androidライクな外観）
     app.setStyle(QStyleFactory::create("Fusion"));

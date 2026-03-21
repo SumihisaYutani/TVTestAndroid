@@ -6,7 +6,7 @@
 #include <cstring>
 
 BonDriverNetwork::BonDriverNetwork(QObject *parent)
-    : QObject(parent), m_socket(new QTcpSocket(this)), m_tsReceiveTimer(new QTimer(this)), m_currentSpace(TERRESTRIAL), m_currentChannel(0), m_signalLevel(0.0f), m_isInitialized(false), m_isTunerOpen(false), m_isTsStreamActive(false)
+    : QObject(parent), m_socket(new QTcpSocket(this)), m_heartbeatTimer(new QTimer(this)), m_workerThread(new QThread(this)), m_worker(nullptr), m_currentSpace(TERRESTRIAL), m_currentChannel(0), m_signalLevel(0.0f), m_isInitialized(false), m_isTunerOpen(false), m_isTsStreamActive(false)
 {
     // TCP接続シグナル接続
     connect(m_socket, &QTcpSocket::connected, this, &BonDriverNetwork::onConnected);
@@ -15,16 +15,33 @@ BonDriverNetwork::BonDriverNetwork(QObject *parent)
     connect(m_socket, QOverload<QAbstractSocket::SocketError>::of(&QAbstractSocket::errorOccurred),
             this, &BonDriverNetwork::onSocketError);
 
-    // TSストリーム受信タイマー設定
-    m_tsReceiveTimer->setSingleShot(false);
-    m_tsReceiveTimer->setInterval(1); // 1ms間隔（極限高速受信で安定化）
-    connect(m_tsReceiveTimer, &QTimer::timeout, this, &BonDriverNetwork::onTsReceiveTimer);
+    // ハートビートタイマー設定（プッシュ型データ受信監視用）
+    m_heartbeatTimer->setSingleShot(false); // 繰り返し実行
+    m_heartbeatTimer->setInterval(10000);   // 10秒間隔でチェック
+    connect(m_heartbeatTimer, &QTimer::timeout, this, &BonDriverNetwork::onHeartbeatTimeout);
 
-    LOG_INFO("BonDriverNetwork初期化完了");
+    // ワーカースレッド設定（UIスレッドと独立した継続コマンド送信）
+    m_worker = new ContinuousCommandWorker(this);
+    m_worker->moveToThread(m_workerThread);
+    connect(m_workerThread, &QThread::started, m_worker, &ContinuousCommandWorker::run);
+
+    // 【削除】TSストリーム受信タイマー - プッシュ型実装では不要
+    // BonDriverProxyサーバーがSetChannel2完了後に自動的にTSデータを送信
+
+    LOG_INFO("BonDriverNetwork初期化完了 (ハートビート: 10秒, ワーカースレッド: 100ms)");
 }
 
 BonDriverNetwork::~BonDriverNetwork()
 {
+    // ワーカースレッド停止
+    if (m_worker) {
+        m_worker->stopWorker();
+    }
+    if (m_workerThread->isRunning()) {
+        m_workerThread->quit();
+        m_workerThread->wait(3000); // 3秒でタイムアウト
+    }
+    
     disconnectFromServer();
 }
 
@@ -486,14 +503,48 @@ void BonDriverNetwork::startReceiving()
         return;
     }
 
-    qDebug() << "TSストリーム受信開始";
-    m_tsReceiveTimer->start();
+    LOG_INFO("=== プッシュ型TSストリーム受信開始 ===");
+    LOG_INFO("SetChannel2完了後、サーバーが自動的にTSデータを送信します");
+
+    m_isTsStreamActive = true;
+
+    // 🔄 ハートビートタイマー開始（10秒後にタイムアウトチェック）
+    m_heartbeatTimer->start();
+    LOG_INFO("ハートビートタイマー開始: 10秒間隔でサーバー応答を監視");
+
+    // 📡 ワーカースレッド開始（UIスレッド独立の継続コマンド送信）
+    if (!m_workerThread->isRunning()) {
+        m_worker->startWorker();  // ← 追加：スレッド開始前にWorkerをアクティブ化
+        m_workerThread->start();
+        LOG_INFO("ワーカースレッド開始: UIフリーズ影響なし継続コマンド送信");
+    } else {
+        m_worker->startWorker();
+        LOG_INFO("ワーカー再開: 継続コマンド送信再開");
+    }
+
+    // ハイブリッド型：SetChannel2後、スレッド独立の定期コマンド送信でデータ要求
+    LOG_INFO("ハイブリッド型受信モード: 独立スレッド継続コマンド + onReadyRead()処理");
+    
+    LOG_INFO(QString("Worker状態確認: worker=%1, tsActive=%2, connected=%3")
+             .arg(m_worker ? "存在" : "なし")
+             .arg(m_isTsStreamActive ? "true" : "false") 
+             .arg(isConnected() ? "true" : "false"));
 }
 
 void BonDriverNetwork::stopReceiving()
 {
-    qDebug() << "TSストリーム受信停止";
-    m_tsReceiveTimer->stop();
+    LOG_INFO("=== TSストリーム受信停止 ===");
+    m_isTsStreamActive = false;
+    
+    // 🔄 ハートビートタイマー停止
+    m_heartbeatTimer->stop();
+    LOG_INFO("ハートビートタイマー停止");
+    
+    // 📡 ワーカースレッド停止
+    if (m_worker) {
+        m_worker->stopWorker();
+        LOG_INFO("ワーカースレッド停止: 継続コマンド送信停止");
+    }
 }
 
 bool BonDriverNetwork::isConnected() const
@@ -520,8 +571,8 @@ void BonDriverNetwork::onDisconnected()
     LOG_CRITICAL(QString("切断理由: %1").arg(m_socket->errorString()));
     LOG_CRITICAL(QString("ソケット状態: %1").arg(m_socket->state()));
 
-    qDebug() << "サーバー切断";
-    m_tsReceiveTimer->stop();
+    LOG_INFO("=== サーバー切断 ===");
+    // 【削除】m_tsReceiveTimer->stop(); - プッシュ型実装では不要
     m_isInitialized = false;
     m_isTunerOpen = false;
     emit disconnected();
@@ -529,11 +580,43 @@ void BonDriverNetwork::onDisconnected()
 
 void BonDriverNetwork::onReadyRead()
 {
+    static int readyReadCount = 0;
+    static QTime lastDataTime = QTime::currentTime();
+    
+    readyReadCount++;
+    QTime currentTime = QTime::currentTime();
+    int msSinceLastData = lastDataTime.msecsTo(currentTime);
+    
     QByteArray data = m_socket->readAll();
     qDebug() << "<<< データ受信:" << data.size() << "bytes";
+    
+    // 🔍 詳細なソケット監視ログ
+    LOG_INFO(QString("📡 onReadyRead #%1 - 受信: %2 bytes, 前回からの間隔: %3 ms")
+             .arg(readyReadCount).arg(data.size()).arg(msSinceLastData));
+    
+    if (data.isEmpty()) {
+        LOG_WARNING("⚠️ onReadyReadが呼ばれましたが、データが空です");
+        LOG_INFO(QString("📊 ソケット状態: %1, bytesAvailable: %2")
+                 .arg(m_socket->state()).arg(m_socket->bytesAvailable()));
+        return;
+    }
+    
+    // ソケット接続状況の定期チェック
+    if (readyReadCount % 1000 == 0) {
+        LOG_INFO(QString("🔍 ソケット定期チェック #%1: 状態=%2, エラー=%3")
+                 .arg(readyReadCount / 1000)
+                 .arg(m_socket->state())
+                 .arg(m_socket->errorString()));
+    }
 
     m_receiveBuffer.append(data);
-    qDebug() << "    受信バッファ合計:" << m_receiveBuffer.size() << "bytes";
+    
+    lastDataTime = currentTime;
+    
+    // 🔄 ハートビートタイマーリセット（データ受信があったため）
+    if (m_isTsStreamActive) {
+        m_heartbeatTimer->start(); // タイマーを再開（10秒後にタイムアウト）
+    }
 
     // レスポンス処理
     processResponse();
@@ -550,62 +633,13 @@ void BonDriverNetwork::onSocketError(QAbstractSocket::SocketError error)
     emit errorOccurred(QString("ネットワークエラー: %1").arg(m_socket->errorString()));
 }
 
-void BonDriverNetwork::onTsReceiveTimer()
-{
-    if (!isConnected() || !m_isTunerOpen)
-    {
-        return;
-    }
+// 【削除】onTsReceiveTimer() - プッシュ型実装では不要
+// BonDriverProxyサーバーはSetChannel2完了後に自動的にTSデータを送信
+// onReadyRead()シグナルで受信処理
 
-    // ⚠️ ログ暴走防止：GetTsStream/GetReadyCountは一旦コメントアウト
-    // サーバーからの応答が無い状態での連続送信を防ぐ
-
-    // 超高速連続TSストリーム取得（最大パフォーマンス）
-    static bool hasLogged = false;
-    if (!hasLogged)
-    {
-        LOG_INFO("🚀 連続大量取得開始 - タイマー停止してノンストップ受信");
-        hasLogged = true;
-        // タイマーを停止して連続受信モードに切り替え
-        m_tsReceiveTimer->stop();
-        // 連続受信を別スレッドで開始
-        QTimer::singleShot(0, this, &BonDriverNetwork::continuousReceive);
-        return;
-    }
-}
-
-// 連続大量TSストリーム受信（最大パフォーマンス実現）
-void BonDriverNetwork::continuousReceive()
-{
-    if (!isConnected() || !m_isTunerOpen || !m_isTsStreamActive) {
-        // 接続切れや停止時は1秒後に再チェック
-        QTimer::singleShot(1000, this, &BonDriverNetwork::continuousReceive);
-        return;
-    }
-    
-    static int loopCount = 0;
-    loopCount++;
-    
-    // 連続大量取得（1回で50回のコマンド実行）
-    for (int i = 0; i < 50; i++) {
-        // GetReadyCountでバッファ確認
-        if (!sendCommand(eGetReadyCount)) {
-            break;
-        }
-        // GetTsStreamでTSデータ取得
-        if (!sendCommand(eGetTsStream)) {
-            break;
-        }
-    }
-    
-    // 統計ログ（削減）
-    if (loopCount % 20 == 0) {
-        LOG_INFO(QString("🚀 連続大量受信ループ #%1: 1回で100コマンド実行").arg(loopCount));
-    }
-    
-    // 即座に次の連続受信をスケジュール（ノンストップ）
-    QTimer::singleShot(1, this, &BonDriverNetwork::continuousReceive);
-}
+// 【削除】continuousReceive() - プッシュ型実装では完全に不要
+// BonDriverProxyサーバーがSetChannel2完了後に自動的にTSデータを送信
+// onReadyRead()シグナルで受信処理
 
 bool BonDriverNetwork::sendCommand(BonDriverCommand command, const QByteArray &data)
 {
@@ -899,6 +933,147 @@ QString BonDriverNetwork::getCommandName(BonDriverCommand command) const
         return "SetChannel2";
     default:
         return QString("Unknown_%1").arg(command);
+    }
+}
+
+void BonDriverNetwork::onHeartbeatTimeout()
+{
+    static int timeoutCount = 0;
+    timeoutCount++;
+    
+    LOG_WARNING(QString("⚠️ ハートビートタイムアウト #%1 - 10秒間データ受信なし").arg(timeoutCount));
+    
+    // ソケット状態の詳細確認
+    LOG_INFO(QString("📊 ソケット状態: %1").arg(m_socket->state()));
+    LOG_INFO(QString("📊 ソケットエラー: %1").arg(m_socket->errorString()));
+    LOG_INFO(QString("📊 bytesAvailable: %1").arg(m_socket->bytesAvailable()));
+    LOG_INFO(QString("📊 TSストリーム状態: %1").arg(m_isTsStreamActive ? "Active" : "Inactive"));
+    
+    if (m_socket->state() != QAbstractSocket::ConnectedState) {
+        LOG_CRITICAL("🚨 ソケット接続が切断されています");
+        emit errorOccurred("サーバー接続が切断されました");
+        return;
+    }
+    
+    // 3回連続でタイムアウトした場合はサーバー側問題と判断
+    if (timeoutCount >= 3) {
+        LOG_CRITICAL(QString("🚨 連続タイムアウト %1回 - BonDriverProxyサーバーがデータ送信を停止した可能性").arg(timeoutCount));
+        emit errorOccurred("サーバーからのデータ受信が長時間停止しています。サーバー側のタイムアウトまたは設定問題の可能性があります。");
+        // タイマーは継続（復旧を待つ）
+        return;
+    }
+    
+    // タイマーを継続（次回10秒後にチェック）
+    LOG_INFO("次のハートビートチェックまで10秒待機...");
+}
+
+bool BonDriverNetwork::sendCommandThreadSafe(BonDriverCommand command, const QByteArray &data)
+{
+    // ワーカースレッドから安全にコマンド送信
+    // QTcpSocketはスレッドセーフなのでそのまま呼び出し可能
+    return sendCommand(command, data);
+}
+
+// =============================================================================
+// ContinuousCommandWorker Implementation
+// =============================================================================
+
+ContinuousCommandWorker::ContinuousCommandWorker(BonDriverNetwork* parent)
+    : m_bonDriver(parent), m_running(false), m_stopRequested(false)
+{
+}
+
+void ContinuousCommandWorker::startWorker()
+{
+    QMutexLocker locker(&m_mutex);
+    m_running = true;
+    m_stopRequested = false;
+    m_condition.wakeAll();
+}
+
+void ContinuousCommandWorker::stopWorker()
+{
+    QMutexLocker locker(&m_mutex);
+    m_stopRequested = true;
+    m_running = false;
+    m_condition.wakeAll();
+}
+
+void ContinuousCommandWorker::run()
+{
+    int commandCount = 0;
+    int commandCycle = 0; // 0:eGetTsStream, 1:ePurgeTsStream, 2:eGetSignalLevel
+    
+    while (true) {
+        QMutexLocker locker(&m_mutex);
+        
+        // 停止要求をチェック
+        if (m_stopRequested) {
+            break;
+        }
+        
+        // アクティブ状態まで待機
+        if (!m_running) {
+            LOG_DEBUG("Worker待機: m_running = false");
+            m_condition.wait(&m_mutex, 1000);
+            continue;
+        }
+        if (!m_bonDriver->isTsStreamActiveForWorker()) {
+            LOG_DEBUG("Worker待機: isTsStreamActive = false");
+            m_condition.wait(&m_mutex, 1000);
+            continue;
+        }
+        if (!m_bonDriver->isConnected()) {
+            LOG_DEBUG("Worker待機: isConnected = false");
+            m_condition.wait(&m_mutex, 1000);
+            continue;
+        }
+        
+        locker.unlock(); // ロック解除してコマンド送信
+        
+        commandCount++;
+        
+        // Worker開始のデバッグログ
+        if (commandCount == 1) {
+            LOG_INFO("🚀 Worker処理開始: 最初のコマンド送信");
+        }
+        
+        // TVTest本家の通信パターンに基づくコマンド送信
+        switch (commandCycle) {
+        case 0: // eGetTsStream（最重要：TSデータ要求）
+            m_bonDriver->sendCommandThreadSafe(BonDriverNetwork::eGetTsStream);
+            if (commandCount <= 10 || commandCount % 100 == 0) {
+                LOG_INFO(QString("📡 ワーカー継続コマンド #%1: eGetTsStream送信").arg(commandCount));
+            }
+            break;
+            
+        case 1: // ePurgeTsStream（バッファクリア）
+            m_bonDriver->sendCommandThreadSafe(BonDriverNetwork::ePurgeTsStream);
+            if (commandCount % 500 == 0) {
+                LOG_INFO(QString("🧹 ワーカー継続コマンド #%1: ePurgeTsStream送信").arg(commandCount));
+            }
+            break;
+            
+        case 2: // eGetSignalLevel（信号レベル確認）
+            m_bonDriver->sendCommandThreadSafe(BonDriverNetwork::eGetSignalLevel);
+            if (commandCount % 1000 == 0) {
+                LOG_INFO(QString("📶 ワーカー継続コマンド #%1: eGetSignalLevel送信").arg(commandCount));
+            }
+            break;
+        }
+        
+        // コマンドサイクルを回転（TVTest本家は主にeGetTsStreamを多用）
+        if (commandCycle == 0) {
+            // eGetTsStreamを75%の確率で実行
+            commandCycle = (commandCount % 4 == 0) ? 1 : 0;
+        } else if (commandCycle == 1) {
+            commandCycle = (commandCount % 10 == 0) ? 2 : 0;
+        } else {
+            commandCycle = 0; // eGetTsStreamに戻る
+        }
+        
+        // 100ms待機（TVTest本家準拠）
+        QThread::msleep(100);
     }
 }
 

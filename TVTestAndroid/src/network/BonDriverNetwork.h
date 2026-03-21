@@ -8,6 +8,34 @@
 #include <QByteArray>
 #include <QString>
 #include <QDebug>
+#include <QThread>
+#include <QMutex>
+#include <QWaitCondition>
+
+// 前方宣言
+class BonDriverNetwork;
+
+/**
+ * @brief UIスレッドと独立した継続コマンド送信ワーカースレッド
+ */
+class ContinuousCommandWorker : public QObject
+{
+    Q_OBJECT
+public:
+    ContinuousCommandWorker(BonDriverNetwork* parent);
+    void startWorker();
+    void stopWorker();
+
+public slots:
+    void run();
+
+private:
+    BonDriverNetwork* m_bonDriver;
+    QMutex m_mutex;
+    QWaitCondition m_condition;
+    bool m_running;
+    bool m_stopRequested;
+};
 
 /**
  * @brief BonDriver_Proxyプロトコルでの通信を行うクラス
@@ -64,6 +92,12 @@ public:
 
     // ソケット取得
     QTcpSocket* socket() const { return m_socket; }
+    
+    // スレッドセーフなコマンド送信（ワーカースレッド用）
+    bool sendCommandThreadSafe(BonDriverCommand command, const QByteArray &data = QByteArray());
+    
+    // ワーカースレッドからのアクセス用
+    bool isTsStreamActiveForWorker() const { return m_isTsStreamActive; }
 
 signals:
     void connected();
@@ -78,8 +112,11 @@ private slots:
     void onDisconnected();
     void onReadyRead();
     void onSocketError(QAbstractSocket::SocketError error);
-    void onTsReceiveTimer();
-    void continuousReceive();
+    void onHeartbeatTimeout(); // プッシュ型データ受信監視用
+    // 【削除】onContinuousCommand - ワーカースレッドに移行
+    // 【削除】プル型メソッド - プッシュ型実装では不要
+    // void onTsReceiveTimer();
+    // void continuousReceive();
 
 private:
     bool sendCommand(BonDriverCommand command, const QByteArray &data = QByteArray());
@@ -89,7 +126,11 @@ private:
 
 private:
     QTcpSocket  *m_socket;
-    QTimer      *m_tsReceiveTimer;
+    QTimer      *m_heartbeatTimer;       // プッシュ型データ受信監視タイマー
+    // 【変更】QTimer → ワーカースレッドに移行
+    QThread     *m_workerThread;         // ワーカースレッド
+    ContinuousCommandWorker *m_worker;   // 継続コマンド送信ワーカー
+    // 【削除】QTimer *m_tsReceiveTimer; - プッシュ型実装では不要
     QByteArray   m_receiveBuffer;
     bool         m_isTsStreamActive;
 

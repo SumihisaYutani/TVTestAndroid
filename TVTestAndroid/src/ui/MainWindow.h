@@ -14,8 +14,8 @@
 #include <QTimer>
 #include <QDateTime>
 #include <QSettings>
-#include "BonDriverNetwork.h"
-#include "media/FfmpegPipePlayer.h"
+#include "network/BonDriverNetwork.h"
+#include "network/VLCStreamingPlayer.h"
 
 class MainWindow : public QMainWindow
 {
@@ -37,12 +37,13 @@ private slots:
     void onClearLogClicked();
     void onQuickChannelSelected();
 
-    void onNetworkConnected();
-    void onNetworkDisconnected();
-    void onTsDataReceived(const QByteArray &data);
-    void onChannelChanged(BonDriverNetwork::TuningSpace space, uint32_t channel);
+    // VLCプレイヤーイベント
+    void onStreamingStarted();
+    void onStreamingStopped();
+    void onPlayerStateChanged(VLCStreamingPlayer::PlayerState state);
     void onSignalLevelChanged(float level);
-    void onErrorOccurred(const QString &error);
+    void onPlayerErrorOccurred(const QString &error);
+    void onBufferingProgress(float percentage);
     void onUpdateStatsTimer();
 
 private:
@@ -54,12 +55,9 @@ private:
     void saveSettings();
     void restoreSettings();
 
-    // ネットワーク
-    BonDriverNetwork                  *m_network;
-
-    // 再生
-    FfmpegPipePlayer  *m_player;
-    QWidget           *m_videoWidget;  // ffplay埋め込み先
+    // VLCストリーミングプレイヤー
+    VLCStreamingPlayer               *m_vlcPlayer;
+    QWidget                          *m_videoWidget;  // VLC表示用ウィジェット
 
     // UI
     QWidget     *m_centralWidget;

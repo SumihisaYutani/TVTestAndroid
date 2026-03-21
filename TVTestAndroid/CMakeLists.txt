@@ -62,23 +62,38 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
+# VLCライブラリパス設定
+set(VLC_ROOT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/vlc-3.0.23")
+set(VLC_INCLUDE_DIR "${VLC_ROOT_DIR}/sdk/include")
+set(VLC_LIB_DIR "${VLC_ROOT_DIR}/sdk/lib")
+
+# VLCライブラリ検出
+if(EXISTS "${VLC_INCLUDE_DIR}/vlc/libvlc.h")
+    set(VLC_FOUND TRUE)
+    message(STATUS "VLCライブラリが見つかりました")
+    message(STATUS "  VLC_INCLUDE: ${VLC_INCLUDE_DIR}")
+    message(STATUS "  VLC_LIB: ${VLC_LIB_DIR}")
+else()
+    set(VLC_FOUND FALSE)
+    message(WARNING "VLCライブラリが見つかりません - ストリーミング機能は無効になります")
+endif()
+
 # ソースファイル
 set(SOURCES
     main.cpp
     src/network/BonDriverNetwork.cpp
+    src/network/VLCStreamingPlayer.cpp
+    src/network/TSStreamingServer.cpp
     src/ui/MainWindow.cpp
-    src/media/FfmpegPipePlayer.cpp
-    src/media/TsStreamDevice.cpp
     src/utils/Logger.cpp
 )
 
 # ヘッダーファイル
 set(HEADERS
     src/network/BonDriverNetwork.h
+    src/network/VLCStreamingPlayer.h
+    src/network/TSStreamingServer.h
     src/ui/MainWindow.h
-    src/media/FfmpegPipePlayer.h
-    src/media/TsBuffer.h
-    src/media/TsStreamDevice.h
     src/utils/Logger.h
 )
 
@@ -102,23 +117,50 @@ target_include_directories(TVTestAndroid PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     ${CMAKE_CURRENT_SOURCE_DIR}/src/network
     ${CMAKE_CURRENT_SOURCE_DIR}/src/ui
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/media
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils
 )
+
+# VLCインクルードパス追加
+if(VLC_FOUND)
+    target_include_directories(TVTestAndroid PRIVATE ${VLC_INCLUDE_DIR})
+    add_definitions(-DUSE_VLC_MEDIA_PLAYER)
+endif()
 
 # Qt6ライブラリとリンク
 target_link_libraries(TVTestAndroid PRIVATE
     Qt6::Core
     Qt6::Network
-    Qt6::Multimedia
-    Qt6::MultimediaWidgets
     Qt6::Widgets
 )
 
-# FFmpeg外部プロセス使用（ライブラリリンク不要）
-if(FFMPEG_FOUND)
-    message(STATUS "FFmpeg external process enabled")
-    add_definitions(-DUSE_FFMPEG_EXTERNAL)
+# VLCライブラリとリンク
+if(VLC_FOUND)
+    target_link_libraries(TVTestAndroid PRIVATE
+        "${VLC_LIB_DIR}/libvlc.lib"
+        "${VLC_LIB_DIR}/libvlccore.lib"
+    )
+    
+    # VLC DLLとプラグインディレクトリを出力ディレクトリにコピー
+    add_custom_command(TARGET TVTestAndroid POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${VLC_ROOT_DIR}/libvlc.dll"
+            $<TARGET_FILE_DIR:TVTestAndroid>
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${VLC_ROOT_DIR}/libvlccore.dll"
+            $<TARGET_FILE_DIR:TVTestAndroid>
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+            "${VLC_ROOT_DIR}/plugins"
+            $<TARGET_FILE_DIR:TVTestAndroid>/plugins
+        COMMENT "VLC DLLとプラグインをコピー中..."
+    )
+endif()
+
+# VLCストリーミング設定
+if(VLC_FOUND)
+    message(STATUS "VLCストリーミング有効")
+    message(STATUS "リアルタイムTSストリーミング対応")
+else()
+    message(WARNING "VLCなし - ストリーミング機能無効")
 endif()
 
 # Android固有の設定
@@ -137,5 +179,9 @@ else()
     message(STATUS "Desktop build: FFmpeg対応予定")
 endif()
 
-# Qt6とFFmpeg外部プロセスのシンプル構成
-message(STATUS "LibVLC依存を除去、Qt6 + FFmpeg外部プロセス構成")
+# 構成サマリー
+if(VLC_FOUND)
+    message(STATUS "構成完了: Qt6 + VLCライブラリによるリアルタイムストリーミング")
+else()
+    message(STATUS "構成完了: Qt6のみ（ストリーミング機能制限）")
+endif()

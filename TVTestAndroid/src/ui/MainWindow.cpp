@@ -6,8 +6,7 @@
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , m_network(new BonDriverNetwork(this))
-    , m_player(new FfmpegPipePlayer(this))
+    , m_vlcPlayer(new VLCStreamingPlayer(this))
     , m_videoWidget(new QWidget(this))
     , m_updateStatsTimer(new QTimer(this))
     , m_logFlushTimer(new QTimer(this))
@@ -15,12 +14,13 @@ MainWindow::MainWindow(QWidget *parent)
     setupUI();
     setupConnections();
 
-    // ffplay埋め込み先ウィジェットを渡す
-m_player->init(m_videoWidget);
+    // VLCプレイヤー初期化
+    m_vlcPlayer->initializeVLC();
+    m_vlcPlayer->setVideoWidget(m_videoWidget);
 
 
-    restoreSettings();
     updateUIState();
+    restoreSettings();
 
     // 統計タイマー（1秒）
     m_updateStatsTimer->setInterval(1000);
@@ -50,9 +50,7 @@ m_player->init(m_videoWidget);
 MainWindow::~MainWindow()
 {
     saveSettings();
-    m_player->stop();
-    if (m_network->isConnected())
-        m_network->disconnectFromServer();
+    m_vlcPlayer->stopStreaming();
 }
 
 void MainWindow::setupUI()
@@ -173,58 +171,58 @@ void MainWindow::setupConnections()
     connect(m_clearLogButton,        &QPushButton::clicked,
             this, &MainWindow::onClearLogClicked);
 
-    // ネットワーク
-    connect(m_network, &BonDriverNetwork::connected,
-            this, &MainWindow::onNetworkConnected);
-    connect(m_network, &BonDriverNetwork::disconnected,
-            this, &MainWindow::onNetworkDisconnected);
-    connect(m_network, &BonDriverNetwork::tsDataReceived,
-            this, &MainWindow::onTsDataReceived);
-    connect(m_network, &BonDriverNetwork::channelChanged,
-            this, &MainWindow::onChannelChanged);
-    connect(m_network, &BonDriverNetwork::signalLevelChanged,
+    // VLCストリーミングプレイヤー
+    connect(m_vlcPlayer, &VLCStreamingPlayer::streamingStarted,
+            this, &MainWindow::onStreamingStarted);
+    connect(m_vlcPlayer, &VLCStreamingPlayer::streamingStopped,
+            this, &MainWindow::onStreamingStopped);
+    connect(m_vlcPlayer, &VLCStreamingPlayer::stateChanged,
+            this, &MainWindow::onPlayerStateChanged);
+    connect(m_vlcPlayer, &VLCStreamingPlayer::signalLevelChanged,
             this, &MainWindow::onSignalLevelChanged);
-    connect(m_network, &BonDriverNetwork::errorOccurred,
-            this, &MainWindow::onErrorOccurred);
+    connect(m_vlcPlayer, &VLCStreamingPlayer::errorOccurred,
+            this, &MainWindow::onPlayerErrorOccurred);
+    connect(m_vlcPlayer, &VLCStreamingPlayer::bufferingProgress,
+            this, &MainWindow::onBufferingProgress);
 
-
-    // プロセッサをネットワークソケットに接続
-    // ※ BonDriverNetwork側のreadyRead接続と競合しないよう
+    // クイックチャンネル選択
+    connect(m_quickChannelCombo, QOverload<int>::of(&QComboBox::currentIndexChanged),
+            this, &MainWindow::onQuickChannelSelected);
 }
 
 void MainWindow::onConnectClicked()
 {
     QString host = m_serverEdit->text();
     int port = m_portSpin->value();
-    addLogMessage(QString("接続開始: %1:%2").arg(host).arg(port));
-    if (m_network->connectToServer(host, port))
-        addLogMessage("接続成功");
-    else
-        addLogMessage("接続失敗");
+    addLogMessage(QString("📡 BonDriverサーバー接続: %1:%2").arg(host).arg(port));
+    
+    // VLC初期化のみ（ストリーミングは受信開始ボタンで開始）
+    if (!m_vlcPlayer->initializeVLC()) {
+        addLogMessage("❌ VLC初期化失敗");
+        return;
+    }
+    
+    m_connectionStatus->setText("接続済み");
+    addLogMessage("✅ 接続完了 - BonDriver・チャンネルを選択してから受信開始してください");
     updateUIState();
 }
 
 void MainWindow::onDisconnectClicked()
 {
-    m_player->stop();
-    m_network->disconnectFromServer();
+    m_vlcPlayer->stopStreaming();
+    m_connectionStatus->setText("未接続");
+    m_bonDriverStatus->setText("未選択");
+    m_channelStatus->setText("未設定");
+    addLogMessage("📡 切断完了");
     updateUIState();
 }
 
 void MainWindow::onSelectBonDriverClicked()
 {
-    if (!m_network->isConnected()) {
-        addLogMessage("❌ 先にサーバーに接続してください");
-        return;
-    }
     QString bonDriver = (m_bonDriverCombo->currentIndex() == 0) ? "PT-T" : "PT-S";
-    if (m_network->selectBonDriver(bonDriver)) {
-        m_bonDriverStatus->setText(QString("選択済み: %1").arg(bonDriver));
-        addLogMessage(QString("✅ BonDriver選択成功: %1").arg(bonDriver));
-    } else {
-        m_bonDriverStatus->setText("選択失敗");
-        addLogMessage("❌ BonDriver選択失敗");
-    }
+    m_bonDriverStatus->setText(QString("選択済み: %1").arg(bonDriver));
+    addLogMessage(QString("✅ BonDriver選択: %1").arg(bonDriver));
+    
     updateUIState();
     saveSettings();
 }
@@ -234,37 +232,59 @@ void MainWindow::onSetChannelClicked()
     auto space = static_cast<BonDriverNetwork::TuningSpace>(
                      m_spaceCombo->currentIndex());
     uint32_t channel = static_cast<uint32_t>(m_channelSpin->value());
-    if (m_network->setChannel(space, channel)) {
-        addLogMessage(QString("✅ チャンネル設定成功: Space=%1 Ch=%2")
-                      .arg(space).arg(channel));
-        saveSettings();
-    } else {
-        addLogMessage("❌ チャンネル設定失敗");
-    }
+    
+    QString spaceName = (space == 0) ? "地上波" : (space == 1) ? "BS" : "CS";
+    m_channelStatus->setText(QString("設定済み: %1 Ch%2").arg(spaceName).arg(channel));
+    addLogMessage(QString("✅ チャンネル選択: %1 Ch%2").arg(spaceName).arg(channel));
+    
+    // 実際のチャンネル設定はストリーミング開始時に行う
     updateUIState();
+    saveSettings();
 }
 
 void MainWindow::onStartReceivingClicked()
 {
-    addLogMessage("🚀 TSストリーム受信開始");
-    m_network->startReceiving();
-    m_player->play();
-    m_streamStatus->setText("🚀 高性能受信中");
-
-    m_totalBytes     = 0;
-    m_totalPackets   = 0;
-    m_startTime      = QDateTime::currentDateTime();
-    m_lastUpdateTime = m_startTime;
-    m_lastTotalBytes = 0;
-    m_updateStatsTimer->start();
+    QString host = m_serverEdit->text();
+    int port = m_portSpin->value();
+    
+    addLogMessage("🚀 VLCストリーミング再生開始");
+    
+    // 実際のストリーミング開始
+    if (m_vlcPlayer->startStreaming(host, port)) {
+        addLogMessage("✅ VLCストリーミング開始成功");
+        
+        // 選択されたチャンネル設定を適用
+        auto space = static_cast<BonDriverNetwork::TuningSpace>(m_spaceCombo->currentIndex());
+        uint32_t channel = static_cast<uint32_t>(m_channelSpin->value());
+        QString bonDriver = (m_bonDriverCombo->currentIndex() == 0) ? "PT-T" : "PT-S";
+        
+        addLogMessage(QString("📺 チャンネル設定適用: %1 %2 Ch%3")
+                      .arg(bonDriver)
+                      .arg((space == 0) ? "地上波" : (space == 1) ? "BS" : "CS")
+                      .arg(channel));
+        
+        m_vlcPlayer->setChannel(space, channel);
+        m_streamStatus->setText("🚀 VLC再生中");
+        
+        // 統計初期化
+        m_totalBytes     = 0;
+        m_totalPackets   = 0;
+        m_startTime      = QDateTime::currentDateTime();
+        m_lastUpdateTime = m_startTime;
+        m_lastTotalBytes = 0;
+        m_updateStatsTimer->start();
+    } else {
+        addLogMessage("❌ VLCストリーミング開始失敗");
+        m_streamStatus->setText("開始失敗");
+    }
+    
     updateUIState();
 }
 
 void MainWindow::onStopReceivingClicked()
 {
-    addLogMessage("TSストリーム受信停止");
-    m_network->stopReceiving();
-    m_player->stop();
+    addLogMessage("VLCストリーミング停止");
+    m_vlcPlayer->stopStreaming();
     m_streamStatus->setText("停止中");
     m_updateStatsTimer->stop();
     updateUIState();
@@ -276,69 +296,36 @@ void MainWindow::onClearLogClicked()
     m_pendingLogs.clear();
 }
 
-void MainWindow::onNetworkConnected()
+// VLCプレイヤーイベントハンドラー
+void MainWindow::onStreamingStarted()
 {
-    m_connectionStatus->setText("接続済み");
-    addLogMessage("ネットワーク接続完了");
+    m_connectionStatus->setText("VLCストリーミング中");
+    addLogMessage("✅ VLCストリーミング開始完了");
     updateUIState();
 }
 
-void MainWindow::onNetworkDisconnected()
+void MainWindow::onStreamingStopped()
 {
-    m_connectionStatus->setText("未接続");
-    m_bonDriverStatus->setText("未選択");
-    m_channelStatus->setText("未設定");
-    m_player->stop();
-    addLogMessage("ネットワーク切断");
+    m_connectionStatus->setText("停止");
+    addLogMessage("⏹ VLCストリーミング停止");
     updateUIState();
 }
 
-void MainWindow::onTsDataReceived(const QByteArray &data)
+void MainWindow::onPlayerStateChanged(VLCStreamingPlayer::PlayerState state)
 {
-    // 統計更新
-    m_totalBytes += data.size();
-    m_totalPackets++;
+    const char* stateNames[] = {"停止", "再生中", "一時停止", "バッファリング", "エラー"};
+    m_streamStatus->setText(QString("VLC: %1").arg(stateNames[state]));
     
-    // 【修正】TSデータをTsBufferに送信（直接パイプライン復旧）
-    m_player->tsBuffer()->appendData(data);
-    
-    // 【デバッグ】TSファイル保存テスト（最初の5MB）
-    static QFile debugTsFile("C:/Users/Yutani Sumihisa/AppData/Local/Temp/debug_stream.ts");
-    static bool fileOpened = false;
-    if (!fileOpened) {
-        fileOpened = debugTsFile.open(QIODevice::WriteOnly);
-        if (fileOpened) {
-            LOG_INFO("🟡 デバッグTSファイル保存開始: debug_stream.ts");
-        }
-    }
-    if (fileOpened && debugTsFile.size() < 5 * 1024 * 1024) {
-        debugTsFile.write(data);
+    if (state == VLCStreamingPlayer::Playing) {
+        addLogMessage("▶ VLC再生開始");
+        m_startTime = QDateTime::currentDateTime();
+        m_lastUpdateTime = m_startTime;
+        m_updateStatsTimer->start();
+    } else if (state == VLCStreamingPlayer::Stopped) {
+        m_updateStatsTimer->stop();
     }
     
-    // デバッグ用：1000パケットごとにログ出力
-    static qint64 debugCounter = 0;
-    if (++debugCounter % 1000 == 0) {
-        LOG_INFO(QString("✅ TSデータフロー確認: %1 packets, %2 MB累積, バッファサイズ: %3 KB")
-                .arg(m_totalPackets)
-                .arg(m_totalBytes / (1024.0 * 1024.0), 0, 'f', 2)
-                .arg(m_player->tsBuffer()->size() / 1024.0, 0, 'f', 1));
-    }
-}
-
-void MainWindow::onChannelChanged(BonDriverNetwork::TuningSpace space, uint32_t channel)
-{
-    m_channelStatus->setText(
-        QString("Space=%1, Channel=%2").arg(space).arg(channel));
-    addLogMessage(QString("チャンネル変更: Space=%1 Ch=%2")
-                  .arg(space).arg(channel));
-
-    m_player->stop();
-    m_player->clearBuffer();
-
-    QTimer::singleShot(300, this, [this]() {
-        m_player->play();
-        addLogMessage("▶ 再生再開");
-    });
+    updateUIState();
 }
 
 void MainWindow::onSignalLevelChanged(float level)
@@ -346,9 +333,15 @@ void MainWindow::onSignalLevelChanged(float level)
     m_signalLevelBar->setValue(static_cast<int>(level * 100));
 }
 
-void MainWindow::onErrorOccurred(const QString &error)
+void MainWindow::onPlayerErrorOccurred(const QString &error)
 {
-    addLogMessage(QString("❌ エラー: %1").arg(error));
+    addLogMessage(QString("❌ VLCエラー: %1").arg(error));
+    updateUIState();
+}
+
+void MainWindow::onBufferingProgress(float percentage)
+{
+    addLogMessage(QString("📡 バッファリング: %1%").arg(percentage, 0, 'f', 1));
 }
 
 void MainWindow::onUpdateStatsTimer()
@@ -385,20 +378,20 @@ void MainWindow::addLogMessage(const QString &message)
 
 void MainWindow::updateUIState()
 {
-    bool connected = m_network->isConnected();
-    bool bonDriverSelected = connected &&
-                             m_bonDriverStatus->text() != "未選択" &&
-                             m_bonDriverStatus->text() != "選択失敗";
-
-    m_connectButton->setEnabled(!connected);
-    m_disconnectButton->setEnabled(connected);
-    m_selectBonDriverButton->setEnabled(connected);
+    bool streaming = m_vlcPlayer->isStreaming();
+    bool connected = (m_connectionStatus->text() == "接続済み");
+    VLCStreamingPlayer::PlayerState state = m_vlcPlayer->getState();
+    
+    // 新しい操作フロー対応
+    m_connectButton->setEnabled(!connected && !streaming);
+    m_disconnectButton->setEnabled(connected || streaming);
+    m_selectBonDriverButton->setEnabled(connected);  // 接続後に選択可能
     m_bonDriverCombo->setEnabled(true);
-    m_setChannelButton->setEnabled(bonDriverSelected);
-    m_startReceivingButton->setEnabled(bonDriverSelected);
-    m_stopReceivingButton->setEnabled(bonDriverSelected);
+    m_setChannelButton->setEnabled(connected);       // 接続後に設定可能
+    m_startReceivingButton->setEnabled(connected && !streaming);  // 接続済み・未ストリーミング時
+    m_stopReceivingButton->setEnabled(streaming);
     if (m_quickChannelGroup)
-        m_quickChannelGroup->setEnabled(bonDriverSelected);
+        m_quickChannelGroup->setEnabled(connected);  // 接続後に選択可能
 }
 
 void MainWindow::setupQuickChannelSelection()
@@ -462,11 +455,11 @@ void MainWindow::onQuickChannelSelected()
     m_channelSpin->setValue(channel);
 
     auto ts = static_cast<BonDriverNetwork::TuningSpace>(space);
-    if (m_network->setChannel(ts, static_cast<uint32_t>(channel)))
-        addLogMessage(QString("✅ %1 設定成功")
+    if (m_vlcPlayer->setChannel(ts, static_cast<uint32_t>(channel)))
+        addLogMessage(QString("✅ VLC %1 設定成功")
                       .arg(m_quickChannelCombo->currentText()));
     else
-        addLogMessage("❌ チャンネル設定失敗");
+        addLogMessage("⚠ VLCチャンネル設定: 接続後に実行してください");
 }
 
 void MainWindow::saveSettings()
@@ -485,8 +478,13 @@ void MainWindow::restoreSettings()
     if (bi >= 0 && bi < m_bonDriverCombo->count())
         m_bonDriverCombo->setCurrentIndex(bi);
     int qi = s.value("channel/quick", 0).toInt();
-    if (qi >= 0 && qi < m_quickChannelCombo->count())
+    if (qi >= 0 && qi < m_quickChannelCombo->count()) {
+        // 【修正】シグナル一時切断して不要なチャンネル変更を防ぐ
+        m_quickChannelCombo->blockSignals(true);
         m_quickChannelCombo->setCurrentIndex(qi);
+        m_quickChannelCombo->blockSignals(false);
+        LOG_INFO(QString("設定復元: クイックチャンネル index=%1 (シグナル発火なし)").arg(qi));
+    }
     int sp = s.value("channel/space", 0).toInt();
     if (sp >= 0 && sp < m_spaceCombo->count())
         m_spaceCombo->setCurrentIndex(sp);
@@ -498,12 +496,11 @@ void MainWindow::showEvent(QShowEvent *event)
 {
     QMainWindow::showEvent(event);
 
-    // ウィジェットが確実に表示された後に init を呼ぶ
+    // VLCプレイヤーは既にコンストラクタで初期化済み
     static bool initialized = false;
     if (!initialized) {
         initialized = true;
-        m_player->init(m_videoWidget);
-        LOG_INFO("showEvent: FfmpegPipePlayer初期化完了");
+        LOG_INFO("showEvent: VLCStreamingPlayer初期化完了");
     }
 }
 
@@ -518,10 +515,10 @@ void MainWindow::resizeEvent(QResizeEvent *event)
         resizeTimer->setSingleShot(true);
         connect(resizeTimer, &QTimer::timeout, this, [this]() {
             if (m_videoWidget) {
-                m_player->resizeVideo(
-                    m_videoWidget->width(),
-                    m_videoWidget->height()
-                );
+                // VLCプレイヤーは自動的にウィジェットサイズに合わせます
+                LOG_DEBUG(QString("ビデオウィジェットサイズ: %1x%2")
+                         .arg(m_videoWidget->width())
+                         .arg(m_videoWidget->height()));
             }
         });
     }

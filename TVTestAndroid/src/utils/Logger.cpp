@@ -117,7 +117,7 @@ void Logger::writeLog(LogLevel level, const QString &message, const char *file, 
                      .arg(location)
                      .arg(message);
 
-    // ファイルに出力
+    // ファイルのみに出力（統一）
     try {
         *m_logStream << logLine << Qt::endl;
     } catch (...) {
@@ -128,24 +128,9 @@ void Logger::writeLog(LogLevel level, const QString &message, const char *file, 
     if (level >= Warning) {
         m_logStream->flush();
     }
-
-    // コンソールにも出力（無限ループ防止のため、ログレベルチェック）
-    switch (level) {
-        case Debug:
-            break; // qDebugは無効化（無限ループ防止）
-        case Info:
-            qInfo() << message;
-            break;
-        case Warning:
-            qWarning() << message;
-            break;
-        case Critical:
-            qCritical() << message;
-            break;
-        case Fatal:
-            qFatal("%s", message.toUtf8().constData());
-            break;
-    }
+    
+    // コンソール出力を無効化してファイルログに統一
+    // UI側は必要に応じてログファイルを監視
 }
 
 QString Logger::getLogFilePath() const
