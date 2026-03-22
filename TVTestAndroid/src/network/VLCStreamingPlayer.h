@@ -62,7 +62,7 @@ public:
     bool isMuted() const;
 
 signals:
-    void stateChanged(PlayerState state);
+    void stateChanged(VLCStreamingPlayer::PlayerState state);
     void streamingStarted();
     void streamingStopped();
     void signalLevelChanged(float level);
@@ -74,6 +74,7 @@ private slots:
     void onBonDriverDisconnected();
     void onTsDataReceived(const QByteArray &data);
     void onBonDriverError(const QString &error);
+    void applyVideoSettings(); // 再生開始後にVLC映像設定を適用
 
 private:
     // VLC初期化・解放

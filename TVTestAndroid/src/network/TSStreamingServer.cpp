@@ -139,15 +139,15 @@ void TSStreamingServer::handleHttpRequest(QTcpSocket *socket, const QByteArray &
 
 void TSStreamingServer::sendHttpHeaders(QTcpSocket *socket)
 {
-    QString headers = 
+    QString headers =
         "HTTP/1.1 200 OK\r\n"
         "Content-Type: video/mp2t\r\n"
         "Cache-Control: no-cache\r\n"
-        "Connection: close\r\n"
-        "Transfer-Encoding: chunked\r\n"
+        "Connection: keep-alive\r\n"
         "\r\n";
-    
+
     socket->write(headers.toUtf8());
+    socket->flush();
     LOG_INFO("HTTPヘッダー送信完了");
 }
 
@@ -202,11 +202,9 @@ void TSStreamingServer::sendTSData(const QByteArray &data)
             continue;
         }
         
-        // HTTP Chunked形式でTSデータを送信
-        QString chunkHeader = QString("%1\r\n").arg(data.size(), 0, 16);
-        client->write(chunkHeader.toUtf8());
+        // 生のTSデータをそのまま送信
         client->write(data);
-        client->write("\r\n");
+        client->flush();
         
         static int sendCount = 0;
         sendCount++;

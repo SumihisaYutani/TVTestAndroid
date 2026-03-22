@@ -728,86 +728,56 @@ void BonDriverNetwork::processResponse()
         return;
     }
     
-    // 簡素化されたデータ処理（無限ループ防止）
-    int processedBytes = 0;
-    const int maxProcessBytes = 188 * 10; // 最大10パケット/回
-    
-    while (m_receiveBuffer.size() > 0 && processedBytes < maxProcessBytes)
+    // バースト分のTSパケットを1つにまとめてから一括送信
+    QByteArray tsBatch;
+
+    while (m_receiveBuffer.size() > 0)
     {
-        // BonDriverコマンドレスポンス優先処理
+        // コマンドレスポンス(0xff)検出 → 蓄積済みTSを先に送信してからコマンド処理
         if (m_receiveBuffer.size() >= 8 && static_cast<uint8_t>(m_receiveBuffer[0]) == 0xff)
         {
+            if (!tsBatch.isEmpty()) {
+                emit tsDataReceived(tsBatch);
+                tsBatch.clear();
+            }
             if (!processCommandResponse()) {
-                // コマンド処理失敗時は1バイト破棄
                 m_receiveBuffer.remove(0, 1);
-                processedBytes++;
             }
             continue;
         }
-        
-        // TSストリーム処理（高速化）
-        if (m_receiveBuffer.size() >= 188) {
-            // 188バイト単位で一括処理（バッファ内の全パケットを処理）
-            int tsPackets = m_receiveBuffer.size() / 188;
 
-            for (int i = 0; i < tsPackets; i++) {
-                QByteArray tsPacket = m_receiveBuffer.left(188);
-                
-                // 🔧 強化されたTSパケット同期チェック
-                if (tsPacket.size() >= 1 && static_cast<uint8_t>(tsPacket[0]) != 0x47) {
-                    // 連続する2つのTSパケット(0x47)を探して確実な同期を取る
-                    int syncPos = -1;
-                    for (int searchPos = 1; searchPos < m_receiveBuffer.size() - 188; searchPos++) {
-                        if (static_cast<uint8_t>(m_receiveBuffer[searchPos]) == 0x47 &&
-                            searchPos + 188 < m_receiveBuffer.size() &&
-                            static_cast<uint8_t>(m_receiveBuffer[searchPos + 188]) == 0x47) {
-                            // 188バイト間隔で2つの0x47が見つかった → 正しい同期位置
-                            syncPos = searchPos;
-                            break;
-                        }
-                    }
-                    
-                    if (syncPos > 0) {
-                        LOG_WARNING(QString("⚠️ TS同期エラー: %1バイト破棄して確実な0x47で再同期").arg(syncPos));
-                        m_receiveBuffer.remove(0, syncPos);
-                        continue; // 次のループで再処理
-                    } else {
-                        // 確実な同期が見つからない場合は1バイトずつ破棄
-                        LOG_WARNING("⚠️ 確実なTS同期が見つかりません - 1バイト破棄");
-                        m_receiveBuffer.remove(0, 1);
+        // TSパケット処理
+        if (m_receiveBuffer.size() >= 188) {
+            // TS同期バイト(0x47)チェック
+            if (static_cast<uint8_t>(m_receiveBuffer[0]) != 0x47) {
+                int syncPos = -1;
+                for (int s = 1; s < m_receiveBuffer.size() - 188; s++) {
+                    if (static_cast<uint8_t>(m_receiveBuffer[s]) == 0x47 &&
+                        static_cast<uint8_t>(m_receiveBuffer[s + 188]) == 0x47) {
+                        syncPos = s;
                         break;
                     }
                 }
-                
-                m_receiveBuffer.remove(0, 188);
-                processedBytes += 188;
-                
-                static int tsDataCount = 0;
-                tsDataCount++;
-                
-                // 従来のシグナル発行（既存機能維持）
-                emit tsDataReceived(tsPacket);
-                
-                // TSストリーム受信完了（シンプル版）
-                
-                // ログ出力制限（調査用：最初の10個、その後は2000個ごと）
-                if (tsDataCount <= 10 || tsDataCount % 2000 == 0) {
-                    LOG_INFO(QString("📺 TSパケット #%1 (バッファ残: %2 KB)")
-                             .arg(tsDataCount).arg(m_receiveBuffer.size() / 1024));
+                if (syncPos > 0) {
+                    m_receiveBuffer.remove(0, syncPos);
+                } else {
+                    m_receiveBuffer.remove(0, 1);
                 }
+                continue;
             }
+
+            tsBatch.append(m_receiveBuffer.left(188));
+            m_receiveBuffer.remove(0, 188);
             continue;
         }
-        
-        // 不完全データまたは不正データの処理
-        if (m_receiveBuffer.size() < 188) {
-            // 188バイト未満の場合は次回まで待機
-            break;
-        } else {
-            // 不正データを1バイト破棄
-            m_receiveBuffer.remove(0, 1);
-            processedBytes++;
-        }
+
+        // 188バイト未満は次回まで待機
+        break;
+    }
+
+    // バースト末尾の残りTSを送信
+    if (!tsBatch.isEmpty()) {
+        emit tsDataReceived(tsBatch);
     }
 }
 
@@ -819,28 +789,27 @@ bool BonDriverNetwork::processCommandResponse()
     }
 
     uint8_t responseCmd = static_cast<uint8_t>(m_receiveBuffer[1]);
-    
-    // 【修正】サイズは3-6バイト目の4バイトlittle-endian
+
+    // 【重要修正】GetTsStreamレスポンス: 8バイトヘッダーだけ削除してTSデータをバッファに残す
+    // bytes[2..5]のサイズフィールドはLE/BEの違いにより誤読されるため使用しない
+    // 後続のTSデータはprocessResponse()のTS同期処理(0x47検出)で正しく処理される
+    if (responseCmd == eGetTsStream)
+    {
+        m_isTsStreamActive = true;
+        m_receiveBuffer.remove(0, 8); // ヘッダー8バイトのみ削除
+
+        static int tsHeaderCount = 0;
+        if (++tsHeaderCount <= 10 || tsHeaderCount % 100 == 0) {
+            LOG_INFO(QString("📡 GetTsStreamヘッダー #%1 処理完了 - 残バッファ: %2 bytes")
+                    .arg(tsHeaderCount).arg(m_receiveBuffer.size()));
+        }
+        return true;
+    }
+
+    // その他コマンドレスポンス: bytes[2..5] LEからサイズ取得
     uint32_t responseSize;
     memcpy(&responseSize, &m_receiveBuffer.data()[2], sizeof(uint32_t));
-    
-    // デバッグ: プロトコルヘッダ詳細ログ（最初の10回のみ）
-    static int protocolDebugCount = 0;
-    if (++protocolDebugCount <= 10) {
-        LOG_INFO(QString("🔍 プロトコル解析: cmd=%1, size=%2, header=[%3 %4 %5 %6 %7 %8 %9 %10]")
-                .arg(responseCmd)
-                .arg(responseSize)
-                .arg((uint8_t)m_receiveBuffer[0], 2, 16, QChar('0'))
-                .arg((uint8_t)m_receiveBuffer[1], 2, 16, QChar('0'))
-                .arg((uint8_t)m_receiveBuffer[2], 2, 16, QChar('0'))
-                .arg((uint8_t)m_receiveBuffer[3], 2, 16, QChar('0'))
-                .arg((uint8_t)m_receiveBuffer[4], 2, 16, QChar('0'))
-                .arg((uint8_t)m_receiveBuffer[5], 2, 16, QChar('0'))
-                .arg((uint8_t)m_receiveBuffer[6], 2, 16, QChar('0'))
-                .arg((uint8_t)m_receiveBuffer[7], 2, 16, QChar('0')));
-    }
-    
-    // 異常に大きなサイズの場合はプロトコルエラー
+
     if (responseSize > 10 * 1024 * 1024) { // 10MB制限
         LOG_WARNING(QString("⚠️ 異常なレスポンスサイズ: %1 bytes - 1バイト破棄").arg(responseSize));
         m_receiveBuffer.remove(0, 1);
@@ -857,41 +826,24 @@ bool BonDriverNetwork::processCommandResponse()
     QByteArray responseData = m_receiveBuffer.mid(8, responseSize);
     m_receiveBuffer.remove(0, totalPacketSize);
 
-    // データサイズ0でも成功/失敗フラグが存在する可能性
-    if (responseSize == 0 && m_receiveBuffer.size() >= 1)
-    {
-        QByteArray actualFlag = m_receiveBuffer.left(1);
-        m_receiveBuffer.remove(0, 1);
-        responseData = actualFlag;
-    }
-
     // コマンドレスポンス処理（ログ削減）
     static int cmdResponseCount = 0;
     cmdResponseCount++;
-
-    // ログ出力をさらに制限
     if (cmdResponseCount <= 5 || cmdResponseCount % 100 == 0)
     {
-        LOG_INFO(QString("<<< コマンドレスポンス #%1: %2 bytes").arg(cmdResponseCount).arg(responseData.size()));
+        LOG_INFO(QString("<<< コマンドレスポンス #%1 cmd=%2: %3 bytes")
+                .arg(cmdResponseCount).arg(responseCmd).arg(responseData.size()));
     }
 
-    // TSストリーム関連レスポンス処理のみ（その他は無視してパフォーマンス向上）
-    if (responseCmd == eGetTsStream && !responseData.isEmpty())
+    // GetSignalLevel: floatを取り出して保存
+    if (responseCmd == eGetSignalLevel && responseData.size() >= 4)
     {
-        m_isTsStreamActive = true;
-        
-        // 【修正】GetTsStreamレスポンスデータを受信バッファに追加してTS処理
-        m_receiveBuffer.append(responseData);
-        
-        // デバッグ用ログ（パフォーマンス考慮で100回に1回）
-        static int tsLogCounter = 0;
-        if (++tsLogCounter % 100 == 0) {
-            LOG_INFO(QString("📡 GetTsStream受信: %1 bytes, バッファサイズ: %2 bytes")
-                    .arg(responseData.size()).arg(m_receiveBuffer.size()));
-        }
+        float signalLevel;
+        memcpy(&signalLevel, responseData.data(), sizeof(float));
+        m_signalLevel = signalLevel;
     }
-    
-    return true; // 正常処理完了
+
+    return true;
 }
 
 QString BonDriverNetwork::getCommandName(BonDriverCommand command) const
@@ -1037,38 +989,22 @@ void ContinuousCommandWorker::run()
             LOG_INFO("🚀 Worker処理開始: 最初のコマンド送信");
         }
         
-        // TVTest本家の通信パターンに基づくコマンド送信
-        switch (commandCycle) {
-        case 0: // eGetTsStream（最重要：TSデータ要求）
-            m_bonDriver->sendCommandThreadSafe(BonDriverNetwork::eGetTsStream);
-            if (commandCount <= 10 || commandCount % 100 == 0) {
-                LOG_INFO(QString("📡 ワーカー継続コマンド #%1: eGetTsStream送信").arg(commandCount));
-            }
-            break;
-            
-        case 1: // ePurgeTsStream（バッファクリア）
-            m_bonDriver->sendCommandThreadSafe(BonDriverNetwork::ePurgeTsStream);
-            if (commandCount % 500 == 0) {
-                LOG_INFO(QString("🧹 ワーカー継続コマンド #%1: ePurgeTsStream送信").arg(commandCount));
-            }
-            break;
-            
-        case 2: // eGetSignalLevel（信号レベル確認）
+        // 通常ストリーミング中は GetTsStream のみ使用
+        // PurgeTsStream は毎サイクル呼ぶとサーバーバッファが破棄されTSデータが欠落するため除外
+        // GetSignalLevel は100回に1回（10秒間隔）
+        if (commandCycle == 2) {
             m_bonDriver->sendCommandThreadSafe(BonDriverNetwork::eGetSignalLevel);
             if (commandCount % 1000 == 0) {
                 LOG_INFO(QString("📶 ワーカー継続コマンド #%1: eGetSignalLevel送信").arg(commandCount));
             }
-            break;
-        }
-        
-        // コマンドサイクルを回転（TVTest本家は主にeGetTsStreamを多用）
-        if (commandCycle == 0) {
-            // eGetTsStreamを75%の確率で実行
-            commandCycle = (commandCount % 4 == 0) ? 1 : 0;
-        } else if (commandCycle == 1) {
-            commandCycle = (commandCount % 10 == 0) ? 2 : 0;
+            commandCycle = 0;
         } else {
-            commandCycle = 0; // eGetTsStreamに戻る
+            m_bonDriver->sendCommandThreadSafe(BonDriverNetwork::eGetTsStream);
+            if (commandCount <= 10 || commandCount % 100 == 0) {
+                LOG_INFO(QString("📡 ワーカー継続コマンド #%1: eGetTsStream送信").arg(commandCount));
+            }
+            // 100回に1回だけ GetSignalLevel を挟む（10秒間隔）
+            commandCycle = (commandCount % 100 == 0) ? 2 : 0;
         }
         
         // 100ms待機（TVTest本家準拠）

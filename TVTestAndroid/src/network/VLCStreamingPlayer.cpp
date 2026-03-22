@@ -89,6 +89,7 @@ bool VLCStreamingPlayer::initializeVLC()
         "--clock-jitter=0",                          // クロックジッター無効
         "--clock-synchro=0",                         // クロック同期無効（低遅延）
         "--no-skip-frames",                          // フレームスキップ無効
+        "--vout=direct3d9",                          // Direct3D9直接レンダリング（drawableのquery3エラー回避）
         "--verbose=1"                                // 最小ログ
     };
 
@@ -281,6 +282,8 @@ void VLCStreamingPlayer::vlcEventCallback(const libvlc_event_t *event, void *use
     case libvlc_MediaPlayerPlaying:
         LOG_INFO("VLC: 再生開始");
         player->setState(Playing);
+        // 映像設定をメインスレッドで適用（VLC callback thread からは直接呼ばない）
+        QMetaObject::invokeMethod(player, "applyVideoSettings", Qt::QueuedConnection);
         emit player->streamingStarted();
         break;
         
@@ -322,6 +325,28 @@ void VLCStreamingPlayer::vlcEventCallback(const libvlc_event_t *event, void *use
     default:
         break;
     }
+}
+
+void VLCStreamingPlayer::applyVideoSettings()
+{
+    if (!m_vlcPlayer) return;
+
+    // デコードされた映像サイズを確認（診断用）
+    unsigned int videoW = 0, videoH = 0;
+    libvlc_video_get_size(m_vlcPlayer, 0, &videoW, &videoH);
+    LOG_INFO(QString("🎬 VLCデコード映像サイズ: %1 x %2").arg(videoW).arg(videoH));
+    LOG_INFO(QString("🖥️ 映像ウィジェットサイズ: %1 x %2")
+             .arg(m_videoWidget ? m_videoWidget->width() : -1)
+             .arg(m_videoWidget ? m_videoWidget->height() : -1));
+
+    // デインターレース: Playing イベント後に確実に適用
+    // yadif2x = フィールドごとにフレーム生成（60fps出力、1080i対応）
+    libvlc_video_set_deinterlace(m_vlcPlayer, "yadif2x");
+    LOG_INFO("✅ デインターレース設定: yadif2x");
+
+    // スケール: 0 = ウィジェットに合わせて自動スケール
+    libvlc_video_set_scale(m_vlcPlayer, 0);
+    LOG_INFO("✅ スケール設定: 自動（ウィジェット全体に表示）");
 }
 
 void VLCStreamingPlayer::onBonDriverConnected()
@@ -415,6 +440,7 @@ bool VLCStreamingPlayer::createStreamingMedia()
     int result = libvlc_media_player_play(m_vlcPlayer);
     if (result == 0) {
         LOG_INFO("VLC公式コールバックストリーミング開始成功");
+
         setState(Playing);
         return true;
     } else {

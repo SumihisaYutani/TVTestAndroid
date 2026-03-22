@@ -1,202 +1,171 @@
 # TVTest Android Version
 
 ## プロジェクト概要
-Windows版TVTestをQt for Androidで移植する視聴専用アプリケーション
+Windows版TVTestをQt for Androidで移植する視聴専用アプリケーション。
+現在はデスクトップ版（Windows Qt6）でBonDriverProxyEx経由のリアルタイムTSストリーミング再生を実装・改善中。
 
-### 現在のステータス
-- [x] プロジェクト構造調査完了
-- [x] 既存機能分析完了
-- [x] Qt for Android技術選定完了
-- [x] Android Emulator採用決定
-- [x] JDK 17 インストール完了
-- [x] Android Studio セットアップ完了
-- [ ] Qt Creator + Android統合
-- [ ] プロジェクト初期化
-- [ ] コア機能移植
-- [ ] UI実装
-- [ ] テスト・デバッグ
+---
 
-## 実装計画
+## 現在の実装状況（2026-03-22時点）
 
-### フェーズ1: 基盤準備
-1. Qt for Androidプロジェクト作成
-2. CMakeビルド設定
-3. 既存LibISDB統合
-4. ログシステム実装
+### 動作している機能
+- [x] BonDriverProxyEx TCP接続（192.168.0.5:1192 / baruma.f5.si:1192）
+- [x] サーバー選択プルダウン（QComboBox、編集可能）
+- [x] GetTsStream ポーリングによるTSデータ受信
+- [x] TSパケット同期（0x47検出）
+- [x] TSStreamingServer（HTTP localhost:8080）経由でVLCに配信
+- [x] VLC 3.0.23 による映像・音声再生（音声は正常）
+- [x] ログファイル出力（build/Desktop_.../logs/tvtest_*.log）
 
-### フェーズ2: コア機能移植
-1. TSProcessor → Qt統合
-2. MPEG-2パーサー → Android対応  
-3. EPGエンジン → Qt SQL統合
-4. チャンネル管理 → QSettings
+### 未解決の問題
+- [ ] 映像が「下半分だけ表示」「高速で2種類の画像が交互」→ 調査・対応中
+  - 音声は正常、映像のみ乱れ
+  - 1080iインターレース映像のフィールド表示問題と推定
+  - `--vout=direct3d9` で drawable window query 3 エラーは解消
+  - `libvlc_video_set_deinterlace("yadif2x")` を Playing イベント後に適用中
+  - **次回**: ログの `🎬 VLCデコード映像サイズ` で実際の解像度を確認して原因を絞り込む
 
-### フェーズ3: UI/UX開発 (Qt Designer)
-1. メイン画面 (動画プレイヤー) - mainwindow.ui
-2. チャンネルリスト画面 - channellist.ui
-3. EPG表示画面 - epgdialog.ui
-4. 設定画面 - settings.ui
+---
 
-### 除外機能
-- 録画機能 (RecorderFilter)
-- キャプチャ機能 (CaptureOptions)
-- 録画スケジューリング
+## アーキテクチャ
 
-## 技術スタック
-
-### 開発環境
-- **Qt Creator 11.x**
-- **Qt 6.6+ for Android**
-- **Android NDK r25+**
-- **CMake 3.21+**
-
-### コア技術
-- **C++17** (既存コード活用)
-- **Qt Widgets** (UI描画)
-- **Qt Designer** (.uiファイル)
-- **Qt Multimedia** (メディア再生)
-- **Qt Network** (通信処理)
-- **Qt SQL** (データベース)
-
-### 依存ライブラリ
-- **LibISDB** (MPEG-2 TS処理)
-- **Qt Widgets** (UIコンポーネント)
-- **Qt Designer** (UI設計ツール)
-
-## ディレクトリ構造
-
+### データフロー
 ```
-android_tvtest/
-├── src/                    # C++ソースコード
-│   ├── core/              # コアエンジン移植
-│   ├── network/           # ネットワーク処理
-│   ├── database/          # EPG・設定データ
-│   └── utils/             # ユーティリティ
-├── ui/                    # UIファイル
-│   ├── mainwindow.ui     # メイン画面
-│   ├── channellist.ui    # チャンネルリスト
-│   ├── epgdialog.ui      # EPG表示
-│   └── settings.ui       # 設定画面
-├── resources/            # リソースファイル
-├── libs/                 # 外部ライブラリ
-│   └── LibISDB/         # 移植版
-└── docs/                # ドキュメント
+BonDriverProxyEx サーバー (192.168.0.5:1192)
+    ↓ TCP (BonDriverNetwork)
+    ↓ GetTsStream 100ms ポーリング
+    ↓ TSパケット(188byte)抽出・同期
+    ↓ emit tsDataReceived(QByteArray)
+TSStreamingServer (HTTP localhost:8080)
+    ↓ HTTP/1.1 200 OK + raw TS stream
+VLC 3.0.23 (libvlc embedded)
+    ↓ direct3d9 レンダリング
+映像ウィジェット (QWidget HWND)
 ```
 
-## ビルド設定
-
-### ビルド出力先
-```bash
-# デバッグビルド
-build/debug/android/
-
-# リリースビルド  
-build/release/android/
-
-# APKファイル
-dist/android/tvtest-android-v*.apk
+### ファイル構成
 ```
+TVTestAndroid/
+├── CMakeLists.txt                          # ビルド設定（VLC 3.0.23 SDK参照）
+├── vlc-3.0.23/                             # VLC SDK（gitignore対象）
+├── src/
+│   ├── network/
+│   │   ├── BonDriverNetwork.cpp/h          # BonDriverProxyEx プロトコル実装
+│   │   ├── TSStreamingServer.cpp/h         # HTTP TSストリーミングサーバー
+│   │   └── VLCStreamingPlayer.cpp/h        # VLC制御・映像出力
+│   ├── ui/
+│   │   └── MainWindow.cpp/h                # メインウィンドウ・UI
+│   └── utils/
+│       └── Logger.cpp/h                    # ログシステム
+└── resources/
+    └── channels.json                       # チャンネル設定
+```
+
+---
+
+## BonDriverProxyEx プロトコル（解析済み）
+
+### パケットフォーマット
+```
+[0xFF][cmd][reserved: 2bytes][size: 4bytes big-endian][payload...]
+```
+
+### GetTsStream レスポンスの処理
+- ヘッダー `[ff 08 00 00 00 02 f0 08]` の bytes[2..5] を LE 読みすると誤値になる
+- **修正済み**: GetTsStream (cmd=0x08) は8バイトヘッダーだけ削除、後続TSデータはそのまま処理
+- PurgeTsStream は通常ストリーミング中に呼ぶとサーバーバッファが破棄されTSデータが欠落するため除外済み
+
+### コマンドサイクル（現在）
+- GetTsStream: 毎100ms（メイン）
+- GetSignalLevel: 100回に1回（10秒間隔）
+- PurgeTsStream: **使用停止**（欠落の原因のため）
+
+---
+
+## VLC設定（現在）
+
+### VLCインスタンス引数
+```cpp
+"--intf", "dummy"
+"--no-video-title-show"
+"--live-caching=300"
+"--file-caching=300"
+"--network-caching=300"
+"--clock-jitter=0"
+"--clock-synchro=0"
+"--no-skip-frames"
+"--vout=direct3d9"    // drawable window query 3 エラー回避
+"--verbose=1"
+```
+
+### メディアオプション
+```cpp
+":demux=ts"
+":ts-es-id-pid"
+":no-ts-trust-pcr"
+":ts-seek-percent=false"
+":live-caching=300"
+":network-caching=300"
+":input-repeat=999999"
+":start-time=0"
+```
+
+### 再生開始後に適用（Playing イベント後・メインスレッド）
+```cpp
+libvlc_video_set_deinterlace(m_vlcPlayer, "yadif2x");  // 1080i対応
+libvlc_video_set_scale(m_vlcPlayer, 0);                // ウィジェット全体に表示
+```
+
+---
+
+## ビルド方法
+
+### 環境
+- Qt 6.10.1 MinGW 64bit
+- VLC 3.0.23 SDK: `TVTestAndroid/vlc-3.0.23/sdk/`
+- ビルドディレクトリ: `TVTestAndroid/build/Desktop_Qt_6_10_1_MinGW_64_bit-Debug/`
 
 ### ビルドコマンド
 ```bash
-# デバッグビルド
-qmake CONFIG+=debug android
-make
-
-# リリースビルド
-qmake CONFIG+=release android
-make
-
-# APK生成
-androiddeployqt --input android-build/android-tvtest-deployment-settings.json --output android-build --android-platform android-33 --jdk $JAVA_HOME --gradle
+cd TVTestAndroid/build/Desktop_Qt_6_10_1_MinGW_64_bit-Debug
+C:\Qt\Tools\Ninja\ninja.exe TVTestAndroid
 ```
+※ アプリ起動中はexeがロックされるため先に終了すること
+
+### 実行
+```
+build/Desktop_Qt_6_10_1_MinGW_64_bit-Debug/TVTestAndroid.exe
+```
+
+---
 
 ## ログ設定
 
 ### ログファイル保存先
 ```
-Android内部ストレージ:
-/storage/emulated/0/Android/data/com.tvtest.android/files/logs/
-
-ログファイル:
-├── tvtest_debug.log       # デバッグログ
-├── tvtest_error.log       # エラーログ  
-├── network.log           # ネットワーク通信ログ
-├── media.log             # メディア処理ログ
-└── crash.log             # クラッシュログ
+build/Desktop_Qt_6_10_1_MinGW_64_bit-Debug/logs/tvtest_YYYYMMDD_HHMMSS.log
 ```
 
-### ログレベル
-```cpp
-enum LogLevel {
-    LOG_TRACE = 0,    // 詳細トレース
-    LOG_DEBUG = 1,    // デバッグ情報
-    LOG_INFO  = 2,    // 一般情報
-    LOG_WARN  = 3,    // 警告
-    LOG_ERROR = 4,    // エラー
-    LOG_FATAL = 5     // 致命的エラー
-};
-```
-
-### デバッグ設定
-```cpp
-// デバッグビルドでは全レベル出力
-#ifdef DEBUG
-    #define LOG_LEVEL LOG_TRACE
-#else
-    #define LOG_LEVEL LOG_INFO
-#endif
-
-// ログファイルサイズ制限: 10MB
-#define MAX_LOG_FILE_SIZE (10 * 1024 * 1024)
-
-// ローテーション: 5世代保持
-#define LOG_FILE_ROTATION 5
-```
-
-## 実行環境 (Android Emulator)
-
-### AVD設定 (推奨)
-```
-TVTest専用AVD:
-├── Device: Pixel 7 Pro (6.7", 1440x3120)
-├── API Level: 33 (Android 13.0)
-├── Target: Google APIs
-├── RAM: 4096 MB
-├── Storage: 8 GB
-└── Graphics: Hardware - GLES 2.0
-```
-
-### 開発ワークフロー
-```bash
-1. emulator -avd TVTest_AVD -gpu host -memory 4096
-2. Qt Creator でビルド・自動インストール
-3. adb logcat でログ確認
-4. デバッグ → 修正 → 再ビルド
-```
-
-### 必要システム要件
-- **RAM**: 8GB以上推奨
-- **CPU**: Intel VT-x/AMD-V対応
-- **GPU**: 統合GPU以上
-- **Storage**: SSD推奨
-
-## 開発メモ
-
-### 現在の課題
-- [ ] LibISDBのAndroid移植対応
-- [ ] DirectShow依存の除去方法
-- [ ] メディア再生の最適化
-
-### 検討事項
-- Qt MultimediaのHLSストリーミング対応
-- Android権限管理 (INTERNET, WRITE_EXTERNAL_STORAGE)
-- 省電力モード対応
-
-### 参考リンク
-- [Qt for Android Documentation](https://doc.qt.io/qt-6/android.html)
-- [Qt Multimedia](https://doc.qt.io/qt-6/qtmultimedia-index.html)
-- [Android NDK Guide](https://developer.android.com/ndk)
+### デバッグのポイント
+- `⚠️ 異常なレスポンスサイズ` → GetTsStream ヘッダー解析エラー（修正済み）
+- `📡 GetTsStreamヘッダー #N` → ヘッダー正常処理の確認
+- `🎬 VLCデコード映像サイズ` → 映像解像度確認（次回デバッグで重要）
+- `🖥️ 映像ウィジェットサイズ` → ウィジェット vs 映像サイズの比較
 
 ---
-**最終更新**: 2026-03-02  
+
+## 今後の課題
+
+1. **映像表示問題の解決**（最優先）
+   - `🎬 VLCデコード映像サイズ` ログで実際の解像度を確認
+   - 1440x540（1フィールド）ならインターレース処理問題
+   - 1440x1080 でウィジェットより大きければスケーリング問題
+   - 0x0 なら Playing イベント時点で映像未初期化
+
+2. **Android移植**（将来）
+   - VLCをAndroid対応版に差し替え
+   - Qt for Android ビルド設定
+
+---
+**最終更新**: 2026-03-22
 **作成者**: Claude Code
